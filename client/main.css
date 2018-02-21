@@ -12,30 +12,23 @@ body {
   right: 0;
   padding: 0;
   margin: 0;
-
   font-size: 13px;
-
 }
 
- 
 
 .container {
-
   //max-width: 800px;
   margin: 0 auto;
   min-height: 100%;
-
 }
 
  
 
 header {
-
   background: #d2edf4;
   background-image: linear-gradient(to bottom, #d0edf5, #e1e5f0 100%);
   padding: 20px 15px 15px 15px;
   position: relative;
-
 }
 
  .filtered_task_list_container{    
@@ -48,35 +41,27 @@ header {
 
  .seitenlist{
      width: 80%;
-     float:left;
-     
+    float:left;  
  }
 
- 
-
 h1 {
-
   font-size: 1.5em;
   margin: 0;
   margin-bottom: 10px;
   display: inline-block;
   margin-right: 1em;
-    width: 200px;
-    float: left;
-
+  width: 200px;
+  float: left;
 }
 
- 
+
 
 form {
-
   margin-top: 10px;
   margin-bottom: -10px;
   position: relative;
-
 }
 
- 
 
 .new-task input {
   box-sizing: border-box;
@@ -112,8 +97,8 @@ ul {
   font-size: 1em;
   border: none;
   position: relative;
-       padding: 0 2px;
-    cursor: pointer;
+  padding: 0 2px;
+  cursor: pointer;
 }
  
 
@@ -123,9 +108,9 @@ ul {
   font-size: 1em;
   border: none;
   position: relative;
-       padding: 0 2px;
-    cursor: pointer;
-    z-index: 100;
+  padding: 0 2px;
+  cursor: pointer;
+  z-index: 100;
 }
 
 li {
@@ -141,7 +126,6 @@ li .text {
 }
  
 .task_title{
-    //padding: 5px 0;
 }
 
  
@@ -151,6 +135,7 @@ li .text {
     background: #eafcfb;
     line-height: 25px;
 }
+
 .seite_edit{
  display: none;  
     margin: 5px 0 20px 0;
@@ -295,27 +280,7 @@ ul.status_total li{
     display:none;
 }
     
-
 @media (max-width: 600px) {
 
-  li {
-    padding: 12px 15px;
-
-  }
-
- 
-
-  .search {
-    width: 150px;
-    clear: both;
-
-  }
-
- 
-
-  .new-task input {
-    padding-bottom: 5px;
-
-  }
 
 }
