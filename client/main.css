@@ -1,0 +1,321 @@
+body {
+
+  font-family: sans-serif;
+  background-color: #315481;
+  background-image: linear-gradient(to bottom, #315481, #918e82 100%);
+  background-attachment: fixed;
+
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0;
+  margin: 0;
+
+  font-size: 13px;
+
+}
+
+ 
+
+.container {
+
+  //max-width: 800px;
+  margin: 0 auto;
+  min-height: 100%;
+
+}
+
+ 
+
+header {
+
+  background: #d2edf4;
+  background-image: linear-gradient(to bottom, #d0edf5, #e1e5f0 100%);
+  padding: 20px 15px 15px 15px;
+  position: relative;
+
+}
+
+ .filtered_task_list_container{    
+     width: 15%;
+    float: right;
+    background-color: #d2edf4;
+    margin: 10px;
+    padding: 10px;
+ }
+
+ .seitenlist{
+     width: 80%;
+     float:left;
+     
+ }
+
+ 
+
+h1 {
+
+  font-size: 1.5em;
+  margin: 0;
+  margin-bottom: 10px;
+  display: inline-block;
+  margin-right: 1em;
+    width: 200px;
+    float: left;
+
+}
+
+ 
+
+form {
+
+  margin-top: 10px;
+  margin-bottom: -10px;
+  position: relative;
+
+}
+
+ 
+
+.new-task input {
+  box-sizing: border-box;
+  padding: 10px 0;
+  background: transparent;
+  border: none;
+  width: 100%;
+  padding-right: 80px;
+  font-size: 1em;
+
+}
+
+ 
+
+.new-task input:focus{
+  outline: 0;
+}
+
+ 
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+ 
+.buttons{
+ 
+  float: right; 
+}
+.delete {
+  background: none;
+  font-size: 1em;
+  border: none;
+  position: relative;
+       padding: 0 2px;
+    cursor: pointer;
+}
+ 
+
+.toggle-edit {
+  font-weight: bold;
+  background: none;
+  font-size: 1em;
+  border: none;
+  position: relative;
+       padding: 0 2px;
+    cursor: pointer;
+    z-index: 100;
+}
+
+li {
+  position: relative;
+  list-style: none;
+  padding: 15px;
+  border-bottom: #eee solid 1px;
+}
+
+
+li .text {
+  margin-left: 10px;
+}
+ 
+.task_title{
+    //padding: 5px 0;
+}
+
+ 
+.task_edit{
+ display: none;  
+    margin: 5px 0 5px 0;
+    background: #eafcfb;
+    line-height: 25px;
+}
+.seite_edit{
+ display: none;  
+    margin: 5px 0 20px 0;
+    background: #eafcfb;
+    line-height: 25px;
+}
+
+.seite{
+    background: #EEE;
+    display: block;
+    margin: 10px;
+    width: 180px;
+    float: left;
+    min-height: 300px;
+    padding: 10px;
+}
+
+.seite .task_title_seite{
+ display: none;   
+}
+
+ul.status_list{
+ margin: 5px 0;   
+}
+ul.status_list li{
+    display: inline;
+    padding: 0;
+    border: 0;
+}
+ 
+ul.task_list li{    
+    padding: 1px 5px;
+    margin: 5px 0;
+    border: 0;
+    background-color:#FFF;
+}
+
+ul.filtered_task_list li{
+    padding: 5px 5px;
+    margin: 5px 0;
+    border: 0;
+    background-color:#FFF;
+
+}
+
+ul.filtered_task_list .task_edit{
+    display:none !important;
+}
+
+ul.filtered_task_list .task_title{
+    display:inline-block !important;
+}
+ul.filtered_task_list .updated{
+    display:inline-block !important;
+}
+
+ul.filtered_task_list .buttons{
+    display:none !important;
+}
+
+.header_legend_filter{
+    background-color: #CCC; 
+}
+.header_picture_filter{
+    background-color: #CCC; 
+}
+ 
+ .updated{
+  font-size: 9px;
+     color: #666;
+ }
+.next_status{
+ background-color: #999;
+    color: #FFF;
+    padding:3px 10px;
+    cursor: pointer;
+}
+.select-status{
+    margin: 5px 0;
+}
+
+.picture_button{
+    background-color: #e6e6e6; 
+    padding: 2px 8px;
+    cursor: pointer;
+}
+
+.picture_buttons{
+    font-size: 11px;
+    margin: 0 0 5px 0;
+}
+.picture_button_ok{
+ background-color: #6dff6d;   
+}
+
+ul.status_total{
+    top: 0px;
+position: absolute;
+right: 10px 
+}
+
+ul.status_total li{
+ display: inline-block;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 0;
+    margin: 5px;   
+    border: 0;
+}
+.header_status{
+    font-weight: normal;
+    padding:  2px 8px;
+    display: block;
+    font-size: 11px;
+}
+
+.status_color0{
+    background-color:#06d6a0;
+}
+.status_color1{
+    background-color:#4bc1d0;
+}
+.status_color2{
+    background-color:#ff6a8d;
+}
+.status_color3{
+    background-color:#ffdb87;
+}
+    
+.status_color4{
+    background-color:#66b2fd;
+}
+    
+.status_color5{
+    background-color:#bd8bcc;
+}
+.status_color6{
+    background-color:#6dff6d;
+}
+    
+.last-status{
+    display:none;
+}
+    
+
+@media (max-width: 600px) {
+
+  li {
+    padding: 12px 15px;
+
+  }
+
+ 
+
+  .search {
+    width: 150px;
+    clear: both;
+
+  }
+
+ 
+
+  .new-task input {
+    padding-bottom: 5px;
+
+  }
+
+}
