@@ -4,17 +4,11 @@ import { Seiten } from '../api/seiten.js';
 import './task.html';
 
 
-
- Template.task.helpers({
-     // radiobutton checker
- //   hasPicture: function(status) {
-   //     return has_picture === this.has_picture ? 'checked' : '';
-    //},
+Template.task.helpers({
     isSelected: function(thisstatus, parentstatus) {
         return thisstatus == parentstatus ? 'selected' : '';
     },
     status_list: function(){
-        
        return status_list;
     },
     nextStatusName: function(){
@@ -24,7 +18,7 @@ import './task.html';
        return (this.status+1);
     } ,
     seitenNummer: function(seiten_id){
-       // return Seiten.findOne({"_id":seiten_id}).nummer;
+       // return Seiten.findOne({"_id":seiten_id}).nummer; throws sometimes error
     } ,
     formatDate: function(date) {
         return moment(date).format('ddd HH:mm');
@@ -52,46 +46,35 @@ Template.task.events({
   },
     
   'click .toggle_has_legend': function(e, template){
-   
     Tasks.update(template.data._id, {
-
           $set: { has_legend: ! this.has_legend },
-
     });
-  },
+  }, 
     
   'click .next_status': function(e, template){
-   
     Tasks.update(template.data._id, {
         $set: {
                 status:  (template.data.status*1)+1,
                 updatedAt: new Date()
         },
-
     });
   },
+    
   'click .toggle-checked'() {
-
-    // Set the checked property to the opposite of its current value
-
     Tasks.update(this._id, {
-
       $set: { checked: ! this.checked },
-
     });
-
   },
-    'click .toggle-status': function(e, template) {
-        
+    
+    'click .toggle-status': function(e, template) { 
         Tasks.update(template.data._id, {
             $set: { 
             status:  e.target.value*1,
             updatedAt: new Date()
             },
-
     });
-
   },
+    
     'change .select-status': function(e, template) {
         Tasks.update(template.data._id, {
         $set: { 
@@ -101,27 +84,24 @@ Template.task.events({
 
     });
   },
-
+    
   'click .toggle-edit'() {
     $(".task_edit_"+this._id).toggle();
     $(".task_title_"+this._id).toggle();
     $(".updated_"+this._id).toggle();
-      
-      
   },
     
-    'change .task_title_edit'(event, template) {  
+  'change .task_title_edit'(event, template) {  
     event.preventDefault();
-         Tasks.update(template.data._id, {
+    Tasks.update(template.data._id, {
             $set: { 
                 text: event.target.value,
                 },
         });
-        
     $(".task_edit_"+this._id).toggle();
     $(".task_title_"+this._id).toggle();
     $(".updated_"+this._id).toggle();
-    },
+  },
 
   'click .task-delete'() {
       if(confirm('Artikel '+this.text+' entfernen?')){
