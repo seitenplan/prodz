@@ -1,19 +1,15 @@
 
 <body>
-
   <div class="container">
-
     <header>
-
       <h1>Seitenplan</h1>
-              
-              <form class="new-seite">
-
+        
+      <form class="new-seite">
         Neue Seite: <input type="text" name="text" placeholder="Nr" size="4"/>
-
       </form> 
-        <ul class="status_total">
-         {{#each status_list}}
+        
+      <ul class="status_total">
+            {{#each status_list}}
                     <li ><span class="header_status status_color{{@index}}">
                     <input type="checkbox" name="{{@index}}" class="toggle_status_list"> 
                     {{this}}</span>{{status_count @index}}</li>
@@ -25,36 +21,25 @@
                     <li><span class="header_legend_filter header_status">
                     <input type="checkbox" class="toggle_legend_filter">Legende 
                     </span>{{legend_count}}</li>
-            </ul>
+      </ul>
 
     </header>
 
- 
-
-      <div class="seitenlist">
+    <div class="seitenlist">
+        <ul>
+          {{#each seiten}}
+            {{> seite}}
+          {{/each}}
+        </ul>
+    </div>
       
-    <ul>
-
-      {{#each seiten}}
-
-        {{> seite}}
-
-      {{/each}}
-
-    </ul>
-      </div>
+    <div class="filtered_task_list_container"><b>Todo-Liste</b><br>
+        <ul class="filtered_task_list">
+            {{#each tasks}}
+                {{> task}}
+            {{/each}}
+        </ul>
+    </div>
       
-      <div class="filtered_task_list_container"><b>Todo-Liste</b><br>
-          
-          <ul class="filtered_task_list">
-       {{#each tasks}}
-
-        {{> task}}
-
-      {{/each}}
-
-</ul>
-</div>
   </div>
-
 </body>

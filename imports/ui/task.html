@@ -1,50 +1,30 @@
 <template name="task">
-
   <li>
-
- 
-
-    
-
- 
-
-      <div><span class="task_title task_title_{{_id}}"><span class="task_title_seite">Seite {{seitenNummer seiten_id}}: </span>{{text}}</span> <span class="updated updated_{{_id}}">{{formatDate updatedAt}}</span> 
-   <span class="buttons"><button class="toggle-edit">&#9998;</button> </span></div>
+        <div>
+            <span class="task_title task_title_{{_id}}">
+            <span class="task_title_seite">Seite {{seitenNummer seiten_id}}: </span>{{text}}</span> 
+            <span class="updated updated_{{_id}}">{{formatDate updatedAt}}</span> 
+            <span class="buttons"><button class="toggle-edit">&#9998;</button> </span>
+        </div>
       
-          <div class="task_edit_{{_id}} task_edit">   
+        <div class="task_edit_{{_id}} task_edit">   
             <input type="text" name="task_title_edit" class="task_title_edit" value="{{text}}" size="15"><br>
-              <input type="checkbox" id="bild" checked="{{need_picture}}" class="toggle_need_picture"> mit Bild<br>
-                <span class="task-delete">&times; Artikel l&ouml;schen</span>
-              
-      </div>
+            <input type="checkbox" id="bild" checked="{{need_picture}}" class="toggle_need_picture"> mit Bild<br>
+            <span class="task-delete">&times; Artikel l&ouml;schen</span>
+        </div>
    
-            <select class="select-status status_color{{status}}"> 
+        <select class="select-status status_color{{status}}"> 
              {{#each status_list}}
                 <option {{isSelected @index ../status}} value="{{@index}}" class="status_color{{@index}}">{{this}}</option>
             {{/each}}
-            </select>
-                      <span class="next_status {{lastStatus}}" > &#9193; </span>
-      {{#if need_picture}}<div class="picture_buttons">
-      <span class="toggle_has_picture picture_button {{#if has_picture}}picture_button_ok{{/if}}">Bild</span>
-      <span class="toggle_has_legend picture_button {{#if has_legend}}picture_button_ok{{/if}}">Legende</span>
-      </div>
-      {{/if}}
-
-  
-
+        </select>
+      
+        <span class="next_status {{lastStatus}}" > &#9193; </span>
+      
+          {{#if need_picture}}<div class="picture_buttons">
+          <span class="toggle_has_picture picture_button {{#if has_picture}}picture_button_ok{{/if}}">Bild</span>
+          <span class="toggle_has_legend picture_button {{#if has_legend}}picture_button_ok{{/if}}">Legende</span>
+          </div>
+          {{/if}}
   </li>
-
-  {{!-- 
-    
-    
-     <span class="next_status {{lastStatus}}" >&#9193;   {{nextStatusName}}</span>
-    
-        <ul class="status_list">
-        {{#each status_list}}
-            <li><input {{isChecked2 @index ../status}} value="{{@index}}" group="gruppe1{{../_id}}" type="radio" class="toggle-status">{{this}}     </li> 
-            {{/each}}
-    </ul>--}}
 </template>
-
-   
-     
