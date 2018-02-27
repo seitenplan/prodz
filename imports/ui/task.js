@@ -25,7 +25,7 @@ Template.task.helpers({
         return moment(date).format('ddd HH:mm');
     },
      lastStatus: function() {
-        return this.status >= 6 ? 'last-status' : ''; 
+        return this.status > (status_list.length-2) ? 'last-status' : ''; 
     },
 });
 

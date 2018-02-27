@@ -95,8 +95,8 @@ Template.body.helpers({
         if(layout_breaks){
             $(".seite_break").removeAttr( 'style' );
             $(".seite_break:nth-child("+layout_breaks.value+"n+1)").css("clear", "both");
+             return layout_breaks.value;
         }
-        return (layout_breaks) ? layout_breaks.value : ''
     } ,
 
 });

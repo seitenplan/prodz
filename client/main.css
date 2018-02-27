@@ -23,32 +23,38 @@ body {
 header {
   background: #d2edf4;
   background-image: linear-gradient(to bottom, #d0edf5, #e1e5f0 100%);
-  padding: 20px 15px 15px 15px;
-  position: relative;
+  position: fixed;
+  width: 100%;
+  height: 55px;
+  z-index: 200;
 }
 
 .config {
   background: #c6e4eb;
-  padding: 20px 15px 15px 15px;
-  position: relative;
+  padding: 10px 15px 15px 10px;
   height: 20px;
   display: none;
+  position: fixed;
+  top: 55px;
+  z-index: 201;
+  width: 800px;
 }
 
 .header_toggle_config{
   font-size: 20px;
-  color: black;
-  cursor: pointer
+  cursor: pointer;
+  top: 10px;
+  position: relative;
 }
 
 .config_element{
   float:left;
-  margin: 0 30px 0 0; 
+  margin-right: 30px; 
 }
 
 .config_button{
  background-color: #CCC;
-    padding: 2px 5px;
+    padding: 3px 5px;
     cursor: pointer;
 }
 
@@ -58,11 +64,15 @@ header {
     background-color: #d2edf4;
     margin: 10px;
     padding: 10px;
+     position: fixed;
+     right: 0px;
+     top: 60px;
  }
 
  .seitenlist{
      width: calc(100% - 210px);
     float:left;  
+     margin-top: 60px;
  }
 
 h1 {
@@ -73,6 +83,7 @@ h1 {
   margin-right: 1em;
   width: 100px;
   float: left;
+      padding: 10px;
 }
 
 
@@ -88,7 +99,7 @@ form {
   border: none;
   width: 100%;
   padding-right: 80px;
-  font-size: 1em;
+  font-size: 13px;
 
 }
 
@@ -118,7 +129,9 @@ ul {
   padding: 0 2px;
   cursor: pointer;
 }
- 
+ .task-delete{
+  cursor: pointer;
+ }
 
 .toggle-edit {
   font-weight: bold;
@@ -152,7 +165,7 @@ li .text {
  display: none;  
     margin: 5px 0 5px 0;
     background: #eafcfb;
-    line-height: 25px;
+    line-height: 21px;
 }
 
 .seite_edit{
@@ -228,12 +241,21 @@ ul.filtered_task_list .buttons{
   font-size: 9px;
      color: #666;
  }
+
 .next_status{
- background-color: #999;
-    color: #FFF;
-    padding:3px 6px;
-    cursor: pointer;
+  background-color: #999;
+  color: #FFF;
+  padding:3px 6px;
+  cursor: pointer;
 }
+
+.all_next_status{
+  background-color: #999;
+  color: #FFF;
+  padding:3px 6px;
+  cursor: pointer;
+}
+
 .select-status{
     margin: 5px 0;
     width: 115px;
@@ -269,32 +291,37 @@ ul.status_total li{
 }
 .header_status{
     font-weight: normal;
-    padding:  2px 8px;
+    padding: 2px 6px;
     display: block;
     font-size: 11px;
+    margin-bottom: 3px;
 }
 
+
 .status_color0{
-    background-color:#06d6a0;
+    background-color:#FFF;
 }
 .status_color1{
-    background-color:#4bc1d0;
+    background-color:#06d6a0;
 }
 .status_color2{
-    background-color:#ff6a8d;
+    background-color:#4bc1d0;
 }
 .status_color3{
+    background-color:#ff6a8d;
+}
+.status_color4{
     background-color:#ffdb87;
 }
     
-.status_color4{
+.status_color5{
     background-color:#66b2fd;
 }
     
-.status_color5{
+.status_color6{
     background-color:#bd8bcc;
 }
-.status_color6{
+.status_color7{
     background-color:#6dff6d;
 }
     

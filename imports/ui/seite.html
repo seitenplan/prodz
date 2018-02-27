@@ -17,6 +17,13 @@
                 {{> task}}
             {{/each}}
         </ul>
+        {{#if tasks_same_status}}
+                <div class="{{lastStatus}}" >
+            
+        <span class="all_next_status" > Ganze Seite &#10145; </span>
+        </div>
+      
+        {{/if}}
         <form class="new-task">
             <input type="text" name="text" placeholder="Neuer Artikel" />
         </form>

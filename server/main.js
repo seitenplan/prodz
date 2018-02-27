@@ -10,8 +10,6 @@ import { Tasks } from '../imports/api/tasks.js';
 import { Seiten } from '../imports/api/seiten.js';
 
 Meteor.startup(() => {
-  // code to run on server at startup
-   // var status_list= ["a","b","c","d","e"];
     
      Meteor.methods({
 
@@ -26,12 +24,9 @@ Meteor.startup(() => {
             Config.remove({});
             Config.insert({
                   name: "layout_breaks",
-                  value: 7,
+                  value: 0,
                 });
-
-            
         }
-
 
     });
 });

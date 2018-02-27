@@ -10,7 +10,27 @@ Template.seite.helpers({
      
   tasks() {
        return Tasks.find({"seiten_id":this._id}, { sort: { createdAt: -1 } });
-  }
+  },
+    status_list: function(){
+       return status_list;
+    },
+    tasks_same_status: function(){ // returns true if more than one task and all same status
+        var tasks=Tasks.find({"seiten_id":this._id}).fetch();
+        var same=1;
+        var last=0;
+        $(tasks).each(function( index ) {   
+            if (this.status!=last && index>0){
+                same=0;
+            }
+            last=this.status;
+        });
+        return (same==1 && tasks.length>1);      
+    },
+     lastStatus: function() {
+        var tasks=Tasks.find({"seiten_id":this._id}).fetch();
+        return tasks[0].status > (status_list.length-2) ? 'last-status' : ''; 
+    },
+    
  });
 
 Template.seite.events({
@@ -60,6 +80,22 @@ Template.seite.events({
     });
 
     target.text.value = '';
+  },
+    
+  'click .all_next_status': function(e, template){
+        var tasks=Tasks.find({"seiten_id":template.data._id}).fetch();
+      
+        $(tasks).each(function( index ) {  
+            
+               Tasks.update(this._id, {
+                    $set: {
+                            status:  (this.status*1)+1,
+                            updatedAt: new Date()
+                    },
+                });
+ 
+        });
+
   },
 
 });
