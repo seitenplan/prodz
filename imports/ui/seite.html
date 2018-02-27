@@ -1,13 +1,13 @@
 <template name="seite">
-    <li class="seite">
+    <li class="seite seite_break">
         <b>Seite {{nummer}} {{desc}}</b>
 
         <span class="buttons"><button class="toggle-edit">&#9998;</button> </span>
 
         <div id="seite_edit_{{_id}}" class="seite_edit">   
             <form class="seite-edit-form">
-                Seiten-Nummer: <input name="seite_edit_nummer" class="seite_edit_nummer" type="text" size="4" value="{{nummer}}">
-                Bezeichnung: <input name="seite_edit_desc"  class="seite_edit_desc" type="text" size="10" value="{{desc}}">
+                Seiten-Nr: <input name="seite_edit_nummer" class="seite_edit_nummer" type="text" size="4" value="{{nummer}}">
+                Bezeichnung: <input name="seite_edit_desc"  class="seite_edit_desc" type="text" size="10" value="{{desc}}"><br>
                 <span class="delete">&times; Seite l&ouml;schen</span>
             </form>
         </div>

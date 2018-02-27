@@ -18,7 +18,8 @@ Template.task.helpers({
        return (this.status+1);
     } ,
     seitenNummer: function(seiten_id){
-       // return Seiten.findOne({"_id":seiten_id}).nummer; throws sometimes error
+        var get_number=Seiten.findOne({"_id":seiten_id});
+        return (get_number) ? get_number.nummer : ''
     } ,
     formatDate: function(date) {
         return moment(date).format('ddd HH:mm');

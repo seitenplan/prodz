@@ -1,16 +1,10 @@
-
-
 import { Template } from 'meteor/templating';
-
- 
 import { Tasks } from '../api/tasks.js';
-
-
 import { Seiten } from '../api/seiten.js';
+import { Config } from '../api/config.js';
 
- import './seite.js';
- import './task.js';
-
+import './seite.js';
+import './task.js';
 import './body.html';
 
 var _deps = new Tracker.Dependency;
@@ -18,6 +12,21 @@ var status_filter = [];
 var picture_filter;
 var legend_filter;
 
+function add_pages(nr,layout_breaks){
+    for (var i = 1; i <= nr; i++){
+        Seiten.insert({
+          nummer: i,
+          createdAt: new Date(), // current time
+        });
+    }
+    var id=Config.findOne({"name":"layout_breaks"})._id;  
+    Config.update(id, {
+        $set: { 
+          value: layout_breaks,
+                },
+        }); 
+    
+}
 
 Template.body.rendered = function() {
     if(!this._rendered) {
@@ -31,7 +40,6 @@ Template.body.rendered = function() {
            return $(this).attr("name")*1; 
         });
         status_filter=$.makeArray(status_filter);
-    
     
         if(load_picture){
             $(".toggle_picture_filter").prop("checked",true);
@@ -82,6 +90,14 @@ Template.body.helpers({
     picture_count: function(status){
        return Tasks.find({$and: [{need_picture:true},{has_picture:false}]}).count();  
     },
+    layout_breaks: function(){
+        var layout_breaks=Config.findOne({"name":"layout_breaks"});
+        if(layout_breaks){
+            $(".seite_break").removeAttr( 'style' );
+            $(".seite_break:nth-child("+layout_breaks.value+"n+1)").css("clear", "both");
+        }
+        return (layout_breaks) ? layout_breaks.value : ''
+    } ,
 
 });
 
@@ -111,20 +127,58 @@ Template.body.events({
         _deps.changed();
     },
     
+    'click .header_toggle_config'() {
+        $(".config").toggle();
+    },
+      
+    'click .config_delete_all'() {
+              if(confirm('Achtung! Alle Daten werden gelöscht!')){
+                if(confirm('Wirklich ALLES löschen?')){
+                    Meteor.call("deleteAll");
+                }
+              }
+    },
+    'click .config_new_24'() {
+              if(confirm('24 neue Seiten einfügen?')){
+                    add_pages(24,6);
+              }
+    },
+    'click .config_new_28'() {
+              if(confirm('28 neue Seiten einfügen?')){
+                    add_pages(28,7);
+              }
+    },
+    'click .config_new_32'() {
+              if(confirm('32 neue Seiten einfügen?')){
+                    add_pages(32,8);
+              }
+    },
     
-    'submit .new-seite'(event) {
-            
-        event.preventDefault();
- 
+    
+    
+    'submit .new-seite'(event) {      
+        event.preventDefault(); 
         const target = event.target;
         const nummer = target.text.value*1;
-
         Seiten.insert({
           nummer,
           createdAt: new Date(), // current time
         });
-
         target.text.value = '';
+  },
+
+    'submit .edit_layout_breaks'(event) {          
+        event.preventDefault(); 
+        const target = event.target;
+        const nummer = target.layout_breaks.value*1;
+        var id=Config.findOne({"name":"layout_breaks"})._id;  
+         Config.update(id, {
+            $set: { 
+          value: nummer,
+                },
+        }); 
+        target.layout_breaks.value = '';
+
   },
 
 });

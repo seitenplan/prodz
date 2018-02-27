@@ -2,12 +2,9 @@
 <body>
   <div class="container">
     <header>
-      <h1>Seitenplan</h1>
+      <h1>Seitenplan</h1> <span class="header_toggle_config">&#128295;</span>
         
-      <form class="new-seite">
-        Neue Seite: <input type="text" name="text" placeholder="Nr" size="4"/>
-      </form> 
-        
+     
       <ul class="status_total">
             {{#each status_list}}
                     <li ><span class="header_status status_color{{@index}}">
@@ -24,6 +21,24 @@
       </ul>
 
     </header>
+    <div class="config">
+        
+      <form class="new-seite config_element">
+        Neue Seite: <input type="text" name="text" placeholder="Nr" size="4"/>
+      </form> 
+        
+      <form class="edit_layout_breaks config_element">
+        Umbruch alle <input type="text" name="layout_breaks" value="{{layout_breaks}}" size="2"/> Seiten
+      </form> 
+        
+        <span class="config_element config_delete_all config_button">Alles löschen</span>
+        <span class="config_element">Neu anlegen: 
+        <span class="config_new_24 config_button">24 Seiten</span>
+        <span class="config_new_28 config_button">28 Seiten</span>
+        <span class="config_new_32 config_button">32 Seiten</span></span>
+
+
+    </div>
 
     <div class="seitenlist">
         <ul>
