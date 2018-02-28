@@ -117,10 +117,6 @@ ul {
 }
 
  
-.buttons{
- 
-  float: right; 
-}
 .delete {
   background: none;
   font-size: 1em;
@@ -133,16 +129,29 @@ ul {
   cursor: pointer;
  }
 
+.task_buttons{
+    
+  right: 8px;
+  position: absolute;
+  padding: 0 2px;
+  z-index: 100;
+}
 .toggle-edit {
   font-weight: bold;
   background: none;
   font-size: 1em;
   border: none;
-  position: absolute;
   padding: 0 2px;
   cursor: pointer;
-  z-index: 100;
-  right: 8px;
+}
+
+.toggle_log {
+  font-weight: bold;
+  background: none;
+  font-size: 1em;
+  border: none;
+  padding: 0 2px;
+  cursor: pointer;
 }
 
 li {
@@ -166,6 +175,17 @@ li .text {
     margin: 5px 0 5px 0;
     background: #eafcfb;
     line-height: 21px;
+}
+
+ul.task_log{
+  display: none;
+}
+
+ul.task_log li{
+  font-size: 9px;
+  color: #AAA;
+  padding: 0 !important;
+  margin: 1px !important;
 }
 
 .seite_edit{
@@ -226,7 +246,7 @@ ul.filtered_task_list .updated{
     display:inline-block !important;
 }
 
-ul.filtered_task_list .buttons{
+ul.filtered_task_list .task_buttons{
     display:none !important;
 }
 

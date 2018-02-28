@@ -4,6 +4,18 @@ import { Seiten } from '../api/seiten.js';
 import './task.html';
 
 
+function   task_status_update(id,new_status){
+    Tasks.update(id, {
+        $set: {
+            status:  new_status,
+            updatedAt: new Date(),
+        },       
+        $addToSet: {
+            log: { status: new_status, date: new Date()}, 
+        },
+    });
+}
+
 Template.task.helpers({
     isSelected: function(thisstatus, parentstatus) {
         return thisstatus == parentstatus ? 'selected' : '';
@@ -23,6 +35,9 @@ Template.task.helpers({
     } ,
     formatDate: function(date) {
         return moment(date).format('ddd HH:mm');
+    },
+    getStatus: function(i) {
+        return status_list[i];
     },
      lastStatus: function() {
         return this.status > (status_list.length-2) ? 'last-status' : ''; 
@@ -53,37 +68,11 @@ Template.task.events({
   }, 
     
   'click .next_status': function(e, template){
-    Tasks.update(template.data._id, {
-        $set: {
-                status:  (template.data.status*1)+1,
-                updatedAt: new Date()
-        },
-    });
+      task_status_update(template.data._id, (template.data.status*1)+1);
   },
-    
-  'click .toggle-checked'() {
-    Tasks.update(this._id, {
-      $set: { checked: ! this.checked },
-    });
-  },
-    
-    'click .toggle-status': function(e, template) { 
-        Tasks.update(template.data._id, {
-            $set: { 
-            status:  e.target.value*1,
-            updatedAt: new Date()
-            },
-    });
-  },
-    
-    'change .select-status': function(e, template) {
-        Tasks.update(template.data._id, {
-        $set: { 
-            status:  e.target.value*1,
-            updatedAt: new Date()
-            },
-
-    });
+     
+  'change .select-status': function(e, template) {   
+      task_status_update(template.data._id, e.target.value*1);
   },
     
   'click .toggle-edit'() {
@@ -91,7 +80,11 @@ Template.task.events({
     $(".task_title_"+this._id).toggle();
     $(".updated_"+this._id).toggle();
   },
-    
+        
+  'click .toggle_log'() {
+    $(".task_log_"+this._id).toggle();
+  },
+
   'change .task_title_edit'(event, template) {  
     event.preventDefault();
     Tasks.update(template.data._id, {

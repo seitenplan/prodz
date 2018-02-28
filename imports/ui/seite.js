@@ -67,7 +67,7 @@ Template.seite.events({
     const target = event.target;
     const text = target.text.value;
     const seiten_id = template.data._id;
-        
+    var log;
     Tasks.insert({
         status:0,
         seiten_id,
@@ -77,6 +77,7 @@ Template.seite.events({
         has_legend: false,
         createdAt: new Date(),
         updatedAt: new Date(), 
+        log, 
     });
 
     target.text.value = '';
@@ -91,6 +92,9 @@ Template.seite.events({
                     $set: {
                             status:  (this.status*1)+1,
                             updatedAt: new Date()
+                    },
+                    $addToSet: {
+                        log: { status: ((this.status*1)+1), date: new Date()}, 
                     },
                 });
  
