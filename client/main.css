@@ -134,17 +134,19 @@ ul {
 .task_buttons{
   float: right;
   padding: 0;
+height: 15px;
 }
 
 .task_header{
   float: left;
   padding: 2px 0 0 0;
-    width: 105px;
+ width: 105px;
+line-height: 13px;
 }
 
 .task{ 
 }
-.toggle-edit {
+.toggle-edit,.toggle_log {
   font-weight: bold;
   background: none;
   font-size: 1em;
@@ -153,14 +155,6 @@ ul {
   cursor: pointer;
 }
 
-.toggle_log {
-  font-weight: bold;
-  background: none;
-  font-size: 1em;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-}
 
 li {
   position: relative;
@@ -294,7 +288,7 @@ ul.filtered_task_list .task_buttons{
 
 .select-status{
     margin: 2px 0 5px 0;
-    width: 110px;
+    width: 115px;
 }
 
 .picture_button{
