@@ -6,6 +6,8 @@ import { Seiten } from '../api/seiten.js';
 import './task.js';
 import './seite.html';
 
+
+  
 Template.seite.helpers({
      
   tasks() {
@@ -101,5 +103,44 @@ Template.seite.events({
         });
 
   },
+    
+  'drop li.seite' : function(e, t) {      
+      $(".seite").removeClass("dropable");
+
+        
+        e.stopPropagation();
+        e.preventDefault();
+        task_id=e.originalEvent.dataTransfer.getData("text");
+        Tasks.update(task_id, {
+                    $set: {
+                            seiten_id:  this._id,
+                    },
+                });
+  },
+    
+  'dragenter .seite' : function(e, t) {
+      $(".seite").removeClass("dropable");
+    $(t.firstNode).addClass("dropable");
+  },    
+  'dragover .seite' : function(e, t) {
+    e.originalEvent.preventDefault(); 
+      e.originalEvent.dataTransfer.dropEffect = "move";
+  },
+  'dragleave .seite' : function(e, t) {
+      $(e.originalEvent.target).removeClass("dropable");
+  },
+  'dragend .seite' : function(e, t) {
+      $(".seite").removeClass("dropable");
+  },
 
 });
+
+  $(".seite").onDrop=function(e){
+        e.stopPropagation();
+        task_id=e.originalEvent.dataTransfer.getData("text");
+        Tasks.update(task_id, {
+                    $set: {
+                            seiten_id:  this._id,
+                    },
+                });   
+}

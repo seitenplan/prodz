@@ -71,11 +71,11 @@ Template.body.helpers({
         }
         
         if (legend_filter){
-            var legend_query={$and: [{need_picture:true},{has_legend:false}]};
+            var legend_query={$and: [{need_picture:true},{has_picture:true},{has_legend:false}]};
             or_query.push(legend_query);
         }
         
-        return Tasks.find( {$or: or_query});
+        return Tasks.find( {$or: or_query},{ sort: { updatedAt: -1 } });
     },
     
     status_list: function(){
@@ -85,7 +85,7 @@ Template.body.helpers({
        return Tasks.find({"status":status}).count();  
     },
     legend_count: function(status){
-       return Tasks.find({$and: [{need_picture:true},{has_legend:false}]}).count();  
+       return Tasks.find({$and: [{need_picture:true},{has_picture:true},{has_legend:false}]}).count();  
     },
     picture_count: function(status){
        return Tasks.find({$and: [{need_picture:true},{has_picture:false}]}).count();  

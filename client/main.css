@@ -12,7 +12,7 @@ body {
   right: 0;
   padding: 0;
   margin: 0;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .container {
@@ -67,6 +67,8 @@ header {
      position: fixed;
      right: 0px;
      top: 60px;
+     overflow-x: auto;
+     max-height: 90%;
  }
 
  .seitenlist{
@@ -94,7 +96,7 @@ form {
 
 .new-task input {
   box-sizing: border-box;
-  padding: 10px 0;
+  padding: 5px 0 0 0;
   background: transparent;
   border: none;
   width: 100%;
@@ -130,11 +132,17 @@ ul {
  }
 
 .task_buttons{
-    
-  right: 8px;
-  position: absolute;
-  padding: 0 2px;
-  z-index: 100;
+  float: right;
+  padding: 0;
+}
+
+.task_header{
+  float: left;
+  padding: 2px 0 0 0;
+    width: 105px;
+}
+
+.task{ 
 }
 .toggle-edit {
   font-weight: bold;
@@ -167,6 +175,7 @@ li .text {
 }
  
 .task_title{
+ cursor: e-resize;  
 }
 
  
@@ -175,6 +184,7 @@ li .text {
     margin: 5px 0 5px 0;
     background: #eafcfb;
     line-height: 21px;
+    cursor: default;
 }
 
 ul.task_log{
@@ -197,13 +207,18 @@ padding: 5px;
 }
 
 .seite{
-    background: #EEE;
+    background: #EAEAEA;
     display: block;
     margin: 10px 5px;
-    width: 160px;
+    width: 155px;
     float: left;
-    min-height: 300px;
-    padding: 10px;
+    min-height: 270px;
+    padding: 5px;
+    user-select: none;
+}
+
+.dropable{
+    background-color: #DDD;
 }
 
 
@@ -259,6 +274,7 @@ ul.filtered_task_list .task_buttons{
  
  .updated{
   font-size: 9px;
+     display: inline-block;
      color: #666;
  }
 
@@ -277,8 +293,8 @@ ul.filtered_task_list .task_buttons{
 }
 
 .select-status{
-    margin: 5px 0;
-    width: 115px;
+    margin: 2px 0 5px 0;
+    width: 110px;
 }
 
 .picture_button{
@@ -347,6 +363,16 @@ ul.status_total li{
     
 .last-status{
     display:none;
+}
+
+[draggable] {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  /* Required to make elements draggable in old WebKit */
+  -khtml-user-drag: element;
+  -webkit-user-drag: element;
 }
     
 @media (max-width: 600px) {

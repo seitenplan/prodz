@@ -1,11 +1,12 @@
 <template name="task">
-  <li>
-        <div>
+  <li draggable="true" class="task" id="{{_id}}">
+        <div  class="task_header">
             <span class="task_title task_title_{{_id}}">
             <span class="task_title_seite">Seite {{seitenNummer seiten_id}}: </span>{{text}}</span> 
             <span class="updated updated_{{_id}}">{{formatDate updatedAt}}</span> 
-            <span class="task_buttons"><button class="toggle_log">&#9776;</button> <button class="toggle-edit">&#9998;</button> </span> 
         </div>
+        <div class="task_buttons"><button class="toggle_log">&#9776;</button> <button class="toggle-edit">&#9998;</button> </div> 
+       
       
         <div class="task_edit_{{_id}} task_edit">   
             <input type="text" name="task_title_edit" class="task_title_edit" value="{{text}}" size="12"><br>

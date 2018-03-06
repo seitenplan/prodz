@@ -15,6 +15,16 @@ function   task_status_update(id,new_status){
         },
     });
 }
+function task_toggle_edit(id){
+    $(".task_edit_"+id).toggle();
+    $(".task_title_"+id).toggle();
+    $(".updated_"+id).toggle();
+    if($(".task_edit_"+id).css("display")=="none" || $(".task_edit_"+id).css("display")==undefined){ // prevent dragging in edit-mode (else text is not selectable)
+            $("#"+id).attr("draggable", true);
+    }else{
+            $("#"+id).attr("draggable", false);
+    }
+}
 
 Template.task.helpers({
     isSelected: function(thisstatus, parentstatus) {
@@ -39,10 +49,12 @@ Template.task.helpers({
     getStatus: function(i) {
         return status_list[i];
     },
-     lastStatus: function() {
+    lastStatus: function() {
         return this.status > (status_list.length-2) ? 'last-status' : ''; 
-    },
+    }, 
 });
+    
+        
 
 
 Template.task.events({
@@ -76,9 +88,7 @@ Template.task.events({
   },
     
   'click .toggle-edit'() {
-    $(".task_edit_"+this._id).toggle();
-    $(".task_title_"+this._id).toggle();
-    $(".updated_"+this._id).toggle();
+    task_toggle_edit(this._id);
   },
         
   'click .toggle_log'() {
@@ -92,15 +102,18 @@ Template.task.events({
                 text: event.target.value,
                 },
         });
-    $(".task_edit_"+this._id).toggle();
-    $(".task_title_"+this._id).toggle();
-    $(".updated_"+this._id).toggle();
+    task_toggle_edit(this._id);
   },
 
   'click .task-delete'() {
       if(confirm('Artikel '+this.text+' entfernen?')){
           Tasks.remove(this._id);
       }
+  },
+
+  'dragstart .task' : function(e, t) {
+        e.originalEvent.dataTransfer.setData('text', this._id);
+        e.originalEvent.dataTransfer.effectAllowed = 'move';
   },
 
 });
