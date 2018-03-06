@@ -17,15 +17,15 @@
             <input type="checkbox" id="bild" checked="{{need_picture}}" class="toggle_need_picture"> mit Bild<br>
             <span class="task-delete">&times; Artikel l&ouml;schen</span>
         </div>
-   
-        <select class="select-status status_color{{status}}"> 
-             {{#each status_list}}
-                <option {{isSelected @index ../status}} value="{{@index}}" class="status_color{{@index}}">{{this}}</option>
-            {{/each}}
-        </select>
-      
-        <span class="next_status {{lastStatus}}" > &#10145; </span>
-      
+        <div>
+            <select class="select-status status_color{{status}}"> 
+                 {{#each status_list}}
+                    <option {{isSelected @index ../status}} value="{{@index}}" class="status_color{{@index}}">{{this}}</option>
+                {{/each}}
+            </select>
+         
+            <span class="next_status {{lastStatus}}" > &#10145; </span>
+        </div>
           {{#if need_picture}}<div class="picture_buttons">
           <span class="toggle_has_picture picture_button {{#if has_picture}}picture_button_ok{{/if}}">Bild</span>
           <span class="toggle_has_legend picture_button {{#if has_legend}}picture_button_ok{{/if}}">Legende</span>
