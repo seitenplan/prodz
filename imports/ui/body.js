@@ -17,6 +17,9 @@ function add_pages(nr,layout_breaks){
         Seiten.insert({
           nummer: i,
           createdAt: new Date(), // current time
+          has_app: false,
+          has_pdf: false,
+          has_picture_edit: false,
         });
     }
     var id=Config.findOne({"name":"layout_breaks"})._id;  
@@ -35,7 +38,7 @@ Template.body.rendered = function() {
         $(load_status).each(function( index ) {
             $(".toggle_status_list[name='"+this+"']").prop( "checked", true );
         });
-                
+          
         status_filter = $('.toggle_status_list:checked:enabled').map(function(index) {
            return $(this).attr("name")*1; 
         });
@@ -98,7 +101,6 @@ Template.body.helpers({
              return layout_breaks.value;
         }
     } ,
-
 });
 
 Template.body.events({
@@ -163,6 +165,9 @@ Template.body.events({
         Seiten.insert({
           nummer,
           createdAt: new Date(), // current time
+          has_app: false,
+          has_pdf: false,
+          has_picture_edit: false,
         });
         target.text.value = '';
   },

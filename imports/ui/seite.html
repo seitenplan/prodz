@@ -27,5 +27,16 @@
         <form class="new-task">
             <input type="text" name="text" placeholder="Neuer Artikel" />
         </form>
+         {{#if layout_mode }}
+                <div class="seite_tools" >
+                      <span class="toggle_has_picture_edit {{has_picture_edit}}">&#x1f3d4;</span>
+                      <span class="toggle_has_app {{has_app}}" alt="APP">&#x1F431;</span>
+                      <span class="toggle_has_pdf {{has_pdf}}">&#x1f353;</span>
+                    
+
+
+        </div>
+      
+        {{/if}}
     </li>
 </template>

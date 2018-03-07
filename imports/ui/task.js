@@ -4,7 +4,8 @@ import { Seiten } from '../api/seiten.js';
 import './task.html';
 
 
-function   task_status_update(id,new_status){
+function task_status_update(id,new_status){
+    if(new_status!=9 || route=="abschluss"){ // only "abschluss"-role may change status 9
     Tasks.update(id, {
         $set: {
             status:  new_status,
@@ -14,6 +15,9 @@ function   task_status_update(id,new_status){
             log: { status: new_status, date: new Date()}, 
         },
     });
+    }else{
+     alert("Nur Abschluss darf Gut zum Druck geben");   
+    }
 }
 function task_toggle_edit(id){
     $(".task_edit_"+id).toggle();
@@ -80,6 +84,7 @@ Template.task.events({
   }, 
     
   'click .next_status': function(e, template){
+      console.log("---"+route);
       task_status_update(template.data._id, (template.data.status*1)+1);
   },
      

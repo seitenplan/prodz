@@ -12,11 +12,11 @@ Template.seite.helpers({
      
   tasks() {
        return Tasks.find({"seiten_id":this._id}, { sort: { createdAt: -1 } });
-  },
-    status_list: function(){
+    },
+  status_list: function(){
        return status_list;
     },
-    tasks_same_status: function(){ // returns true if more than one task and all same status
+  tasks_same_status: function(){ // returns true if more than one task and all same status
         var tasks=Tasks.find({"seiten_id":this._id}).fetch();
         var same=1;
         var last=0;
@@ -28,10 +28,26 @@ Template.seite.helpers({
         });
         return (same==1 && tasks.length>1);      
     },
-     lastStatus: function() {
+  lastStatus: function() {
         var tasks=Tasks.find({"seiten_id":this._id}).fetch();
         return tasks[0].status > (status_list.length-2) ? 'last-status' : ''; 
     },
+  layout_mode: function(){
+        if(route=="layout"){
+            return true;   
+        }
+    },
+  has_app: function(){
+        return (this.has_app)? "active":"inactive";
+    },  
+  has_pdf: function(){
+        return (this.has_pdf)? "active":"inactive";
+    },  
+  has_picture_edit: function(){
+        return (this.has_picture_edit)? "active":"inactive";
+    },  
+      
+    
     
  });
 
@@ -85,23 +101,27 @@ Template.seite.events({
     target.text.value = '';
   },
     
-  'click .all_next_status': function(e, template){
+  'click .all_next_status': function(e, template){    
+            
         var tasks=Tasks.find({"seiten_id":template.data._id}).fetch();
       
-        $(tasks).each(function( index ) {  
+        if((($(tasks).get( 0 ).status*1)+1)!=9 || route=="abschluss"){ // only "abschluss"-role may change status 9   
             
-               Tasks.update(this._id, {
-                    $set: {
-                            status:  (this.status*1)+1,
-                            updatedAt: new Date()
-                    },
-                    $addToSet: {
-                        log: { status: ((this.status*1)+1), date: new Date()}, 
-                    },
-                });
- 
-        });
+            $(tasks).each(function( index ) {  
 
+                   Tasks.update(this._id, {
+                        $set: {
+                                status:  (this.status*1)+1,
+                                updatedAt: new Date()
+                        },
+                        $addToSet: {
+                            log: { status: ((this.status*1)+1), date: new Date()}, 
+                        },
+                    });
+            });
+        }else{   
+             alert("Nur Abschluss darf Gut zum Druck geben");   
+        }
   },
     
   'drop li.seite' : function(e, t) {      
@@ -131,6 +151,22 @@ Template.seite.events({
   },
   'dragend .seite' : function(e, t) {
       $(".seite").removeClass("dropable");
+  },
+                     
+  'click .toggle_has_app': function(){
+        Seiten.update(this._id, {
+            $set: { has_app: ! this.has_app },
+        });
+  },               
+  'click .toggle_has_pdf': function(){
+        Seiten.update(this._id, {
+            $set: { has_pdf: ! this.has_pdf },
+        });
+  },           
+  'click .toggle_has_picture_edit': function(){
+        Seiten.update(this._id, {
+            $set: { has_picture_edit: ! this.has_picture_edit },
+        });
   },
 
 });
