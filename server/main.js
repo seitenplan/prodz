@@ -25,15 +25,18 @@ Meteor.startup(() => {
            Tasks.remove({"ausgaben_id":ausgaben_id});
         },
          
+         
         "deleteAll": function() {
             Seiten.remove({});
+            Ausgaben.remove({});
             Tasks.remove({});
             Config.remove({});
-            Config.insert({
-                  name: "layout_breaks",
-                  value: 0,
-                });
+        },
+        "deleteSeiten": function(ausgaben_id) {
+           Seiten.remove({"ausgaben_id":ausgaben_id});
+           Tasks.remove({"ausgaben_id":ausgaben_id});
         }
+
 
     });
 });

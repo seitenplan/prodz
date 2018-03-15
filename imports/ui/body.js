@@ -156,9 +156,16 @@ Template.body.events({
       
     
     'click .config_delete_all'() {
-              if(confirm('Achtung! Alle Daten werden gelöscht!')){
-                if(confirm('Wirklich ALLES löschen?')){
+              if(confirm('Achtung! Alle Augaben, Seiten, Artikel in der Datenbank werden gelöscht!')){
+                if(confirm('Wirklich ALLE DATEN löschen?')){
                     Meteor.call("deleteAll");
+                }
+              }
+    },
+    'click .config_delete_seiten'() {
+              if(confirm('Achtung! Alle Seiten dieser Ausgabe werden gelöscht!')){
+                if(confirm('Wirklich ALLE SEITEN dieser Ausgabe löschen?')){
+                    Meteor.call("deleteSeiten",current_ausgabe.get());
                 }
               }
     },

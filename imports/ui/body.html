@@ -16,7 +16,7 @@
                   
                   <form class="neu_ausgabe"><input type="text" placeholder="Neue Ausgabe..." name="bezeichnung" class="" size="15"></form>
             </li>
-              <li><span class="header_toggle_config_ausgaben">&#128295;</span></li>
+              <li><span class="header_toggle_config_ausgaben">&#9881;</span></li>
         </ul>
         
         <ul class="status_total">
@@ -51,7 +51,7 @@
     </div>
     <div class="right_column">
         <div class="seiten_config">
-            <span class="config_element"><b>Ausgaben-Einstellungen</b></span>
+            <span class="config_element"><b>Einstellungen Ausgabe</b></span>
             <form class="neu_seite config_element">
                 Neue Seite: <input type="text" name="text" placeholder="Nr" size="4"/>
             </form> 
@@ -59,12 +59,19 @@
             <form class="edit_page_breaks config_element">
                 Umbruch alle <input type="text" name="page_breaks" value="{{page_breaks}}" size="2"/>
             </form> 
-            <span class="config_element config_delete_all config_button">Alle Seiten dieser Ausgabe löschen</span>
+            
             <span class="config_element">Seiten hinzufügen:<br> 
             <span class="config_new_20 config_button">20</span>
             <span class="config_new_24 config_button">24</span>
             <span class="config_new_28 config_button">28</span>
             <span class="config_new_32 config_button">32</span></span>
+            
+            <span class="config_element config_delete_seiten config_button">Alle Seiten löschen (Ausgabe)</span>
+            <span class="config_element">&nbsp; </span>
+            <span class="config_element">&nbsp; </span>
+            
+            <span class="config_element"><b>Einstellungen Global</b></span>
+            <span class="config_element config_delete_all config_button">Datenbank leeren</span>
         </div>
 
         <div class="filtered_task_list_container"><b>Todo</b><br>
