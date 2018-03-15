@@ -1,6 +1,7 @@
 import { Template } from 'meteor/templating';
 import { Tasks } from '../api/tasks.js';
 import { Seiten } from '../api/seiten.js';
+import { Ausgaben } from '../api/ausgaben.js';
 
  
 import './task.js';
@@ -46,7 +47,10 @@ Template.seite.helpers({
   has_picture_edit: function(){
         return (this.has_picture_edit)? "active":"inactive";
     },  
-      
+    page_break : function(){
+        var breaks=Ausgaben.findOne({_id:current_ausgabe.get()}).page_breaks;
+       return (((this.nummer-1)/breaks)==Math.round((this.nummer-1)/breaks)) ? "page_break": "";
+    },  
     
     
  });
@@ -69,6 +73,7 @@ Template.seite.events({
                 nummer: event.target.value*1,
                 },
         });
+        $("#seite_edit_"+this._id).toggle();
     },
     
     'change .seite_edit_desc'(event, template) {  
@@ -77,7 +82,9 @@ Template.seite.events({
                 desc: event.target.value,
                 },
         });
+        $("#seite_edit_"+this._id).toggle();
     },
+    
     'submit .new-task'(event, template) {
 
     event.preventDefault();
@@ -85,10 +92,12 @@ Template.seite.events({
     const target = event.target;
     const text = target.text.value;
     const seiten_id = template.data._id;
+    const ausgaben_id = template.data.ausgaben_id;
     var log;
     Tasks.insert({
         status:0,
         seiten_id,
+        ausgaben_id,
         text,
         need_picture: false,
         has_picture: false,
@@ -170,7 +179,7 @@ Template.seite.events({
   },
 
 });
-
+/*
   $(".seite").onDrop=function(e){
         e.stopPropagation();
         task_id=e.originalEvent.dataTransfer.getData("text");
@@ -179,4 +188,4 @@ Template.seite.events({
                             seiten_id:  this._id,
                     },
                 });   
-}
+}*/

@@ -69,6 +69,7 @@ Template.task.events({
               need_picture: ! this.need_picture 
           },
     });
+    task_toggle_edit(this._id);
   },
     
   'click .toggle_has_picture': function(e, template){
@@ -84,7 +85,6 @@ Template.task.events({
   }, 
     
   'click .next_status': function(e, template){
-      console.log("---"+route);
       task_status_update(template.data._id, (template.data.status*1)+1);
   },
      
