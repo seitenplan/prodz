@@ -55,7 +55,22 @@ Template.task.helpers({
     },
     lastStatus: function() {
         return this.status > (status_list.length-2) ? 'last-status' : ''; 
-    }, 
+    },  
+    abschluss_mode: function(){
+        if(route=="abschluss"){
+            return true;   
+        }
+    },
+    showcase_status: function(){
+        if(!this.showcase || this.showcase==0 ){
+            return "showcase_0";
+        }else if(this.showcase==1 ){
+            return "showcase_1";
+        }else if(this.showcase==2 ){
+            return "showcase_2 strikethrough";
+        }else 
+        return (this.showcase);
+    },  
 });
     
         
@@ -120,5 +135,17 @@ Template.task.events({
         e.originalEvent.dataTransfer.setData('text', this._id);
         e.originalEvent.dataTransfer.effectAllowed = 'move';
   },
+    'click .toggle_showcase': function(){
+        if(!this.showcase || this.showcase==0 ){
+            var new_showcase_status=1;
+        } else if(this.showcase==1 ){
+            var new_showcase_status=2;
+        } else if(this.showcase==2 ){
+            var new_showcase_status=0;
+        }
+        Tasks.update(this._id, {
+            $set: { showcase: new_showcase_status },
+        });
+  },  
 
 });

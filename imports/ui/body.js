@@ -3,9 +3,11 @@ import { Tasks } from '../api/tasks.js';
 import { Seiten } from '../api/seiten.js';
 import { Config } from '../api/config.js';
 import { Ausgaben } from '../api/ausgaben.js';
+import { Tickets } from '../api/tickets.js';
 
 import './seite.js';
 import './task.js';
+import './ticket.js';
 import './body.html';
 
 var _deps = new Tracker.Dependency;
@@ -56,13 +58,18 @@ Template.body.rendered = function() {
             $(".toggle_legend_filter").prop("checked",true);
             current_legend_filter.set(true);
         }
-
-        //_deps.changed(); // Update Todo-List
         
     }
 }
 
 Template.body.helpers({
+    formatDate: function(date) {
+        return moment(date).format('ddd HH:mm');
+    },
+    
+    show: function(show_role) {
+       return (show_role.split(",").indexOf(route)!=-1)? "show":"dont_show";
+    },
 
     seiten() {
         return Seiten.find({ausgaben_id: current_ausgabe.get()}, { sort: { nummer: 1 } });
@@ -91,7 +98,12 @@ Template.body.helpers({
         
         return Tasks.find( {$and: [{ ausgaben_id: current_ausgabe.get()}, {$or: or_query}]},{ sort: { updatedAt: -1 } });
     },
-    
+    tickets_inbox() {
+        return Tickets.find({to:route, ausgaben_id: current_ausgabe.get()},{sort: { status:1, updatedAt: -1 } });
+    },
+    tickets_outbox() {
+        return Tickets.find({from:route, ausgaben_id: current_ausgabe.get()},{sort: { status:1,updatedAt: -1 } });
+    },
     status_list: function(){
        return status_list;
     },
@@ -105,7 +117,6 @@ Template.body.helpers({
        return Tasks.find({$and: [{need_picture:true},{has_picture:true},{has_legend:false}, {ausgaben_id: current_ausgabe.get()}]}).count();  
     },
     picture_count: function(status){
-      //  _deps.depend();
        return Tasks.find({$and: [{need_picture:true},{has_picture:false}, {ausgaben_id: current_ausgabe.get()}]}).count();  
     },
     page_breaks: function(){
@@ -119,6 +130,40 @@ Template.body.helpers({
     ausgabe_is_active: function(){
         
        return (this._id==current_ausgabe.get())? "ausgabe_active":"" ; 
+    },
+     layout_task_list: function(){
+        var ausgabe=Ausgaben.findOne({_id:current_ausgabe.get()});
+        if(ausgabe){
+            return ausgabe.layout_tasks;
+        }
+        
+    },
+    layout_task_status: function(index){  
+       return (this[1])? "layout_task_done":"" ;       
+    },
+    ticket_role_list: function(){ // returns a list with other roles, and marks the prefered default target
+        var is_selected;
+        var other_roles=[];
+        var own_route_index;
+        for(var i = ticket_roles.length - 1; i >= 0; i--) {
+            if(ticket_roles[i][0] === route) {
+                own_route_index=i;
+            }
+        }
+        for(var i = ticket_roles.length - 1; i >= 0; i--) {
+            if(i != own_route_index && own_route_index >-1) {
+                if(ticket_roles[i][0] == ticket_roles[own_route_index][1]){ // default target
+                    is_selected="selected";
+                }else{
+                    is_selected="";
+                }
+               other_roles.push([ticket_roles[i][0],is_selected]);
+            }
+        }
+       return other_roles;
+    },       
+    ticket_status: function(){
+       return (this.status)? "ticket_done":"ticket_open" ;     
     },
 });
 
@@ -224,10 +269,15 @@ Template.body.events({
  
   }, 
     
-    'submit .neu_ausgabe'(event) {      
+    'submit .neu_ausgabe'(event) {  
+        var layout_tasks_array=[];
+        layout_list.forEach(function(element) {
+          layout_tasks_array.push([element,false]);
+        });
         event.preventDefault(); 
         Ausgaben.insert({
             bezeichnung:event.target.bezeichnung.value,
+            layout_tasks:layout_tasks_array,
             page_break:0,
         });
         event.target.bezeichnung.value = '';
@@ -284,4 +334,47 @@ Template.body.events({
       e.originalEvent.dataTransfer.dropEffect = "move";
   },
     
+            
+  'click .layout_task'(e,t) {
+        var ausgabe=Ausgaben.findOne({_id:current_ausgabe.get()});       
+        var layout_tasks_new=ausgabe.layout_tasks;
+      var update_index=$(e.currentTarget).attr("name");
+      layout_tasks_new[update_index]=[layout_tasks_new[update_index][0],!layout_tasks_new[update_index][1]];
+             
+        Ausgaben.update(current_ausgabe.get(), {
+            $set: { layout_tasks: layout_tasks_new },
+        });
+  }, 
+        
+    'submit .new-ticket'(event, template) {
+        
+    event.preventDefault();
+    const target = event.target;
+    const text = target.text.value;
+    const to = target.to.value;
+    console.log(text);
+    console.log(to);
+    Tickets.insert({
+        status:0,
+        ausgaben_id: current_ausgabe.get(),
+        text,
+        to,
+        from: route,
+        createdAt: new Date(),
+        updatedAt: new Date(), 
+    });
+    target.text.value = '';
+}, 
+    'click .ticket_inbox'(e,t) {
+        Tickets.update(this._id, {
+            $set: { status: 1, 
+            updatedAt: new Date(), },
+        });
+  }, 
+    'click .ticket_outbox'(e,t) {
+        Tickets.remove(this._id);
+  }, 
+        
+      
+
 });

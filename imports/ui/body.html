@@ -50,7 +50,7 @@
         </ul>
     </div>
     <div class="right_column">
-        <div class="seiten_config">
+        <div class="seiten_config right_column_element">
             <span class="config_element"><b>Einstellungen Ausgabe</b></span>
             <form class="neu_seite config_element">
                 Neue Seite: <input type="text" name="text" placeholder="Nr" size="4"/>
@@ -73,15 +73,59 @@
             <span class="config_element"><b>Einstellungen Global</b></span>
             <span class="config_element config_delete_all config_button">Datenbank leeren</span>
         </div>
-
-        <div class="filtered_task_list_container"><b>Todo</b><br>
+ 
+        
+        <div class="ticket_container right_column_element {{show "layout,foto,abschluss"}}"><b>Tickets</b><br>
+            <div class="tickets_category">Eingehend</div>
+            <ul class="tickets">
+                {{#each tickets_inbox}}
+                    <li class="ticket ticket_inbox {{ticket_status}}" id="{{_id}}">
+                      <div class="ticket_from">von {{from}} <span class="ticket_date">{{formatDate updatedAt}}</span></div>
+                      <div>{{text}} <span class="ticket_check">&#x2713;</span></div>
+                    </li>
+                {{/each}}
+             </ul>
+            <div class="tickets_category">Aufgegeben</div>
+            <ul class="tickets">
+                {{#each tickets_outbox}}
+                    <li class="ticket ticket_outbox {{ticket_status}}" id="{{_id}}">
+                        <div class="ticket_from">an {{to}} <span class="ticket_date">{{formatDate updatedAt}}</span></div>
+                      <div>{{text}}  <span class="ticket_delete">&#9587;</span><span class="ticket_check">&#x2713;</span></div>
+                    </li>
+                {{/each}}
+            </ul>
+                <div class="tickets_category">Neues Ticket</div>
+            <form class="new-ticket">
+                An: <select name="to" class="ticket_list">
+                 {{#each ticket_role_list}}
+                    <option {{this.[1]}} >{{this.[0]}} </option>
+                {{/each}}
+                </select>
+            <input type="text" name="text" placeholder="Neues Ticket" />
+                
+        </form>
+        </div>
+        
+        <div class="filtered_task_list_container right_column_element"><b>Todo</b><br>
             <ul class="filtered_task_list">
                 {{#each tasks}}
                     {{> task}}
                 {{/each}}
             </ul>
         </div>
+        
+        <div class="layout_tasks_container right_column_element {{show "layout"}}"><b>Mittwochstodo</b><br>
+            <ul class="layout_tasks">
+                {{#each layout_task_list}}
+                <li class="layout_task {{layout_task_status}}" name="{{@index}}">
+                {{this.[0]}} <span class="layout_task_check">&#x2713;</span>
+                    </li>
+                {{/each}}
+            </ul>
+        </div>
+        
     </div>
+      
       
   </div>
 </body>

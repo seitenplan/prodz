@@ -51,7 +51,15 @@ Template.seite.helpers({
         var breaks=Ausgaben.findOne({_id:current_ausgabe.get()}).page_breaks;
        return (((this.nummer-1)/breaks)==Math.round((this.nummer-1)/breaks)) ? "page_break": "";
     },  
-    
+    page_odd_even: function(){
+        return (this.nummer%2 == 0) ? "seite_gerade":"seite_ungerade";        
+    },  
+    linked: function(){
+              return (this.linked_after)? "seite_doppelseite":"";     
+    },  
+    page_pdf: function(){
+              return (this.has_pdf)? "seite_pdf":"";     
+    },  
     
  });
 
@@ -172,11 +180,20 @@ Template.seite.events({
             $set: { has_pdf: ! this.has_pdf },
         });
   },           
-  'click .toggle_has_picture_edit': function(){
+    'click .toggle_has_picture_edit': function(){
         Seiten.update(this._id, {
             $set: { has_picture_edit: ! this.has_picture_edit },
         });
   },
+    'click .seite_after'() {
+        if(route=="layout" || route=="abschluss"){
+            Seiten.update(this._id, {
+                $set: { linked_after: ! this.linked_after },
+            });
+        }
+  },
+    
+    
 
 });
 /*

@@ -7,8 +7,12 @@
                 <span class="updated updated_{{_id}}">{{formatDate updatedAt}}</span> 
             </div>
             <div class="task_buttons">
-                <button class="toggle_log">&#9776;</button> 
+                <button class="toggle_log">&#9776;</button>          
+                {{#if abschluss_mode }}
+                <button class="toggle_showcase {{showcase_status}}">&#128444;</button> 
+          {{/if}}
                 <button class="toggle-edit">&#9998;</button> 
+
             </div> 
        </div>
       
@@ -32,7 +36,7 @@
           </div>
           {{/if}}
       
-      
+      <span class="big_showcase {{showcase_status}}">&#128444;</span> 
         <ul class="task_log_{{_id}} task_log"> 
             {{#each log}}
             <li>{{formatDate this.date}}: {{getStatus this.status}}</li>

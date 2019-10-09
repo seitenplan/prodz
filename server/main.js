@@ -7,6 +7,7 @@ import { Meteor } from 'meteor/meteor';
  
 import { Config } from '../imports/api/config.js';
 import { Tasks } from '../imports/api/tasks.js';
+import { Tickets } from '../imports/api/tickets.js';
 import { Seiten } from '../imports/api/seiten.js';
 import { Ausgaben } from '../imports/api/ausgaben.js';
 

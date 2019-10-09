@@ -36,7 +36,9 @@ header {
   flex: 0 0 auto;
 }
 
-
+.dont_show{
+    display:none;
+}
 .header_toggle_config_seiten{
   font-size: 20px;
   cursor: pointer;
@@ -98,19 +100,23 @@ header {
 .right_column{
      overflow-x: auto;
      max-height: 85%;
-    background-color: #d2edf4;
-    margin: 10px;
-    padding: 10px;
     position: fixed;
     right: 15px;
+}
+
+
+.right_column_element{   
+    background-color: #d2edf4;
+    
     width: 180px;
+    margin: 10px;
+    padding: 10px;
 }
 
 .seiten_config {
   display: none;
 }
 .config_element{
-  float:left;
   margin: 5px 0;
     display: block;
 }
@@ -119,9 +125,84 @@ header {
  }
 
  .seiten_list{
-     width: calc(100% - 210px);
+     width: calc(100% - 230px);
     float:left;  
  }
+
+.layout_tasks_container{
+    margin: 10px;
+}
+
+.layout_task{
+    margin: 7px 0;
+    padding: 12px 10px;
+    
+  cursor: pointer;
+    background-color: #FFF;
+    
+}
+.layout_task_check{
+    display: none;
+    font-size: 20px;
+    line-height: 8px;
+}
+.layout_task_done .layout_task_check{
+    display: inline-block;
+}
+
+.layout_task_done{
+    background-color: #cff2cf;
+}
+.ticket{
+    background-color: #fff;
+    margin: 5px 0;
+    padding: 10px 10px;
+}
+.ticket_check, .ticket_delete{
+    display:none;
+    font-size: 20px;
+    line-height: 20px;
+    float: right;
+}
+
+.ticket_open{
+    cursor: pointer;
+}
+.ticket_open:hover{
+   background-color: #EFEFEF;
+}
+
+.ticket_open:hover .ticket_check{
+    display:inline;
+}
+.ticket_outbox{
+    cursor: pointer;
+}
+.ticket_outbox:hover{
+   background-color: #F8C3C3;
+}
+.ticket_outbox:hover .ticket_delete{
+    display:inline;
+}
+.ticket_outbox:hover .ticket_check{
+    display:none;
+}
+.ticket_done{
+   background-color: #cff2cf;
+}
+.ticket_done .ticket_check{
+    display:inline;
+}
+.ticket_from{
+    color: #AAA;
+    margin-bottom:5px;
+}
+.tickets_category{
+    margin-top: 15px;
+}
+.ticket_date{
+    float:right;
+}
 
 h1 {
   font-size: 1.5em;
@@ -191,7 +272,7 @@ line-height: 13px;
 
 .task{ 
 }
-.toggle-edit,.toggle_log {
+.toggle-edit,.toggle_log,.toggle_showcase {
   font-weight: bold;
   background: none;
   font-size: 1em;
@@ -200,6 +281,26 @@ line-height: 13px;
   cursor: pointer;
 }
 
+.toggle_showcase{
+  font-size: 0.75em;
+}
+.big_showcase{
+  font-size: 2.5em;
+}
+
+
+span.showcase_0{
+  display:none;  
+}
+.showcase_0{
+  opacity: 0.3;  
+}
+.showcase_1{
+  opacity: 1;  
+}
+.showcase_2{
+  opacity: 1;  
+}
 
 li {
   position: relative;
@@ -247,12 +348,39 @@ padding: 5px;
 .seite{
     background: #EEE;
     display: block;
-    margin: 10px 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     width: 155px;
     float: left;
     min-height: 280px;
     padding: 5px;
     user-select: none;
+}
+.seite_main{
+}
+.seite_after{
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 5px 0;
+    float: left;
+    min-height: 280px;
+    background-color: none;
+    cursor: cell;
+}
+
+.seite_ungerade{
+    width: 18px;
+}
+.seite_gerade{
+    width:8px;
+}
+.seite_doppelseite{
+    background-color: #ccc;
+}
+
+.seite_pdf{
+    background-color: #cff2cf;
 }
 
 .page_break{
@@ -323,6 +451,7 @@ ul.filtered_task_list .updated{
 ul.filtered_task_list .task_buttons{
     display:none !important;
 }
+
 
 .header_legend_filter{
     background-color: #CCC; 
@@ -442,4 +571,23 @@ ul.status_total li{
 @media (max-width: 600px) {
 
 
+}
+
+.strikethrough {
+  position: relative;
+}
+.strikethrough:before {
+  position: absolute;
+  content: "";
+  left: -2px;
+  top: 50%;
+  right: -2px;
+  border-top: 1px solid;
+  border-color: red;
+
+  -webkit-transform:rotate(-15deg);
+  -moz-transform:rotate(-15deg);
+  -ms-transform:rotate(-15deg);
+  -o-transform:rotate(-15deg);
+  transform:rotate(-15deg);
 }
