@@ -19,6 +19,9 @@ current_status_filter=new ReactiveVar([]);
 current_picture_filter=new ReactiveVar(false);
 current_legend_filter=new ReactiveVar(false);
 
+var favicon=new Favico({
+    animation:'slide'
+});
 
 function add_pages(nr,page_breaks){
     for (var i = 1; i <= nr; i++){
@@ -60,6 +63,7 @@ Template.body.rendered = function() {
         }
         
     }
+
 }
 
 Template.body.helpers({
@@ -99,7 +103,11 @@ Template.body.helpers({
         return Tasks.find( {$and: [{ ausgaben_id: current_ausgabe.get()}, {$or: or_query}]},{ sort: { updatedAt: -1 } });
     },
     tickets_inbox() {
-        return Tickets.find({to:route, ausgaben_id: current_ausgabe.get()},{sort: { status:1, updatedAt: -1 } });
+        var inbox_tickets=Tickets.find({to:route, ausgaben_id: current_ausgabe.get()},{sort: { status:1, updatedAt: -1 } });
+        var inbox_tickets_undone=Tickets.find({to:route, ausgaben_id: current_ausgabe.get(),status:0},{}).count();
+        favicon.badge(inbox_tickets_undone);
+        document.title = "("+inbox_tickets_undone+") Seitenplan";
+        return inbox_tickets;
     },
     tickets_outbox() {
         return Tickets.find({from:route, ausgaben_id: current_ausgabe.get()},{sort: { status:1,updatedAt: -1 } });
@@ -151,7 +159,7 @@ Template.body.helpers({
             }
         }
         for(var i = ticket_roles.length - 1; i >= 0; i--) {
-            if(i != own_route_index && own_route_index >-1) {
+            if(own_route_index >-1) {
                 if(ticket_roles[i][0] == ticket_roles[own_route_index][1]){ // default target
                     is_selected="selected";
                 }else{
@@ -163,7 +171,9 @@ Template.body.helpers({
        return other_roles;
     },       
     ticket_status: function(){
-       return (this.status)? "ticket_done":"ticket_open" ;     
+       var done_open= (this.status)? "ticket_done":"ticket_open" ; 
+       var alert= (this.alert)? " pulse_infinite":"" ; 
+        return done_open+alert;
     },
 });
 
@@ -333,6 +343,7 @@ Template.body.events({
     e.originalEvent.preventDefault(); 
       e.originalEvent.dataTransfer.dropEffect = "move";
   },
+
     
             
   'click .layout_task'(e,t) {
@@ -360,6 +371,7 @@ Template.body.events({
         text,
         to,
         from: route,
+        alert: 0,
         createdAt: new Date(),
         updatedAt: new Date(), 
     });
@@ -371,8 +383,13 @@ Template.body.events({
             updatedAt: new Date(), },
         });
   }, 
-    'click .ticket_outbox'(e,t) {
+    'click .ticket_delete'(e,t) {
         Tickets.remove(this._id);
+  }, 
+    'click .ticket_alert'(e,t) {
+             Tickets.update(this._id, {
+            $set: { alert: !this.alert },
+        });
   }, 
         
       

@@ -127,6 +127,7 @@ header {
  .seiten_list{
      width: calc(100% - 230px);
     float:left;  
+     margin-left: 10px;
  }
 
 .layout_tasks_container{
@@ -158,13 +159,17 @@ header {
     margin: 5px 0;
     padding: 10px 10px;
 }
-.ticket_check, .ticket_delete{
+.ticket_check,.ticket_alert, .ticket_delete{
     display:none;
     font-size: 20px;
     line-height: 20px;
     float: right;
 }
-
+.ticket_alert{
+     display:none;
+    font-size: 12px;
+    float: right; 
+}
 .ticket_open{
     cursor: pointer;
 }
@@ -178,10 +183,10 @@ header {
 .ticket_outbox{
     cursor: pointer;
 }
-.ticket_outbox:hover{
-   background-color: #F8C3C3;
-}
 .ticket_outbox:hover .ticket_delete{
+    display:inline;
+}
+.ticket_outbox:hover .ticket_alert{
     display:inline;
 }
 .ticket_outbox:hover .ticket_check{
@@ -192,6 +197,9 @@ header {
 }
 .ticket_done .ticket_check{
     display:inline;
+}
+.ticket_done .ticket_alert{
+    display:none !important;
 }
 .ticket_from{
     color: #AAA;
@@ -314,7 +322,7 @@ li .text {
 }
  
 .task_title{
- cursor: e-resize;  
+ cursor: grab;  
 }
 
  
@@ -390,7 +398,30 @@ padding: 5px;
 .dropable{
     background-color: #DDD;
 }
+.task_dropable{
+    margin-top: 35px !important;
+}
+.task_dropable:before{
+    content:" ";
+    margin-top:-25px !important;
+    height: 15px;
+    display:block;
+        border: 1px dotted black !important;
+    margin-bottom: 10px;
 
+}
+.task_insert_here{
+    
+    border: 1px dotted black !important;
+    height: 15px;
+    margin: 5px 0;
+}
+
+.task_insert_end{
+    background-color: transparent !important;
+    height: 30px;
+    display:none;
+}
 
 .seite .task_title_seite{
  display: none;   
@@ -582,7 +613,7 @@ ul.status_total li{
   left: -2px;
   top: 50%;
   right: -2px;
-  border-top: 1px solid;
+  border-top: 2px solid;
   border-color: red;
 
   -webkit-transform:rotate(-15deg);
@@ -590,4 +621,47 @@ ul.status_total li{
   -ms-transform:rotate(-15deg);
   -o-transform:rotate(-15deg);
   transform:rotate(-15deg);
+}
+
+.pulse_once {
+  box-shadow: 0 0 0 rgba(255,106,106, 0.8);
+  animation: pulse 2s 1;
+}
+
+.pulse_infinite {
+  box-shadow: 0 0 0 rgba(255,106,106, 0.8);
+  animation: pulse 2s infinite;
+}
+
+
+@-webkit-keyframes pulse {
+  0% {
+            background-color: rgba(255, 230, 230, 1);
+    -webkit-box-shadow: 0 0 0 0 rgba(255,106,106, 0.8);
+  }
+  70% {
+            background-color: rgba(255,255,255, 1);
+      -webkit-box-shadow: 0 0 0 10px rgba(255,106,106, 0);
+  }
+  100% {
+            background-color: rgba(255,255,255, 1);
+      -webkit-box-shadow: 0 0 0 0 rgba(255,106,106, 0);
+  }
+}
+@keyframes pulse {
+  0% {
+      background-color: rgba(255, 230, 230, 1);
+    -moz-box-shadow: 0 0 0 0 rgba(255,106,106, 0.8);
+    box-shadow: 0 0 0 0 rgba(255,106,106, 0.4);
+  }
+  70% {
+      background-color: rgba(255,255,255, 1);
+      -moz-box-shadow: 0 0 0 10px rgba(255,106,106, 0);
+      box-shadow: 0 0 0 10px rgba(255,106,106, 0);
+  }
+  100% {
+      background-color: rgba(255,255,255, 1);
+      -moz-box-shadow: 0 0 0 0 rgba(255,106,106, 0);
+      box-shadow: 0 0 0 0 rgba(255,106,106, 0);
+  }
 }

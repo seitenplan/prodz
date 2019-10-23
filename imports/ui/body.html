@@ -79,7 +79,7 @@
             <div class="tickets_category">Eingehend</div>
             <ul class="tickets">
                 {{#each tickets_inbox}}
-                    <li class="ticket ticket_inbox {{ticket_status}}" id="{{_id}}">
+                    <li class="ticket ticket_inbox {{ticket_status}} pulse_once" id="{{_id}}">
                       <div class="ticket_from">von {{from}} <span class="ticket_date">{{formatDate updatedAt}}</span></div>
                       <div>{{text}} <span class="ticket_check">&#x2713;</span></div>
                     </li>
@@ -90,7 +90,7 @@
                 {{#each tickets_outbox}}
                     <li class="ticket ticket_outbox {{ticket_status}}" id="{{_id}}">
                         <div class="ticket_from">an {{to}} <span class="ticket_date">{{formatDate updatedAt}}</span></div>
-                      <div>{{text}}  <span class="ticket_delete">&#9587;</span><span class="ticket_check">&#x2713;</span></div>
+                      <div>{{text}}  <span class="ticket_delete">&#9587;</span><span class="ticket_alert">&#9200;</span> <span class="ticket_check">&#x2713;</span></div>
                     </li>
                 {{/each}}
             </ul>

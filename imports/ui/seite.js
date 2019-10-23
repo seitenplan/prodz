@@ -12,7 +12,7 @@ import './seite.html';
 Template.seite.helpers({
      
   tasks() {
-       return Tasks.find({"seiten_id":this._id}, { sort: { createdAt: -1 } });
+       return Tasks.find({"seiten_id":this._id}, { sort: { order: 1 } });
     },
   status_list: function(){
        return status_list;
@@ -101,6 +101,11 @@ Template.seite.events({
     const text = target.text.value;
     const seiten_id = template.data._id;
     const ausgaben_id = template.data.ausgaben_id;
+    if(order= Tasks.findOne({"seiten_id":template.data._id},{sort:{order:-1}})){
+       order= order.order+1;
+    }else{
+        order=1;
+    }
     var log;
     Tasks.insert({
         status:0,
@@ -112,6 +117,7 @@ Template.seite.events({
         has_legend: false,
         createdAt: new Date(),
         updatedAt: new Date(), 
+        order: order,
         log, 
     });
 
@@ -140,9 +146,11 @@ Template.seite.events({
              alert("Nur Abschluss darf Gut zum Druck geben");   
         }
   },
-    
+  /*  
   'drop li.seite' : function(e, t) {      
       $(".seite").removeClass("dropable");
+      $(".task").removeClass("task_dropable");
+        $(".task_insert_end").hide();
 
         
         e.stopPropagation();
@@ -155,19 +163,78 @@ Template.seite.events({
                 });
   },
     
-  'dragenter .seite' : function(e, t) {
-      $(".seite").removeClass("dropable");
-    $(t.firstNode).addClass("dropable");
+  'dragenter li.seite' : function(e, t) {
+      original_seiten_id=$("#"+e.originalEvent.dataTransfer.getData("text")).parent().parent()[0].id;
+      target_seiten_id=this._id;
+      if(this._id !=original_seiten_id){
+        $(".seite").removeClass("dropable");
+        $(t.firstNode).addClass("dropable");  
+         }
   },    
-  'dragover .seite' : function(e, t) {
-    e.originalEvent.preventDefault(); 
+  'dragover li.seite' : function(e, t) {
+      e.originalEvent.preventDefault(); 
       e.originalEvent.dataTransfer.dropEffect = "move";
   },
-  'dragleave .seite' : function(e, t) {
+  'dragleave li.seite' : function(e, t) {
       $(e.originalEvent.target).removeClass("dropable");
   },
-  'dragend .seite' : function(e, t) {
+  'dragend li.seite' : function(e, t) {
       $(".seite").removeClass("dropable");
+  },
+  */
+  'dragstart' : function(e, t) {
+    $(".task_insert_end").show();
+  },
+    
+  'dragenter li.task' : function(e, t) {
+       $(".task").removeClass("task_dropable");
+      if(this.seiten_id==undefined){ // =  objekt ist Seite, ansonsten task
+       $("#task_insert_"+this._id).addClass("task_dropable");
+      }else{
+       $("#"+this._id).addClass("task_dropable");
+      }
+  }, 
+  'dragover li.task' : function(e, t) {
+        e.originalEvent.preventDefault(); 
+        e.originalEvent.dataTransfer.dropEffect = "grabbing";
+  },
+  'dragleave li.task' : function(e, t) {
+      $(e.originalEvent.target).removeClass("task_dropable");
+  },
+  'dragend li.task' : function(e, t) {
+      $(".task").removeClass("task_dropable");
+        $(".task_insert_end").hide();
+    },
+    'drop li.task' : function(e, t) {      
+      $(".task").removeClass("task_dropable");
+        $(".task_insert_end").hide();
+
+        original_id=e.originalEvent.dataTransfer.getData("text");
+        var previous_task_order=0;
+              
+        if(this.seiten_id==undefined){ // =  objekt ist Seite, ansonsten Task
+            if($("#task_insert_"+this._id).prev("li")[0]){ // gibt es ein vorheriges element?
+                previous_task_order=$("#task_insert_"+this._id).prev("li")[0].attributes.order.nodeValue; 
+            }
+            new_seiten_id=this._id;
+            new_order=(1000+previous_task_order*1)/2;
+
+        }else{
+                if($("#"+this._id).prev("li")[0]){ // gibt es ein vorheriges element?
+                    previous_task_order=$("#"+this._id).prev("li")[0].attributes.order.nodeValue; 
+                }
+            new_seiten_id=this.seiten_id;
+            new_order=(this.order*1+previous_task_order*1)/2;
+        }
+        e.stopPropagation();
+        e.preventDefault();
+       Tasks.update(original_id, {
+                    $set: {
+                        seiten_id: new_seiten_id,
+                        order:  new_order,
+                    },
+                });
+                
   },
                      
   'click .toggle_has_app': function(){
