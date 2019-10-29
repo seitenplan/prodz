@@ -159,7 +159,7 @@ header {
     margin: 5px 0;
     padding: 10px 10px;
 }
-.ticket_check,.ticket_alert, .ticket_delete{
+.ticket_check,.ticket_alert, .ticket_edit, .ticket_delete{
     display:none;
     font-size: 20px;
     line-height: 20px;
@@ -189,8 +189,15 @@ header {
 .ticket_outbox:hover .ticket_alert{
     display:inline;
 }
+.ticket_outbox:hover .ticket_edit{
+    display:inline;
+}
 .ticket_outbox:hover .ticket_check{
     display:none;
+}
+.ticket_text_edit{
+    width: 80%;
+    display: none;
 }
 .ticket_done{
    background-color: #cff2cf;
@@ -198,7 +205,7 @@ header {
 .ticket_done .ticket_check{
     display:inline;
 }
-.ticket_done .ticket_alert{
+.ticket_done .ticket_alert, .ticket_done .ticket_edit {
     display:none !important;
 }
 .ticket_from{
@@ -631,6 +638,10 @@ ul.status_total li{
 .pulse_infinite {
   box-shadow: 0 0 0 rgba(255,106,106, 0.8);
   animation: pulse 2s infinite;
+}
+.pulse_infinite:hover {
+  box-shadow: 0;
+  animation: none;
 }
 
 

@@ -172,7 +172,7 @@ Template.body.helpers({
     },       
     ticket_status: function(){
        var done_open= (this.status)? "ticket_done":"ticket_open" ; 
-       var alert= (this.alert)? " pulse_infinite":"" ; 
+       var alert= (this.alert && this.status!=1)? " pulse_infinite":"" ; 
         return done_open+alert;
     },
 });
@@ -386,11 +386,37 @@ Template.body.events({
     'click .ticket_delete'(e,t) {
         Tickets.remove(this._id);
   }, 
+        'click .ticket_outbox.ticket_done'(e,t) {
+        Tickets.remove(this._id);
+  }, 
     'click .ticket_alert'(e,t) {
              Tickets.update(this._id, {
             $set: { alert: !this.alert },
         });
   }, 
+    'click .ticket_edit'(e,t) {
+        $("#"+this._id+" .ticket_text_edit").toggle();
+        $("#"+this._id+" .ticket_text").toggle();
+        
+        /*
+             Tickets.update(this._id, {
+            $set: { alert: !this.alert },
+        });
+        */
+  }, 
+    
+    'change .ticket_text_edit'(e, t) {  
+        console.log(this._id);
+    e.preventDefault();
+    Tickets.update(this._id, {
+            $set: { 
+                text: e.target.value,
+                },
+        });
+    
+        $("#"+this._id+" .ticket_text_edit").toggle();
+        $("#"+this._id+" .ticket_text").toggle();
+  },
         
       
 

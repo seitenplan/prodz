@@ -90,7 +90,9 @@
                 {{#each tickets_outbox}}
                     <li class="ticket ticket_outbox {{ticket_status}}" id="{{_id}}">
                         <div class="ticket_from">an {{to}} <span class="ticket_date">{{formatDate updatedAt}}</span></div>
-                      <div>{{text}}  <span class="ticket_delete">&#9587;</span><span class="ticket_alert">&#9200;</span> <span class="ticket_check">&#x2713;</span></div>
+                      <div><span class="ticket_text">{{text}}</span>            <input type="text" name="ticket_text_edit" class="ticket_text_edit" value="{{text}}" size="10">
+
+                          <span class="ticket_delete">&#9587;</span><span class="ticket_edit">&#9998;</span> <span class="ticket_alert">&#9200;</span> <span class="ticket_check">&#x2713;</span></div>
                     </li>
                 {{/each}}
             </ul>
