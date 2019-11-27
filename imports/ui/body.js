@@ -14,6 +14,7 @@ var _deps = new Tracker.Dependency;
 var status_filter = [];
 var picture_filter;
 var legend_filter;
+var planning_mode=false;
 current_ausgabe=new ReactiveVar(0);
 current_status_filter=new ReactiveVar([]);
 current_picture_filter=new ReactiveVar(false);
@@ -23,8 +24,64 @@ var favicon=new Favico({
     animation:'slide'
 });
 
+
+function toggle_planning_mode(){
+            planning_mode=!planning_mode;
+    if(planning_mode){
+        url_planning_param="planung";
+    }else{
+         url_planning_param="";  
+    }
+    if(route){
+        FlowRouter.go('url_with_role', { route: route , planung: url_planning_param });
+        }else{
+            
+        FlowRouter.go('url_without_role', { planung: url_planning_param });
+        }
+    
+        if(planning_mode){
+            $(document.body).addClass('planning_mode');
+            $('textarea').each(function () {
+//              this.setAttribute('style', 'height:1em;overflow-y:hidden;');
+             this.setAttribute('style', 'overflow-y:hidden;');
+                      
+              this.style.height = 'auto';
+              this.style.height = (this.scrollHeight) + 'px';
+            }).on('input', function () {
+              this.style.height = 'auto';
+              this.style.height = (this.scrollHeight) + 'px';
+        });
+        }else{
+            $(document.body).removeClass('planning_mode');
+
+        }
+}
 function add_pages(nr,page_breaks){
     for (var i = 1; i <= nr; i++){
+        if(seiten_titles[nr]){
+            if(seiten_titles[nr][i]){
+                seiten_titel=seiten_titles[nr][i];
+            }else{
+                seiten_titel="";
+            }
+        }
+        if(seiten_inserate[nr]){
+            if(seiten_inserate[nr][i]){
+                seite_inserat=true;
+                seite_inserat_desc=seiten_inserate[nr][i];
+            }else{
+               seite_inserat=false;
+                seite_inserat_desc=""; 
+            }
+        }        
+        if(seiten_linked[nr]){
+            if(seiten_linked[nr][i]){
+                seite_linked=true;
+            }else{
+               seite_linked=false;
+            }
+        }
+        
         Seiten.insert({
           nummer: i,
           createdAt: new Date(), // current time
@@ -32,6 +89,10 @@ function add_pages(nr,page_breaks){
           has_pdf: false,
           has_picture_edit: false,
           ausgaben_id: current_ausgabe.get(),
+          has_inserat: seite_inserat,
+          inserat_desc:seite_inserat_desc,
+          desc:seiten_titel,
+          linked_after: seite_linked,
         });
     }
     Ausgaben.update(current_ausgabe.get(), {
@@ -49,7 +110,9 @@ Template.body.rendered = function() {
         $(load_status).each(function( index ) {
             $(".toggle_status_list[name='"+this+"']").prop( "checked", true );
         });
-
+        if(planning_url==true){
+            toggle_planning_mode();
+        }
         current_status_filter.set(load_status);
         
         if(load_picture){
@@ -61,12 +124,14 @@ Template.body.rendered = function() {
             $(".toggle_legend_filter").prop("checked",true);
             current_legend_filter.set(true);
         }
-        
     }
-
 }
 
 Template.body.helpers({
+    body_classes: function() {
+        return (planning_mode==true)? "planning_mode":"no";
+    },
+    
     formatDate: function(date) {
         return moment(date).format('ddd HH:mm');
     },
@@ -175,6 +240,11 @@ Template.body.helpers({
        var alert= (this.alert && this.status!=1)? " pulse_infinite":"" ; 
         return done_open+alert;
     },
+    current_datetime: function(){
+        date=new Date();
+        return moment(date).format('ddd DD.MM.YYYY -  HH:mm');
+    },
+
 });
 
 Template.body.events({
@@ -208,7 +278,11 @@ Template.body.events({
     'click .header_toggle_config_ausgaben'() {
         $(".header_config_ausgabe").toggle();
     },
-      
+    
+    'click .header_toggle_planning_mode'() {
+        toggle_planning_mode();
+    },
+    
     
     'click .config_delete_all'() {
               if(confirm('Achtung! Alle Augaben, Seiten, Artikel in der Datenbank werden gelöscht!')){
@@ -275,6 +349,7 @@ Template.body.events({
   'click .ausgabe'(e,t) {
       if($(".header_config_ausgabe").first().css("display")=="none"){ // do not switch ausgabe if edit_mode is active
                 current_ausgabe.set(this._id);
+          
       }
  
   }, 
@@ -315,6 +390,14 @@ Template.body.events({
          Ausgaben.update(this._id, {
             $set: { 
                 bezeichnung: event.target.rename.value,
+                },
+        });
+    },
+    'submit .ausgabe_datum'(event) { 
+        event.preventDefault(); 
+         Ausgaben.update(this._id, {
+            $set: { 
+                erscheinungsdatum: event.target.rename.value,
                 },
         });
     },
@@ -398,11 +481,6 @@ Template.body.events({
         $("#"+this._id+" .ticket_text_edit").toggle();
         $("#"+this._id+" .ticket_text").toggle();
         
-        /*
-             Tickets.update(this._id, {
-            $set: { alert: !this.alert },
-        });
-        */
   }, 
     
     'change .ticket_text_edit'(e, t) {  

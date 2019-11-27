@@ -1,6 +1,7 @@
 <template name="seite">
-    <li class="seite seite_break {{page_break}} {{page_pdf}}" id="{{_id}}">
-        <b>Seite {{nummer}} {{desc}}</b>
+    <li class="seite seite_break {{page_break}} {{page_pdf}} {{has_inserat}}" id="{{_id}}">
+        <b>{{nummer}} <span class="seite_desc">{{desc}}</span></b>
+        <input type="text" name="seite_edit_desc_top" class="seite_edit_desc_top" value="{{desc}}">
 
         <span class="buttons"><button class="toggle-edit">&#9998;</button> </span>
 
@@ -16,7 +17,7 @@
             {{#each tasks}}
                 {{> task}}
             {{/each}}
-            <li class="task task_insert_end" id="task_insert_{{_id}}"> </li>
+            <li class="task task_insert_end task_drag" id="task_insert_{{_id}}"> </li>
         </ul>
         {{#if tasks_same_status}}
                 <div class="{{lastStatus}}" >
@@ -25,9 +26,15 @@
         </div>
       
         {{/if}}
-        <form class="new-task">
+        <div class="seite_bottom">
+        <form class="new-task no-print">
             <input type="text" name="text" placeholder="Neuer Artikel" />
         </form>
+            <span class="add_inserat {{has_no_inserat}} no-print">+ Inserat</span>
+        </div>
+         <div class="seite_inserat {{has_inserat}}">
+                 <input type="text" class="inserat_desc" name="inserat_desc{{_id}}" placeholder="4spaltiger Streifen 60mm" value="{{inserat_desc}}"/><span class="remove_inserat no-print">x</span>
+            </div>
          {{#if layout_mode }}
                 <div class="seite_tools" >
                       <span class="toggle_has_picture_edit {{has_picture_edit}}">&#x1f3d4;</span>

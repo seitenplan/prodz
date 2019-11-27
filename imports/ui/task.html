@@ -1,5 +1,5 @@
 <template name="task">
-  <li draggable="true" class="task" id="{{_id}}" order="{{order}}">
+  <li draggable="true" class="task task_drag" id="{{_id}}" order="{{order}}">
       <div>
             <div  class="task_header">
                 <span class="task_title task_title_{{_id}}">
@@ -21,10 +21,49 @@
             <input type="checkbox" id="bild" checked="{{need_picture}}" class="toggle_need_picture"> mit Bild<br>
             <span class="task-delete">&times; Artikel l&ouml;schen</span>
         </div>
-        <div>
+      
+        <div class="task_planning{{_id}} task_planning"> 
+            <ul>
+            <li class="planning_dotted">
+                <input type="text" name="task_plan_title{{_id}}" class="task_plan_title task_plan_onchange" value="{{text}}">  
+                <select name="task_plan_date{{_id}}" class="task_plan_date task_plan_onchange" >
+                <option value="Fr" {{isSelectedDate "Do"}}>Fr</option>
+                <option value="Fr" {{isSelectedDate "Fr"}}>Fr</option>
+                <option value="Mo" {{isSelectedDate "Mo"}}>Mo</option>
+                <option value="Di" {{isSelectedDate "Di"}}>Di</option>
+                <option value="Mi" {{isSelectedDate "Mi"}}>Mi</option>
+                </select>
+                <span class="task-delete no-print">&times;</span>
+            </li> {{#if collapsed}}{{else}}     <li class="planning_dotted">
+                <input type="text" name="task_plan_author{{_id}}" class="task_plan_author task_plan_onchange" placeholder="AutorIn" value="{{author}}" size="16">
+                
+                <input type="text" name="task_plan_length{{_id}}" class="task_plan_length task_plan_onchange" placeholder="1000" value="{{length}}"  >
+            </li>
+            <li><textarea name="task_plan_desc{{_id}}" class="task_plan_desc task_plan_onchange planning_dotted" placeholder="Beschreibung" draggable="false">{{desc}}</textarea>
+            </li>{{/if}}
+                        </ul> 
+
+            <div class="task_bottom">
+                <span class="task_add_button no-print">+</span>
+                <div class="task_add_dropdown task_add_dropdown{{_id}}">
+                    {{#if show_picture_button}}<div class="task_add_dropdown_button add_picture">Bild</div>{{/if}}
+                    {{#if show_rf_button}}<div class="task_add_dropdown_button add_rf">RF</div>{{/if}}
+                </div>
+                <span class="task_options">
+                    {{#if need_picture}}<span class="task_option">Bild <span class="remove_picture no-print">x</span></span>{{/if}}            
+                    {{#if rf}}<span class="task_option"> RF <span class="remove_rf no-print">x</span></span>{{/if}} 
+                </span>
+                <span class="task_collapse no-print">{{#if collapsed}} &#9660; {{else}} &#9650; {{/if}}</span>
+            </div>
+            
+
+            
+        </div>
+      
+        <div class="task_status_list">
             <select class="select-status status_color{{status}}"> 
                  {{#each status_list}}
-                    <option {{isSelected @index ../status}} value="{{@index}}" class="status_color{{@index}}">{{this}}</option>
+                    <option {{isSelectedStatus @index ../status}} value="{{@index}}" class="status_color{{@index}}">{{this}}</option>
                 {{/each}}
             </select>
          
@@ -34,6 +73,8 @@
           <span class="toggle_has_picture picture_button {{#if has_picture}}picture_button_ok{{/if}}">Bild</span>
           <span class="toggle_has_legend picture_button {{#if has_legend}}picture_button_ok{{/if}}">Legende</span>
           </div>
+          {{/if}}     {{#if rf}}
+      <span class="rf_button">RF</span>
           {{/if}}
       
       <span class="big_showcase {{showcase_status}}">&#128444;</span> 

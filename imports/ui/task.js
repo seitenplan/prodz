@@ -30,8 +30,27 @@ function task_toggle_edit(id){
     }
 }
 
+Template.task.rendered = function() {
+    if(!this._rendered) {
+        var template = Template.instance();
+template.$('.task_plan_desc').each(function () {
+//              this.setAttribute('style', 'height:1em;overflow-y:hidden;');
+             this.setAttribute('style', 'overflow-y:hidden;');
+                      
+              this.style.height = 'auto';
+              this.style.height = (this.scrollHeight) + 'px';
+            }).on('input', function () {
+              this.style.height = 'auto';
+              this.style.height = (this.scrollHeight) + 'px';
+        });
+    
+    }
+}
+
+
+
 Template.task.helpers({
-    isSelected: function(thisstatus, parentstatus) {
+    isSelectedStatus: function(thisstatus, parentstatus) {
         return thisstatus == parentstatus ? 'selected' : '';
     },
     status_list: function(){
@@ -61,6 +80,13 @@ Template.task.helpers({
             return true;   
         }
     },
+    
+    show_picture_button: function(){
+        return (this.need_picture)? false:true;   
+    },
+    show_rf_button: function(){
+        return (this.rf)? false:true;   
+    },
     showcase_status: function(){
         if(!this.showcase || this.showcase==0 ){
             return "showcase_0";
@@ -71,6 +97,9 @@ Template.task.helpers({
         }else 
         return (this.showcase);
     },  
+    isSelectedDate: function(date) {
+        return date == this.date ? 'selected' : '';
+    },
 });
     
         
@@ -147,5 +176,69 @@ Template.task.events({
             $set: { showcase: new_showcase_status },
         });
   },  
+  'click .task_add_button': function(){
+      
+      
+    $(".task_add_dropdown").not(".task_add_dropdown"+this._id).hide();
+      
+    $(".task_add_dropdown"+this._id).toggle();
+  },  
+    
+  'change .task_plan_onchange': function(e){
+        Tasks.update(this._id, {
+            $set: { 
+                text: $("[name='task_plan_title"+this._id+"']").val(),
+                length: $("[name='task_plan_length"+this._id+"']").val(),
+                author: $("[name='task_plan_author"+this._id+"']").val(),
+                desc: $("[name='task_plan_desc"+this._id+"']").val(),
+                date: $("[name='task_plan_date"+this._id+"']").val(),
+                },
+        });
+  },  
+      
+  'click .add_picture': function(){    
+    Tasks.update(this._id, {
+          $set: { 
+              need_picture: true, 
+          },
+    });
+    $(".task_add_dropdown").hide();
+  },  
+'click .add_rf': function(){    
+    Tasks.update(this._id, {
+          $set: { 
+              rf: true, 
+          },
+    });
+    $(".task_add_dropdown").hide();
+  },  
+    
+    
+'click .remove_rf': function(){    
+    Tasks.update(this._id, {
+          $set: { 
+              rf: false, 
+          },
+    });
+  },  
+    
+    
+'click .remove_picture': function(){    
+    Tasks.update(this._id, {
+          $set: { 
+              need_picture: false, 
+          },
+    });
+  },  
+    
+      'click .task_collapse': function(){
+        Tasks.update(this._id, {
+            $set: { collapsed: ! this.collapsed },
+        });
+  }, 
+    
+    
+    
+    
 
 });

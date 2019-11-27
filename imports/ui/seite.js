@@ -8,6 +8,7 @@ import './task.js';
 import './seite.html';
 
 
+
   
 Template.seite.helpers({
      
@@ -60,7 +61,12 @@ Template.seite.helpers({
     page_pdf: function(){
               return (this.has_pdf)? "seite_pdf":"";     
     },  
-    
+    has_inserat: function(){
+        return (this.has_inserat)? "has_inserat":"";
+    },  
+    has_no_inserat: function(){
+        return (this.has_inserat)? "has_no_inserat":"";
+    },  
  });
 
 Template.seite.events({
@@ -93,6 +99,14 @@ Template.seite.events({
         $("#seite_edit_"+this._id).toggle();
     },
     
+     'change .seite_edit_desc_top'(event, template) {  
+         Seiten.update(template.data._id, {
+            $set: { 
+                desc: event.target.value,
+                },
+        });
+    },
+    
     'submit .new-task'(event, template) {
 
     event.preventDefault();
@@ -113,11 +127,16 @@ Template.seite.events({
         ausgaben_id,
         text,
         need_picture: false,
+        rf: false,
         has_picture: false,
         has_legend: false,
         createdAt: new Date(),
         updatedAt: new Date(), 
         order: order,
+        length:"",
+        author:"",
+        date: "Fr",
+        desc:"",
         log, 
     });
 
@@ -131,7 +150,6 @@ Template.seite.events({
         if((($(tasks).get( 0 ).status*1)+1)!=9 || route=="abschluss"){ // only "abschluss"-role may change status 9   
             
             $(tasks).each(function( index ) {  
-
                    Tasks.update(this._id, {
                         $set: {
                                 status:  (this.status*1)+1,
@@ -146,47 +164,14 @@ Template.seite.events({
              alert("Nur Abschluss darf Gut zum Druck geben");   
         }
   },
-  /*  
-  'drop li.seite' : function(e, t) {      
-      $(".seite").removeClass("dropable");
-      $(".task").removeClass("task_dropable");
-        $(".task_insert_end").hide();
 
-        
-        e.stopPropagation();
-        e.preventDefault();
-        task_id=e.originalEvent.dataTransfer.getData("text");
-        Tasks.update(task_id, {
-                    $set: {
-                            seiten_id:  this._id,
-                    },
-                });
-  },
-    
-  'dragenter li.seite' : function(e, t) {
-      original_seiten_id=$("#"+e.originalEvent.dataTransfer.getData("text")).parent().parent()[0].id;
-      target_seiten_id=this._id;
-      if(this._id !=original_seiten_id){
-        $(".seite").removeClass("dropable");
-        $(t.firstNode).addClass("dropable");  
-         }
-  },    
-  'dragover li.seite' : function(e, t) {
-      e.originalEvent.preventDefault(); 
-      e.originalEvent.dataTransfer.dropEffect = "move";
-  },
-  'dragleave li.seite' : function(e, t) {
-      $(e.originalEvent.target).removeClass("dropable");
-  },
-  'dragend li.seite' : function(e, t) {
-      $(".seite").removeClass("dropable");
-  },
-  */
   'dragstart' : function(e, t) {
     $(".task_insert_end").show();
+      console.log(e);
+      console.log(t);
   },
     
-  'dragenter li.task' : function(e, t) {
+  'dragenter li.task_drag' : function(e, t) {
        $(".task").removeClass("task_dropable");
       if(this.seiten_id==undefined){ // =  objekt ist Seite, ansonsten task
        $("#task_insert_"+this._id).addClass("task_dropable");
@@ -194,47 +179,46 @@ Template.seite.events({
        $("#"+this._id).addClass("task_dropable");
       }
   }, 
-  'dragover li.task' : function(e, t) {
+  'dragover li.task_drag' : function(e, t) {
         e.originalEvent.preventDefault(); 
         e.originalEvent.dataTransfer.dropEffect = "grabbing";
   },
-  'dragleave li.task' : function(e, t) {
+  'dragleave li.task_drag' : function(e, t) {
       $(e.originalEvent.target).removeClass("task_dropable");
   },
-  'dragend li.task' : function(e, t) {
-      $(".task").removeClass("task_dropable");
+  'dragend li.task_drag' : function(e, t) {
+        $(".task").removeClass("task_dropable");
         $(".task_insert_end").hide();
     },
-    'drop li.task' : function(e, t) {      
+  'drop li.task_drag' : function(e, t) {      
       $(".task").removeClass("task_dropable");
-        $(".task_insert_end").hide();
+      $(".task_insert_end").hide();
 
-        original_id=e.originalEvent.dataTransfer.getData("text");
-        var previous_task_order=0;
+      original_id=e.originalEvent.dataTransfer.getData("text");
+      var previous_task_order=0;
               
-        if(this.seiten_id==undefined){ // =  objekt ist Seite, ansonsten Task
-            if($("#task_insert_"+this._id).prev("li")[0]){ // gibt es ein vorheriges element?
-                previous_task_order=$("#task_insert_"+this._id).prev("li")[0].attributes.order.nodeValue; 
-            }
-            new_seiten_id=this._id;
-            new_order=(1000+previous_task_order*1)/2;
-
-        }else{
-                if($("#"+this._id).prev("li")[0]){ // gibt es ein vorheriges element?
-                    previous_task_order=$("#"+this._id).prev("li")[0].attributes.order.nodeValue; 
-                }
-            new_seiten_id=this.seiten_id;
-            new_order=(this.order*1+previous_task_order*1)/2;
+      if(this.seiten_id==undefined){ // =  objekt ist Seite, ansonsten Task
+        if($("#task_insert_"+this._id).prev("li")[0]){ // gibt es ein vorheriges element?
+            previous_task_order=$("#task_insert_"+this._id).prev("li")[0].attributes.order.nodeValue; 
         }
-        e.stopPropagation();
-        e.preventDefault();
-       Tasks.update(original_id, {
-                    $set: {
-                        seiten_id: new_seiten_id,
-                        order:  new_order,
-                    },
-                });
-                
+        new_seiten_id=this._id;
+        new_order=(1000+previous_task_order*1)/2;
+
+      }else{
+        if($("#"+this._id).prev("li")[0]){ // gibt es ein vorheriges element?
+            previous_task_order=$("#"+this._id).prev("li")[0].attributes.order.nodeValue; 
+        }
+        new_seiten_id=this.seiten_id;
+        new_order=(this.order*1+previous_task_order*1)/2;
+      }
+      e.stopPropagation();
+      e.preventDefault();
+      Tasks.update(original_id, {
+          $set: {
+            seiten_id: new_seiten_id,
+            order:  new_order,
+            },
+      });
   },
                      
   'click .toggle_has_app': function(){
@@ -259,17 +243,27 @@ Template.seite.events({
             });
         }
   },
+    'click .add_inserat'() {
+            Seiten.update(this._id, {
+                $set: { has_inserat: true },
+            });
+  },
+        'click .remove_inserat'() {
+            Seiten.update(this._id, {
+                $set: { has_inserat: false },
+            });
+  },
+'change .inserat_desc': function(e){
+    console.log($("[name='inserat_desc"+this._id+"']").val());
+        Seiten.update(this._id, {
+            $set: { 
+                inserat_desc: $("[name='inserat_desc"+this._id+"']").val(),
+                },
+        });
+  },  
+    
+    
     
     
 
 });
-/*
-  $(".seite").onDrop=function(e){
-        e.stopPropagation();
-        task_id=e.originalEvent.dataTransfer.getData("text");
-        Tasks.update(task_id, {
-                    $set: {
-                            seiten_id:  this._id,
-                    },
-                });   
-}*/
