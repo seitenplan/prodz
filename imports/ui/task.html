@@ -4,13 +4,11 @@
             <div  class="task_header">
                 <span class="task_title task_title_{{_id}}">
                 <span class="task_title_seite">S. {{seitenNummer seiten_id}}: </span>{{text}}</span> 
-                <span class="updated updated_{{_id}}">{{formatDate updatedAt}}</span> 
+                <span class="updated updated_{{_id}} {{dont_display_if 'web'}}">{{formatDate updatedAt}}</span> 
             </div>
+          
             <div class="task_buttons">
                 <button class="toggle_log">&#9776;</button>          
-                {{#if abschluss_mode }}
-                <button class="toggle_showcase {{showcase_status}}">&#128444;</button> 
-          {{/if}}
                 <button class="toggle-edit">&#9998;</button> 
 
             </div> 
@@ -24,24 +22,28 @@
       
         <div class="task_planning{{_id}} task_planning"> 
             <ul>
-            <li class="planning_dotted">
-                <input type="text" name="task_plan_title{{_id}}" class="task_plan_title task_plan_onchange" value="{{text}}">  
-                <select name="task_plan_date{{_id}}" class="task_plan_date task_plan_onchange" >
-                <option value="Fr" {{isSelectedDate "Do"}}>Fr</option>
-                <option value="Fr" {{isSelectedDate "Fr"}}>Fr</option>
-                <option value="Mo" {{isSelectedDate "Mo"}}>Mo</option>
-                <option value="Di" {{isSelectedDate "Di"}}>Di</option>
-                <option value="Mi" {{isSelectedDate "Mi"}}>Mi</option>
-                </select>
-                <span class="task-delete no-print">&times;</span>
-            </li> {{#if collapsed}}{{else}}     <li class="planning_dotted">
-                <input type="text" name="task_plan_author{{_id}}" class="task_plan_author task_plan_onchange" placeholder="AutorIn" value="{{author}}" size="16">
-                
-                <input type="text" name="task_plan_length{{_id}}" class="task_plan_length task_plan_onchange" placeholder="1000" value="{{length}}"  >
-            </li>
-            <li><textarea name="task_plan_desc{{_id}}" class="task_plan_desc task_plan_onchange planning_dotted" placeholder="Beschreibung" draggable="false">{{desc}}</textarea>
-            </li>{{/if}}
-                        </ul> 
+                <li class="planning_dotted">
+                    <input type="text" name="task_plan_title{{_id}}" class="task_plan_title task_plan_onchange" value="{{text}}">  
+                    <select name="task_plan_date{{_id}}" class="task_plan_date task_plan_onchange" >
+                    <option value="?" {{isSelectedDate "?"}}>?</option>
+                    <option value="Fr" {{isSelectedDate "Fr"}}>Fr</option>
+                    <option value="Mo" {{isSelectedDate "Mo"}}>Mo</option>
+                    <option value="Di" {{isSelectedDate "Di"}}>Di</option>
+                    <option value="Mi" {{isSelectedDate "Mi"}}>Mi</option>
+                    </select>
+                    <span class="task-delete no-print">&times;</span>
+                </li> 
+                {{#if collapsed}}{{else}}     
+                <li class="planning_dotted">
+                    <input type="text" name="task_plan_author{{_id}}" class="task_plan_author task_plan_onchange" placeholder="AutorIn" value="{{author}}" size="16">
+
+                    <input type="text" name="task_plan_length{{_id}}" class="task_plan_length task_plan_onchange" placeholder="1000" value="{{length}}"  >
+                </li>
+                <li>
+                    <textarea name="task_plan_desc{{_id}}" class="task_plan_desc task_plan_onchange planning_dotted" placeholder="Beschreibung" draggable="false">{{desc}}</textarea>
+                </li>
+                {{/if}}
+            </ul> 
 
             <div class="task_bottom">
                 <span class="task_add_button no-print">+</span>
@@ -50,39 +52,56 @@
                     {{#if show_rf_button}}<div class="task_add_dropdown_button add_rf">RF</div>{{/if}}
                 </div>
                 <span class="task_options">
-                    {{#if need_picture}}<span class="task_option">Bild <span class="remove_picture no-print">x</span></span>{{/if}}            
-                    {{#if rf}}<span class="task_option"> RF <span class="remove_rf no-print">x</span></span>{{/if}} 
+                    {{#if need_picture}}
+                    <span class="task_option">Bild <span class="remove_picture no-print">x</span></span>{{/if}}            
+                    {{#if rf}}
+                    <span class="task_option"> RF <span class="remove_rf no-print">x</span></span>
+                    {{/if}} 
                 </span>
-                <span class="task_collapse no-print">{{#if collapsed}} &#9660; {{else}} &#9650; {{/if}}</span>
+                <span class="task_collapse no-print">
+                    {{#if collapsed}} &#9660; {{else}} &#9650; {{/if}}
+                </span>
             </div>
-            
-
             
         </div>
       
-        <div class="task_status_list">
-            <select class="select-status status_color{{status}}"> 
-                 {{#each status_list}}
+        <div class="task_status_list {{dont_display_if 'web'}}">
+            <select class="select-status status_color{{status}} "> 
+                {{#each status_list}}
                     <option {{isSelectedStatus @index ../status}} value="{{@index}}" class="status_color{{@index}}">{{this}}</option>
                 {{/each}}
             </select>
-         
-            <span class="next_status {{lastStatus}}" > &#10145; </span>
+            <span class="next_status {{lastStatus}} {{dont_display_if 'web'}}" > &#10145; </span>
         </div>
-          {{#if need_picture}}<div class="picture_buttons">
-          <span class="toggle_has_picture picture_button {{#if has_picture}}picture_button_ok{{/if}}">Bild</span>
-          <span class="toggle_has_legend picture_button {{#if has_legend}}picture_button_ok{{/if}}">Legende</span>
-          </div>
-          {{/if}}     {{#if rf}}
-      <span class="rf_button">RF</span>
-          {{/if}}
-      
-      <span class="big_showcase {{showcase_status}}">&#128444;</span> 
+        <div class="task_functions">
+            {{#if need_picture}}
+                <div class="picture_buttons {{dont_display_if 'web'}}">
+                <span class="toggle_has_picture picture_button {{#if has_picture}}picture_button_ok{{/if}}">Bild</span>
+                <span class="toggle_has_legend picture_button {{#if   has_legend}}picture_button_ok{{/if}}">Legende</span>
+                </div>
+            {{/if}}
+
+            {{#if rf}}
+                <span class="rf_button {{dont_display_if 'web'}}">RF</span>
+            {{/if}}
+
+            <span class="big_showcase {{showcase_status}} {{display_if 'layout foto abschluss'}}">&#128444;</span> 
+
+            <button class="toggle_showcase {{showcase_status}} {{display_if 'web'}}">&#128444;</button> 
+
+            <select class="select-web web_color_{{web}} {{display_if 'web abschluss'}} {{select_web_display}}" {{select_web_disabled}}>
+                <option value="" {{isSelectedWeb ""}}   class="web_color_">-</option>
+                <option value="mi" {{isSelectedWeb "mi"}}  class="web_color_mi">Online Mittwoch</option>
+                <option value="fr" {{isSelectedWeb "fr"}} class="web_color_fr">Online Freitag</option>
+                <option value="mo" {{isSelectedWeb "mo"}} class="web_color_mo">Online Montag</option>
+                <option value="home" {{isSelectedWeb "home"}} class="web_color_home">Offline Home</option>
+                <option value="ressort" {{isSelectedWeb "ressort"}} class="web_color_ressort">Offline Ressort</option>
+            </select>
+        </div>
         <ul class="task_log_{{_id}} task_log"> 
             {{#each log}}
-            <li>{{formatDate this.date}}: {{getStatus this.status}}</li>
-              {{/each}}
+                <li>{{formatDate this.date}}: {{getStatus this.status}}</li>
+            {{/each}}
         </ul>
-        
   </li>
 </template>

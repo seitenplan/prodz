@@ -22,7 +22,7 @@
         {{#if tasks_same_status}}
                 <div class="{{lastStatus}}" >
             
-        <span class="all_next_status" > Ganze Seite &#10145; </span>
+        <span class="all_next_status {{dont_display_if route='social'}}" > Ganze Seite &#10145; </span>
         </div>
       
         {{/if}}
@@ -30,7 +30,7 @@
         <form class="new-task no-print">
             <input type="text" name="text" placeholder="Neuer Artikel" />
         </form>
-            <span class="add_inserat {{has_no_inserat}} no-print">+ Inserat</span>
+            <span class="add_inserat {{has_no_inserat}} no-print">+ Reklame</span>
         </div>
          <div class="seite_inserat {{has_inserat}}">
                  <input type="text" class="inserat_desc" name="inserat_desc{{_id}}" placeholder="4spaltiger Streifen 60mm" value="{{inserat_desc}}"/><span class="remove_inserat no-print">x</span>

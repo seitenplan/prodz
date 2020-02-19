@@ -67,6 +67,9 @@ Template.seite.helpers({
     has_no_inserat: function(){
         return (this.has_inserat)? "has_no_inserat":"";
     },  
+    dont_display_if: function(f){
+        return (f.hash.route==route)? "dont_display":""
+    },  
  });
 
 Template.seite.events({
@@ -135,7 +138,7 @@ Template.seite.events({
         order: order,
         length:"",
         author:"",
-        date: "Fr",
+        date: "?",
         desc:"",
         log, 
     });
@@ -245,7 +248,9 @@ Template.seite.events({
   },
     'click .add_inserat'() {
             Seiten.update(this._id, {
-                $set: { has_inserat: true },
+                $set: { has_inserat: true ,
+                        inserat_desc: "Reklame",
+                      },
             });
   },
         'click .remove_inserat'() {

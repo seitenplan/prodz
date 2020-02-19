@@ -19,6 +19,15 @@ function task_status_update(id,new_status){
      alert("Nur Abschluss darf Gut zum Druck geben");   
     }
 }
+
+function task_web_update(id,new_status){
+    console.log(new_status);
+      Tasks.update(id, {
+        $set: {
+            web:  new_status,
+        }, 
+    });
+}
 function task_toggle_edit(id){
     $(".task_edit_"+id).toggle();
     $(".task_title_"+id).toggle();
@@ -94,12 +103,30 @@ Template.task.helpers({
             return "showcase_1";
         }else if(this.showcase==2 ){
             return "showcase_2 strikethrough";
-        }else 
-        return (this.showcase);
+        }else{
+            return (this.showcase);
+        }
     },  
     isSelectedDate: function(date) {
         return date == this.date ? 'selected' : '';
     },
+    isSelectedWeb: function(web) {
+        return web == this.web ? 'selected' : '';
+    },
+      
+    dont_display_if: function(f){
+        return (f.includes(route) && route!="")? "dont_display":"";
+    },  
+    display_if: function(f){
+        return (f.includes(route) && route!="")? "":"dont_display";
+    }, 
+    select_web_disabled: function(){
+        return (route!="web")? "disabled":"";
+    }, 
+    select_web_display: function(){
+        console.log(route=="web")
+        return ((this.web && this.web!="") || route=="web")? "":"dont_display";
+    }, 
 });
     
         
@@ -136,6 +163,10 @@ Template.task.events({
       task_status_update(template.data._id, e.target.value*1);
   },
     
+  'change .select-web': function(e, template) {   
+      task_web_update(template.data._id, e.target.value);
+  },
+    
   'click .toggle-edit'() {
     task_toggle_edit(this._id);
   },
@@ -164,7 +195,8 @@ Template.task.events({
         e.originalEvent.dataTransfer.setData('text', this._id);
         e.originalEvent.dataTransfer.effectAllowed = 'move';
   },
-    'click .toggle_showcase': function(){
+    
+  'click .toggle_showcase': function(){
         if(!this.showcase || this.showcase==0 ){
             var new_showcase_status=1;
         } else if(this.showcase==1 ){
@@ -176,11 +208,9 @@ Template.task.events({
             $set: { showcase: new_showcase_status },
         });
   },  
+    
   'click .task_add_button': function(){
-      
-      
     $(".task_add_dropdown").not(".task_add_dropdown"+this._id).hide();
-      
     $(".task_add_dropdown"+this._id).toggle();
   },  
     

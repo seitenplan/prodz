@@ -26,7 +26,7 @@ var favicon=new Favico({
 
 
 function toggle_planning_mode(){
-            planning_mode=!planning_mode;
+    planning_mode=!planning_mode;
     if(planning_mode){
         url_planning_param="planung";
     }else{

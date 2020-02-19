@@ -24,7 +24,7 @@ body {
 }
 
 body.planning_mode{
-    background-color: #F3F3F3;
+    background-color: #F1F1F1;
     background-image: none;
 }
 body.planning_mode ::placeholder{
@@ -92,7 +92,7 @@ textarea{
     width: 72%;
 }
 .task_plan_length{
-    width: 29%;
+    width: 21%;
 }
 .task_plan_desc{
     width: 100%;
@@ -101,7 +101,7 @@ textarea{
 }
 
 .task_plan_author{
-    width: 60%;
+    width: 73%;
 }
 .task_plan_button{
     background-color: #eeeeee; 
@@ -364,10 +364,11 @@ form {
 }
 
 .toggle_showcase{
-  font-size: 0.75em;
+  font-size: 1.2em;
 }
 .big_showcase{
-  font-size: 2.5em;
+  font-size: 1.2em;
+margin-right: 5px;
 }
 
 
@@ -621,7 +622,7 @@ body.planning_mode .seite_bottom{
   padding: 5px 0 0 0;
   background: transparent;
   border: none;
-  width: 60%;
+  width: 50%;
 
 }
  
@@ -800,6 +801,17 @@ line-height: 13px;
     border: 1px solid #888;
 }
 
+.select-web{
+    display: inline-block;
+ margin-top: 5px; 
+    margin-bottom: 2px;
+}
+
+:disabled{
+   color: black;
+}
+
+
 .picture_button{
     background-color: #e6e6e6; 
     padding: 3px 8px 1px 8px;
@@ -813,7 +825,7 @@ line-height: 13px;
     font-size: 11px;
 }
 
-body.planning_mode .rf_button{
+body.planning_mode .task_functions{
     display:none;
 }
 
@@ -920,6 +932,27 @@ body.planning_mode .header_right{
     display:none;
 }
 
+
+.web_color_{
+    background-color:#FFF;
+}
+.web_color_mi{
+    background-color:#99f542;
+}
+.web_color_fr{
+    background-color:#e6f542;
+}
+.web_color_mo{
+    background-color:#f5d742;
+}
+.web_color_home{
+    background-color:#9ad7fc;
+}
+.web_color_ressort{
+    background-color:#6dc0f2;
+}
+  
+
     select {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -943,6 +976,12 @@ body.planning_mode .header_right{
         display: none !important;
         
     }
+.dont_display{
+    display: none;
+}
+.do_display{
+    display: inline-block;
+}
 
 @media (max-width: 600px) {
 
@@ -1045,16 +1084,14 @@ body.planning_mode .header_right{
     }
     
     .seite{
-        
-        min-height: 320px !important;
-        
+        min-height: 370px !important;
     }
     .seite_after{
-        min-height: 310px !important;
+        min-height: 360px !important;
     }
     
     .seite.has_inserat{
-        min-height: 295px !important;
+        min-height: 345px !important;
     }
     .seite_gerade{
         width: 6px !important;
