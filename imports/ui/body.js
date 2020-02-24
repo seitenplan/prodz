@@ -27,6 +27,7 @@ var favicon=new Favico({
 
 function toggle_planning_mode(){
     planning_mode=!planning_mode;
+    
     if(planning_mode){
         url_planning_param="planung";
     }else{
@@ -50,7 +51,9 @@ function toggle_planning_mode(){
             }).on('input', function () {
               this.style.height = 'auto';
               this.style.height = (this.scrollHeight) + 'px';
-        });
+            });
+            
+
         }else{
             $(document.body).removeClass('planning_mode');
 

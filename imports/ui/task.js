@@ -128,9 +128,6 @@ Template.task.helpers({
         return ((this.web && this.web!="") || route=="web")? "":"dont_display";
     }, 
 });
-    
-        
-
 
 Template.task.events({
    

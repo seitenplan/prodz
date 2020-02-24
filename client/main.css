@@ -79,7 +79,7 @@ textarea{
 
 .task_plan_date{
     border: none;
-    width: 25px;
+    width: 20px;
 }
 
 .planning_dotted{
@@ -89,7 +89,7 @@ textarea{
     border:none;
 }
 .task_plan_title{
-    width: 72%;
+    width: 76%;
 }
 .task_plan_length{
     width: 21%;
@@ -109,6 +109,10 @@ textarea{
     padding: 2px 5px;
     cursor: pointer;
     font-size: 11px;
+}
+.task_dragfield{
+    float:right;
+    margin-right: 5px;
 }
 .container {
   flex: 1 1 auto;

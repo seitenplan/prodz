@@ -1,8 +1,8 @@
 <template name="task">
-  <li draggable="true" class="task task_drag" id="{{_id}}" order="{{order}}">
+  <li class="task task_drag" id="{{_id}}" order="{{order}}">
       <div>
             <div  class="task_header">
-                <span class="task_title task_title_{{_id}}">
+                <span class="task_title task_title_{{_id}}"  draggable="true">
                 <span class="task_title_seite">S. {{seitenNummer seiten_id}}: </span>{{text}}</span> 
                 <span class="updated updated_{{_id}} {{dont_display_if 'web'}}">{{formatDate updatedAt}}</span> 
             </div>
@@ -23,7 +23,7 @@
         <div class="task_planning{{_id}} task_planning"> 
             <ul>
                 <li class="planning_dotted">
-                    <input type="text" name="task_plan_title{{_id}}" class="task_plan_title task_plan_onchange" value="{{text}}">  
+                    <input type="text" name="task_plan_title{{_id}}" class="task_plan_title task_plan_onchange" value="{{text}}"> 
                     <select name="task_plan_date{{_id}}" class="task_plan_date task_plan_onchange" >
                     <option value="?" {{isSelectedDate "?"}}>?</option>
                     <option value="Fr" {{isSelectedDate "Fr"}}>Fr</option>
@@ -40,7 +40,7 @@
                     <input type="text" name="task_plan_length{{_id}}" class="task_plan_length task_plan_onchange" placeholder="1000" value="{{length}}"  >
                 </li>
                 <li>
-                    <textarea name="task_plan_desc{{_id}}" class="task_plan_desc task_plan_onchange planning_dotted" placeholder="Beschreibung" draggable="false">{{desc}}</textarea>
+                    <textarea name="task_plan_desc{{_id}}" class="task_plan_desc task_plan_onchange planning_dotted" placeholder="Beschreibung" >{{desc}}</textarea>
                 </li>
                 {{/if}}
             </ul> 
@@ -61,6 +61,8 @@
                 <span class="task_collapse no-print">
                     {{#if collapsed}} &#9660; {{else}} &#9650; {{/if}}
                 </span>
+                
+                <span class="task_dragfield" draggable="true" >&#x2195;</span>
             </div>
             
         </div>
