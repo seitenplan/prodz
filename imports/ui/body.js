@@ -247,6 +247,9 @@ Template.body.helpers({
         date=new Date();
         return moment(date).format('ddd DD.MM.YYYY -  HH:mm');
     },
+    user_role: function(){
+        return (route)? "role_"+route:"";
+    },
 
 });
 

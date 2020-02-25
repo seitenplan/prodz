@@ -113,6 +113,8 @@ textarea{
 .task_dragfield{
     float:right;
     margin-right: 5px;
+    font-size: 14px;
+    cursor: move;
 }
 .container {
   flex: 1 1 auto;
@@ -157,6 +159,7 @@ display: block;
 
 .header_toggle_planning_mode{
       cursor: pointer;
+    font-size: 24px;
 }
 .ausgaben_list{
     width: 35%;  
@@ -642,6 +645,7 @@ body.planning_mode .seite_bottom{
     float:right;
     cursor: pointer;
     display:none;
+    font-size: 11px;
 }
 body.planning_mode .add_inserat{
     display:inline;
@@ -832,6 +836,13 @@ line-height: 13px;
 body.planning_mode .task_functions{
     display:none;
 }
+
+.container.role_web .task_functions{
+    display: block !important;
+}
+
+
+
 
 .picture_buttons{
     font-size: 11px;
@@ -1137,5 +1148,20 @@ body.planning_mode .header_right{
     ul.task_list li {
         background-color: transparent !important;
     }
+    .container.role_web .task_plan_desc{
+        display: none !important;
+    }
+    .showcase_0{
+        display: none !important;
+    }
+
+    .showcase_1, .showcase_2 {
+        font-size: 14px;
+    }
+
+    .select-web {
+        font-size: 10px;
+    }
+
 
 }
