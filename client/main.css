@@ -952,19 +952,19 @@ body.planning_mode .header_right{
     background-color:#FFF;
 }
 .web_color_mi{
-    background-color:#99f542;
-}
-.web_color_fr{
-    background-color:#e6f542;
-}
-.web_color_mo{
-    background-color:#f5d742;
-}
-.web_color_home{
     background-color:#9ad7fc;
 }
+.web_color_fr{
+    background-color:#fffd80;
+}
+.web_color_mo{
+    background-color:#ffda61;
+}
+.web_color_home{
+    background-color:#7bd96c;
+}
 .web_color_ressort{
-    background-color:#6dc0f2;
+    background-color:#a5ff96;
 }
   
 
