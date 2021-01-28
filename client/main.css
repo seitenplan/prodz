@@ -18,7 +18,7 @@ body {
   padding: 0;
   margin: 0;
   font-size: 12px;
-        
+
   display: flex;
   flex-direction: column;
 }
@@ -40,8 +40,8 @@ body.planning_mode .task{
     border-top: 1px solid #888;
     padding-bottom: 1px;
 }
-body.planning_mode .task_header, 
-body.planning_mode .task_buttons, 
+body.planning_mode .task_header,
+body.planning_mode .task_buttons,
 body.planning_mode .all_next_status,
 body.planning_mode .task_status_list,
 body.planning_mode .right_column,
@@ -56,7 +56,7 @@ body.planning_mode .seiten_list {
 .task_planning{
     display: none;
 }
-body.planning_mode .task_planning{ 
+body.planning_mode .task_planning{
     display: block;
 }
 
@@ -74,7 +74,8 @@ textarea{
 }
 
 .task_plan_title{
- font-weight: bold;   
+ font-weight: bold;
+ font-family: helvetica, sans-serif;
 }
 
 .task_plan_date{
@@ -104,7 +105,7 @@ textarea{
     width: 73%;
 }
 .task_plan_button{
-    background-color: #eeeeee; 
+    background-color: #eeeeee;
     color: #666;
     padding: 2px 5px;
     cursor: pointer;
@@ -143,7 +144,7 @@ body.planning_mode header{
 }
 
 body.planning_mode .header_toggle_config_seiten{
-display: block; 
+display: block;
 }
 .header_toggle_config_ausgaben{
   font-size: 20px;
@@ -162,14 +163,14 @@ display: block;
     font-size: 24px;
 }
 .ausgaben_list{
-    width: 35%;  
+    width: 35%;
     float: left;
 }
 body.planning_mode .ausgaben_list{
-    width: 90%;   
+    width: 90%;
 }
 .ausgaben_list li{
-    float:left; 
+    float:left;
  }
 .ausgabe{
     display: inline-block;
@@ -179,7 +180,7 @@ body.planning_mode .ausgaben_list{
     margin: 5px 3px;
     padding: 8px 8px 3px 8px;
     cursor: pointer;
-    
+
 }
 
 
@@ -199,13 +200,13 @@ body.planning_mode .ausgaben_list{
 }
 
 .ausgabe_delete{
- cursor: pointer;   
+ cursor: pointer;
 }
 .neu_ausgabe{
- clear: left;   
+ clear: left;
 }
 .ausgabe_sort input{
- font-size: 11px;  
+ font-size: 11px;
  margin-bottom: 5px;
 }
 .config_button{
@@ -222,9 +223,9 @@ body.planning_mode .ausgaben_list{
 }
 
 
-.right_column_element{   
+.right_column_element{
     background-color: #d2edf4;
-    
+
     width: 180px;
     margin: 10px;
     padding: 10px;
@@ -232,7 +233,7 @@ body.planning_mode .ausgaben_list{
 
 .seiten_config {
   display: none;
-    float: right;   
+    float: right;
     background-color: white;
     border-top: 1px solid black;
     border-left: 1px solid black;
@@ -244,13 +245,13 @@ body.planning_mode .ausgaben_list{
   margin: 5px 0;
     display: block;
 }
- .filtered_task_list_container{    
+ .filtered_task_list_container{
     background-color: #d2edf4;
  }
 
  .seiten_list{
      width: calc(100% - 230px);
-    float:left;  
+    float:left;
      margin-left: 10px;
  }
 
@@ -261,10 +262,10 @@ body.planning_mode .ausgaben_list{
 .layout_task{
     margin: 7px 0;
     padding: 12px 10px;
-    
+
   cursor: pointer;
     background-color: #FFF;
-    
+
 }
 .layout_task_check{
     display: none;
@@ -292,7 +293,7 @@ body.planning_mode .ausgaben_list{
 .ticket_alert{
      display:none;
     font-size: 12px;
-    float: right; 
+    float: right;
 }
 .ticket_open{
     cursor: pointer;
@@ -380,16 +381,16 @@ margin-right: 5px;
 
 
 span.showcase_0{
-  display:none;  
+  display:none;
 }
 .showcase_0{
-  opacity: 0.3;  
+  opacity: 0.3;
 }
 .showcase_1{
-  opacity: 1;  
+  opacity: 1;
 }
 .showcase_2{
-  opacity: 1;  
+  opacity: 1;
 }
 
 li {
@@ -402,14 +403,14 @@ li {
 li .text {
   margin-left: 10px;
 }
- 
+
 .task_title{
- cursor: grab;  
+ cursor: grab;
 }
 
- 
+
 .task_edit{
- display: none;  
+ display: none;
     margin: 5px 0 5px 0;
     background: #eafcfb;
     line-height: 21px;
@@ -428,7 +429,7 @@ ul.task_log li{
 }
 
 .seite_edit{
- display: none;  
+ display: none;
 margin: 5px 0 10px 0;
 background: #eafcfb;
 line-height: 25px;
@@ -459,9 +460,10 @@ body.planning_mode .seite_desc{
     font-weight: bold;
     margin-left: 5px;
     display: none;
-    width: 80%; 
+    width: 80%;
     border: none;
     background-color: transparent;
+    font-family: helvetica,sans-serif;
 }
 body.planning_mode .seite_edit_desc_top{
     display: inline;
@@ -471,7 +473,7 @@ body.planning_mode .seite_edit_desc_top{
 }
 
 body.planning_mode .buttons{
-    
+
     display:none;
 }
 .seite_after{
@@ -539,7 +541,7 @@ body.planning_mode .task_dropable:before{
 
 }
 .task_insert_here{
-    
+
     border: 1px dotted black !important;
     height: 15px;
     margin: 5px 0;
@@ -553,14 +555,14 @@ body.planning_mode .task_dropable:before{
 }
 
 .seite .task_title_seite{
- display: none;   
+ display: none;
 }
 
 .seite_tools{
   margin-top: 5px;
- font-size: 22px;   
+ font-size: 22px;
   cursor: pointer;
-    
+
   -moz-user-select: none;
   -khtml-user-select: none;
   -webkit-user-select: none;
@@ -574,15 +576,15 @@ body.planning_mode .task_dropable:before{
 }
 
 ul.status_list{
- margin: 5px 0; 
+ margin: 5px 0;
 }
 ul.status_list li{
     display: inline;
     padding: 0;
     border: 0;
 }
- 
-ul.task_list li{    
+
+ul.task_list li{
     padding: 1px 5px;
     margin: 5px 0;
     border: 0;
@@ -632,12 +634,12 @@ body.planning_mode .seite_bottom{
   width: 50%;
 
 }
- 
+
 .new-task input:focus{
   outline: 0;
 }
 
-.add_inserat{  
+.add_inserat{
     padding: 2px 5px 2px 5px;
     margin: 2px 5px 0 0;
     background-color: #EEE;
@@ -673,7 +675,7 @@ position: absolute;
 }
  body.planning_mode .seite.has_inserat{
     min-height: 255px;
-    
+
     padding: 0px 0px 25px 0px !important;
 }
 .seite_inserat input {
@@ -681,11 +683,11 @@ position: absolute;
   padding: 2px 5px 2px 5px;
   background: transparent;
   border: none;
-  width: 80%;  
-    color: white;    
+  width: 80%;
+    color: white;
 }
 .seite_inserat input::placeholder {
-    color: #ccc;    
+    color: #ccc;
 }
 
 .remove_inserat{
@@ -704,7 +706,7 @@ ul {
   padding: 0;
 }
 
- 
+
 .delete {
   background: none;
   font-size: 1em;
@@ -747,7 +749,7 @@ line-height: 13px;
 .task_add_button{
     background-color: #DDD;
     padding: 2px 5px;
-    cursor: pointer;  
+    cursor: pointer;
     border-radius: 25px;
     z-index: 998;
 }
@@ -772,17 +774,17 @@ line-height: 13px;
 
 .task_collapse{
     color: #888;
-    cursor: pointer;  
+    cursor: pointer;
     z-index: 998;
     float: right;
 }
 .header_legend_filter{
-    background-color: #CCC; 
+    background-color: #CCC;
 }
 .header_picture_filter{
-    background-color: #CCC; 
+    background-color: #CCC;
 }
- 
+
  .updated{
   font-size: 9px;
      display: inline-block;
@@ -811,7 +813,7 @@ line-height: 13px;
 
 .select-web{
     display: inline-block;
- margin-top: 5px; 
+ margin-top: 5px;
     margin-bottom: 2px;
 }
 
@@ -821,15 +823,15 @@ line-height: 13px;
 
 
 .picture_button{
-    background-color: #e6e6e6; 
+    background-color: #e6e6e6;
     padding: 3px 8px 1px 8px;
     cursor: pointer;
 }
 .rf_button{
-    background-color: #444; 
+    background-color: #444;
     color: white;
     padding: 3px 8px 1px 8px;
-    cursor: pointer;   
+    cursor: pointer;
     font-size: 11px;
 }
 
@@ -854,7 +856,7 @@ body.planning_mode .picture_buttons{
     display: none;
 }
 .picture_button_ok{
- background-color: #6dff6d;   
+ background-color: #6dff6d;
 }
 
 body.planning_mode .header_status_total{
@@ -870,7 +872,7 @@ ul.header_status_total li{
     font-size: 14px;
     font-weight: bold;
     padding: 0;
-    margin: 5px 1px 2px 1px;   
+    margin: 5px 1px 2px 1px;
     border: 0;
 }
 .header_status{
@@ -890,7 +892,7 @@ ul.header_status_total li{
 
 }
 body.planning_mode .header_right{
-   
+
     width: 10%;
 }
 .header_menu_right{
@@ -927,22 +929,22 @@ body.planning_mode .header_right{
 .status_color5{
     background-color:#f764b3;
 }
-    
+
 .status_color6{
     background-color:#66c9fd;
 }
-    
+
 .status_color7{
     background-color:#fcd059;
 }
 .status_color8{
     background-color:#f9ff6e;
 }
-    
+
 .status_color9{
     background-color:#6dff6d;
 }
-    
+
 .last-status{
     display:none;
 }
@@ -966,7 +968,7 @@ body.planning_mode .header_right{
 .web_color_ressort{
     background-color:#a5ff96;
 }
-  
+
 
     select {
     -webkit-appearance: none;
@@ -989,7 +991,7 @@ body.planning_mode .header_right{
       .no-web, .no-web *
     {
         display: none !important;
-        
+
     }
 .dont_display{
     display: none;
@@ -1070,48 +1072,48 @@ body.planning_mode .header_right{
 }
 
 @media print
-{    
+{
     body{
     width:100%;
     height:100%;
         background-color: white !important;
     }
-    
-    @page { margin: 1cm; } 
-    
+
+    @page { margin: 1cm; }
+
     .header_currenttime{
     display:inline;
         font-size: 10px;
         float: right !important;
     }
-    
+
     .seiten_break_7 .seite{
         width: 12.7% !important;
     }
-    
+
     .seiten_break_8 .seite{
-        
+
         width: 11% !important;
     }
     .seite,  .seite *{
-        
+
         font-size: 6pt;
     }
-    
+
     .seite{
         min-height: 370px !important;
     }
     .seite_after{
         min-height: 360px !important;
     }
-    
+
     .seite.has_inserat{
         min-height: 345px !important;
     }
     .seite_gerade{
         width: 6px !important;
     }
-  
+
     .ausgabe{
         display:none;
     }
@@ -1124,27 +1126,27 @@ body.planning_mode .header_right{
     display: inline;
          margin-left: 20px;
     }
-    
+
     .ausgabe_inline{
         display: inline-block !important;
     }
- 
+
     input:placeholder-shown, textarea:placeholder-shown{
         display:none;
     }
-    
-  
+
+
       .no-print, .no-print *
     {
         display: none !important;
-        
-    } 
+
+    }
       .no-web, .no-web *
     {
         display: inline !important;
-        
+
     }
-    
+
     ul.task_list li {
         background-color: transparent !important;
     }
