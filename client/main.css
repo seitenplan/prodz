@@ -153,9 +153,12 @@ display: block;
     padding: 2px;
 }
 .header_config_ausgabe{
-    font-size: 10px;
+    font-size: 12px;
     display:none;
     padding: 5px 0px;
+}
+.erscheinungsdatum{
+  margin: 7px 0;
 }
 
 .header_toggle_planning_mode{

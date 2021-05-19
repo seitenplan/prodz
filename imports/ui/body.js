@@ -4,6 +4,8 @@ import { Seiten } from '../api/seiten.js';
 import { Config } from '../api/config.js';
 import { Ausgaben } from '../api/ausgaben.js';
 import { Tickets } from '../api/tickets.js';
+import flatpickr from "flatpickr";
+import 'flatpickr/dist/flatpickr.css';
 
 import './seite.js';
 import './task.js';
@@ -27,32 +29,32 @@ var favicon=new Favico({
 
 function toggle_planning_mode(){
     planning_mode=!planning_mode;
-    
+
     if(planning_mode){
         url_planning_param="planung";
     }else{
-         url_planning_param="";  
+         url_planning_param="";
     }
     if(route){
         FlowRouter.go('url_with_role', { route: route , planung: url_planning_param });
         }else{
-            
+
         FlowRouter.go('url_without_role', { planung: url_planning_param });
         }
-    
+
         if(planning_mode){
             $(document.body).addClass('planning_mode');
             $('textarea').each(function () {
 //              this.setAttribute('style', 'height:1em;overflow-y:hidden;');
              this.setAttribute('style', 'overflow-y:hidden;');
-                      
+
               this.style.height = 'auto';
               this.style.height = (this.scrollHeight) + 'px';
             }).on('input', function () {
               this.style.height = 'auto';
               this.style.height = (this.scrollHeight) + 'px';
             });
-            
+
 
         }else{
             $(document.body).removeClass('planning_mode');
@@ -74,9 +76,9 @@ function add_pages(nr,page_breaks){
                 seite_inserat_desc=seiten_inserate[nr][i];
             }else{
                seite_inserat=false;
-                seite_inserat_desc=""; 
+                seite_inserat_desc="";
             }
-        }        
+        }
         if(seiten_linked[nr]){
             if(seiten_linked[nr][i]){
                 seite_linked=true;
@@ -84,7 +86,7 @@ function add_pages(nr,page_breaks){
                seite_linked=false;
             }
         }
-        
+
         Seiten.insert({
           nummer: i,
           createdAt: new Date(), // current time
@@ -99,16 +101,16 @@ function add_pages(nr,page_breaks){
         });
     }
     Ausgaben.update(current_ausgabe.get(), {
-        $set: { 
+        $set: {
           page_breaks: page_breaks,
                 },
-        }); 
-    
+        });
+
 }
 
 Template.body.rendered = function() {
     if(!this._rendered) {
-        
+
         // ROUTING VIEWS
         $(load_status).each(function( index ) {
             $(".toggle_status_list[name='"+this+"']").prop( "checked", true );
@@ -117,12 +119,12 @@ Template.body.rendered = function() {
             toggle_planning_mode();
         }
         current_status_filter.set(load_status);
-        
+
         if(load_picture){
             $(".toggle_picture_filter").prop("checked",true);
             current_picture_filter.set(true);
         }
-    
+
         if(load_picture_legend){
             $(".toggle_legend_filter").prop("checked",true);
             current_legend_filter.set(true);
@@ -134,11 +136,15 @@ Template.body.helpers({
     body_classes: function() {
         return (planning_mode==true)? "planning_mode":"no";
     },
-    
+
     formatDate: function(date) {
         return moment(date).format('ddd HH:mm');
     },
-    
+
+    formatDayDate: function(date) {
+        return moment(date).format('D.M.YYYY');
+    },
+
     show: function(show_role) {
        return (show_role.split(",").indexOf(route)!=-1)? "show":"dont_show";
     },
@@ -146,30 +152,33 @@ Template.body.helpers({
     seiten() {
         return Seiten.find({ausgaben_id: current_ausgabe.get()}, { sort: { nummer: 1 } });
     },
+
     ausgaben() {
         // on data loaded: set ausgabe number as active
         if(current_ausgabe.get()==0){
             if(Ausgaben.find().count()>0){
-                current_ausgabe.set(Ausgaben.findOne({}, { sort: { sort: 1 } })._id); 
-            }       
+                current_ausgabe.set(Ausgaben.findOne({}, { sort: { erscheinungsdatum: 1 } })._id);
+            }
         }
-        return Ausgaben.find({}, { sort: { sort: 1 } });
+        return Ausgaben.find({}, { sort: { erscheinungsdatum: 1 } });
     },
+
     tasks() {
         var or_query=[{status: {$in: current_status_filter.get()}}];
-        
+
         if (current_picture_filter.get()){
             var picture_query={$and: [{need_picture:true},{has_picture:false}]};
             or_query.push(picture_query);
         }
-        
+
         if (current_legend_filter.get()){
             var legend_query={$and: [{need_picture:true},{has_picture:true},{has_legend:false}]};
             or_query.push(legend_query);
         }
-        
+
         return Tasks.find( {$and: [{ ausgaben_id: current_ausgabe.get()}, {$or: or_query}]},{ sort: { updatedAt: -1 } });
     },
+
     tickets_inbox() {
         var inbox_tickets=Tickets.find({to:route, ausgaben_id: current_ausgabe.get()},{sort: { status:1, updatedAt: -1 } });
         var inbox_tickets_undone=Tickets.find({to:route, ausgaben_id: current_ausgabe.get(),status:0},{}).count();
@@ -177,24 +186,31 @@ Template.body.helpers({
         document.title = "("+inbox_tickets_undone+") Seitenplan";
         return inbox_tickets;
     },
+
     tickets_outbox() {
         return Tickets.find({from:route, ausgaben_id: current_ausgabe.get()},{sort: { status:1,updatedAt: -1 } });
     },
+
     status_list: function(){
        return status_list;
     },
+
     status_count: function(status){
-       return Tasks.find({"status":status, ausgaben_id: current_ausgabe.get()}).count();  
+       return Tasks.find({"status":status, ausgaben_id: current_ausgabe.get()}).count();
     },
+
     ausgabe_count: function(ausgaben_id){
-       return Tasks.find({ausgaben_id: ausgaben_id}).count();  
+       return Tasks.find({ausgaben_id: ausgaben_id}).count();
     },
+
     legend_count: function(status){
-       return Tasks.find({$and: [{need_picture:true},{has_picture:true},{has_legend:false}, {ausgaben_id: current_ausgabe.get()}]}).count();  
+       return Tasks.find({$and: [{need_picture:true},{has_picture:true},{has_legend:false}, {ausgaben_id: current_ausgabe.get()}]}).count();
     },
+
     picture_count: function(status){
-       return Tasks.find({$and: [{need_picture:true},{has_picture:false}, {ausgaben_id: current_ausgabe.get()}]}).count();  
+       return Tasks.find({$and: [{need_picture:true},{has_picture:false}, {ausgaben_id: current_ausgabe.get()}]}).count();
     },
+
     page_breaks: function(){
         var page_breaks=Ausgaben.findOne({_id:current_ausgabe.get()});
 
@@ -202,21 +218,24 @@ Template.body.helpers({
              return page_breaks.page_breaks;
         }
     } ,
-    
+
     ausgabe_is_active: function(){
-        
-       return (this._id==current_ausgabe.get())? "ausgabe_active":"" ; 
+
+       return (this._id==current_ausgabe.get())? "ausgabe_active":"" ;
     },
+
      layout_task_list: function(){
         var ausgabe=Ausgaben.findOne({_id:current_ausgabe.get()});
         if(ausgabe){
             return ausgabe.layout_tasks;
         }
-        
+
     },
-    layout_task_status: function(index){  
-       return (this[1])? "layout_task_done":"" ;       
+
+    layout_task_status: function(index){
+       return (this[1])? "layout_task_done":"" ;
     },
+
     ticket_role_list: function(){ // returns a list with other roles, and marks the prefered default target
         var is_selected;
         var other_roles=[];
@@ -237,59 +256,75 @@ Template.body.helpers({
             }
         }
        return other_roles;
-    },       
+    },
+
     ticket_status: function(){
-       var done_open= (this.status)? "ticket_done":"ticket_open" ; 
-       var alert= (this.alert && this.status!=1)? " pulse_infinite":"" ; 
+       var done_open= (this.status)? "ticket_done":"ticket_open" ;
+       var alert= (this.alert && this.status!=1)? " pulse_infinite":"" ;
         return done_open+alert;
     },
+
     current_datetime: function(){
         date=new Date();
         return moment(date).format('ddd DD.MM.YYYY -  HH:mm');
     },
+
     user_role: function(){
         return (route)? "role_"+route:"";
     },
-
 });
 
 Template.body.events({
 
     'click .toggle_status_list': function(e){
         $(e.currentTarget).attr("checked", ! $(e.currentTarget).attr("checked"));
-        
+
         status_filter = $('.toggle_status_list:checked:enabled').map(function(index) {
-           return $(this).attr("name")*1; 
+           return $(this).attr("name")*1;
         });
         current_status_filter.set($.makeArray(status_filter));
     },
-    
+
     'click .toggle_picture_filter': function(e){
         $(e.currentTarget).attr("checked", ! $(e.currentTarget).attr("checked"));
-        
+
         current_picture_filter.set( $(e.currentTarget).prop("checked"));
         _deps.changed();
     },
-    
+
     'click .toggle_legend_filter': function(e){
         $(e.currentTarget).attr("checked", ! $(e.currentTarget).attr("checked"));
         current_legend_filter.set($(e.currentTarget).prop("checked"));
     },
-    
+
     'click .header_toggle_config_seiten'() {
         $(".seiten_config").toggle();
         $(".filtered_task_list_container").toggle();
     },
-      
+
     'click .header_toggle_config_ausgaben'() {
         $(".header_config_ausgabe").toggle();
+        $(".header_display_ausgabe").toggle();
+
+        flatpickr($(".erscheinungsdatum"),{
+          onChange: function(selectedDates, dateStr, instance) {
+            console.log();
+            Ausgaben.update(this._input.parentElement.parentElement.id, {
+               $set: {
+                   erscheinungsdatum: dateStr,
+                   },
+                });
+              }
+        });
+
+
     },
-    
+
     'click .header_toggle_planning_mode'() {
         toggle_planning_mode();
     },
-    
-    
+
+
     'click .config_delete_all'() {
               if(confirm('Achtung! Alle Augaben, Seiten, Artikel in der Datenbank werden gelöscht!')){
                 if(confirm('Wirklich ALLE DATEN löschen?')){
@@ -297,6 +332,7 @@ Template.body.events({
                 }
               }
     },
+
     'click .config_delete_seiten'() {
               if(confirm('Achtung! Alle Seiten dieser Ausgabe werden gelöscht!')){
                 if(confirm('Wirklich ALLE SEITEN dieser Ausgabe löschen?')){
@@ -304,31 +340,33 @@ Template.body.events({
                 }
               }
     },
+
     'click .config_new_20'() {
               if(confirm('20 neue Seiten einfügen?')){
                     add_pages(20,5);
               }
     },
+
     'click .config_new_24'() {
               if(confirm('24 neue Seiten einfügen?')){
                     add_pages(24,6);
               }
     },
+
     'click .config_new_28'() {
               if(confirm('28 neue Seiten einfügen?')){
                     add_pages(28,7);
               }
     },
+
     'click .config_new_32'() {
               if(confirm('32 neue Seiten einfügen?')){
                     add_pages(32,8);
               }
     },
-    
-    
-    
-    'submit .neu_seite'(event) {      
-        event.preventDefault(); 
+
+    'submit .neu_seite'(event) {
+        event.preventDefault();
         const target = event.target;
         const nummer = target.text.value*1;
         Seiten.insert({
@@ -342,30 +380,30 @@ Template.body.events({
         target.text.value = '';
   },
 
-    'submit .edit_page_breaks'(event) {          
-        event.preventDefault(); 
+    'submit .edit_page_breaks'(event) {
+        event.preventDefault();
        Ausgaben.update( current_ausgabe.get(), {
-            $set: { 
+            $set: {
           page_breaks: event.target.page_breaks.value*1,
                 },
-        }); 
+        });
 
-  },    
-    
+  },
+
   'click .ausgabe'(e,t) {
       if($(".header_config_ausgabe").first().css("display")=="none"){ // do not switch ausgabe if edit_mode is active
                 current_ausgabe.set(this._id);
-          
+
       }
- 
-  }, 
-    
-    'submit .neu_ausgabe'(event) {  
+
+  },
+
+  'submit .neu_ausgabe'(event) {
         var layout_tasks_array=[];
         layout_list.forEach(function(element) {
           layout_tasks_array.push([element,false]);
         });
-        event.preventDefault(); 
+        event.preventDefault();
         Ausgaben.insert({
             bezeichnung:event.target.bezeichnung.value,
             layout_tasks:layout_tasks_array,
@@ -374,48 +412,49 @@ Template.body.events({
         event.target.bezeichnung.value = '';
         $(".header_config_ausgabe").show();
   },
-        
+
   'click .ausgabe_delete'() {
       if(confirm('Ausgabe '+this.bezeichnung+' entfernen? ALLE Seiten und Artikel werden gelöscht!')){
           if(confirm('Ausgabe '+this.bezeichnung+' WIRKLICH entfernen?')){
             Meteor.call("removeAusgabe",this._id);
         }
       }
-  }, 
-    
-    'submit .ausgabe_sort'(event) { 
-        event.preventDefault(); 
+  },
+
+  'submit .ausgabe_sort'(event) {
+        event.preventDefault();
          Ausgaben.update(this._id, {
-            $set: { 
+            $set: {
                 sort: event.target.sort.value,
                 },
         });
     },
-    'submit .ausgabe_rename'(event) { 
-        event.preventDefault(); 
+    'change .ausgabe_rename'(event) {
+        event.preventDefault();
          Ausgaben.update(this._id, {
-            $set: { 
-                bezeichnung: event.target.rename.value,
+            $set: {
+                bezeichnung: event.target.value,
                 },
         });
     },
-    'submit .ausgabe_datum'(event) { 
-        event.preventDefault(); 
+    'submit .ausgabe_datum'(event) {
+        event.preventDefault();
          Ausgaben.update(this._id, {
-            $set: { 
+            $set: {
                 erscheinungsdatum: event.target.rename.value,
                 },
         });
     },
-        
-  'drop li.ausgabe' : function(e, t) {      
+
+
+  'drop li.ausgabe' : function(e, t) {
       $(".ausgabe").removeClass("ausgabe_dropable");
-      
+
         e.stopPropagation();
         e.preventDefault();
         task_id=e.originalEvent.dataTransfer.getData("text");
         target_seite=Seiten.findOne({ausgaben_id: this._id}, { sort: { nummer: 1 } });
-      
+
         if(target_seite){
           Tasks.update(task_id, {
                     $set: {
@@ -424,30 +463,30 @@ Template.body.events({
                     },
                 });
         }else{
-            alert("Ausgabe besitzt noch keine Seiten! Artikel kann nicht verschoben werden.");   
+            alert("Ausgabe besitzt noch keine Seiten! Artikel kann nicht verschoben werden.");
         }
   },
-        
+
   'dragover .ausgabe' : function(e, t) {
-    e.originalEvent.preventDefault(); 
+    e.originalEvent.preventDefault();
       e.originalEvent.dataTransfer.dropEffect = "move";
   },
 
-    
-            
+
+
   'click .layout_task'(e,t) {
-        var ausgabe=Ausgaben.findOne({_id:current_ausgabe.get()});       
+        var ausgabe=Ausgaben.findOne({_id:current_ausgabe.get()});
         var layout_tasks_new=ausgabe.layout_tasks;
       var update_index=$(e.currentTarget).attr("name");
       layout_tasks_new[update_index]=[layout_tasks_new[update_index][0],!layout_tasks_new[update_index][1]];
-             
+
         Ausgaben.update(current_ausgabe.get(), {
             $set: { layout_tasks: layout_tasks_new },
         });
-  }, 
-        
+  },
+
     'submit .new-ticket'(event, template) {
-        
+
     event.preventDefault();
     const target = event.target;
     const text = target.text.value;
@@ -462,46 +501,46 @@ Template.body.events({
         from: route,
         alert: 0,
         createdAt: new Date(),
-        updatedAt: new Date(), 
+        updatedAt: new Date(),
     });
     target.text.value = '';
-}, 
+},
     'click .ticket_inbox'(e,t) {
         Tickets.update(this._id, {
-            $set: { status: 1, 
+            $set: { status: 1,
             updatedAt: new Date(), },
         });
-  }, 
+  },
     'click .ticket_delete'(e,t) {
         Tickets.remove(this._id);
-  }, 
+  },
         'click .ticket_outbox.ticket_done'(e,t) {
         Tickets.remove(this._id);
-  }, 
+  },
     'click .ticket_alert'(e,t) {
              Tickets.update(this._id, {
             $set: { alert: !this.alert },
         });
-  }, 
+  },
     'click .ticket_edit'(e,t) {
         $("#"+this._id+" .ticket_text_edit").toggle();
         $("#"+this._id+" .ticket_text").toggle();
-        
-  }, 
-    
-    'change .ticket_text_edit'(e, t) {  
+
+  },
+
+    'change .ticket_text_edit'(e, t) {
         console.log(this._id);
     e.preventDefault();
     Tickets.update(this._id, {
-            $set: { 
+            $set: {
                 text: e.target.value,
                 },
         });
-    
+
         $("#"+this._id+" .ticket_text_edit").toggle();
         $("#"+this._id+" .ticket_text").toggle();
   },
-        
-      
+
+
 
 });
