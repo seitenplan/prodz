@@ -1,6 +1,7 @@
 
 <body>
     <header>
+      <div>
         <ul class="ausgaben_list">
           {{#each ausgaben}}
             <li class="ausgabe {{ausgabe_is_active}}" id="{{_id}}">
@@ -12,20 +13,61 @@
                 </div>
                 <div class="header_config_ausgabe">
                     <input class="ausgabe_rename" type="text" value="{{bezeichnung}}" name="rename"  size="9">
-                    <div class="erscheinungsdatum">
-                    Erscheinungsdatum: <br><strong>{{formatDayDate erscheinungsdatum}}</strong></div>
+                    <div>
+                    Erscheinungsdatum: <br><span class="ausgabe_erscheinungsdatum"><strong>{{formatDayDate erscheinungsdatum}} &#x270E;</strong></span></div>
+                    <div>
+                    Vorlage: <input type="checkbox" class="ausgabe_vorlage" checked="{{vorlage}}"></div>
                     <span class="ausgabe_delete">&#x274C; löschen</span>
                 </div>
             </li>
           {{/each}}
 
-              <li class="header_config_ausgabe">
-
-                  <form class="neu_ausgabe"><input type="text" placeholder="Neue Ausgabe..." name="bezeichnung" class="" size="15"></form>
-            </li>
-              <li class="header_toggle_config_ausgaben"><span class="no-print">&#9881;</span></li>
               <li class="header_currenttime">{{current_datetime}}</li>
         </ul>
+        </div>
+        <div class="ausgaben_vorlagen_list">
+        <ul>
+              <h3>&#9650; Ausgaben-Einstellungen</h3>
+                    {{#each ausgaben_vorlagen}}
+          <li class="ausgabe {{ausgabe_is_active}}" id="{{_id}}">
+              <div class="header_display_ausgabe">
+                    <span class="ausgaben_titel">
+                    <span class="no-web ausgabe_inline"> WOZ Nr. </span>{{bezeichnung}}</span>
+                    <span class="no-print">({{ausgabe_count _id}})</span>
+                    <span class="ausgaben_datum"><span class="no-web ausgabe_inline">vom </span>{{formatDayDate erscheinungsdatum}}</span>
+              </div>
+              <div class="header_config_ausgabe">
+                  <input class="ausgabe_rename" type="text" value="{{bezeichnung}}" name="rename"  size="9">
+                  <div>
+                  Erscheinungsdatum: <br><span class="ausgabe_erscheinungsdatum"><strong>{{formatDayDate erscheinungsdatum}} &#x270E;</strong></span></div>
+                  <div>
+                  Vorlage: <input type="checkbox" class="ausgabe_vorlage" checked="{{vorlage}}"></div>
+                  <span class="ausgabe_delete">&#x274C; löschen</span>
+              </div>
+          </li>
+
+        {{/each}}
+        <li  class="header_config_border"><strong> Neue Ausgabe</strong>
+          <form class="neu_ausgabe">
+            <input type="text" placeholder="Neue Ausgabe..." name="bezeichnung" class="" size="15">
+          </form>
+        </li>
+        <li  class="header_config_border"><strong> Ausgabe klonen</strong>
+            <span class="config_element">Seiten und Texte übernehmen von<br>
+            Von: <select id="config_copy_from" name="config_copy_from">
+              {{#each ausgaben_vorlagen}}
+                <option value="{{_id}}">{{bezeichnung}}</option>
+            {{/each}}
+            </select><br>
+            Neuer Name:<br> <input type="text"  placeholder="Neue Ausgabe..." id="config_clone_name" size="12">
+          <br><span class="config_clone config_button">Klonen</span>
+        </span>
+        </li>
+          </ul>
+
+
+
+          </div>
 
         <div class="header_right">
 
@@ -45,15 +87,18 @@
         </ul>
 
         <ul class="header_menu_right no-print">
-            <li><span class="header_toggle_config_seiten">&#9881; </span></li>
-            <li><span class="header_toggle_planning_mode">&#128161;</span></li>
+
+              <li><span class="header_toggle_planning_mode">&#128161;</span></li>
+                  <li class="header_toggle_config_seiten {{display_if 'layout abschluss'}}"><span class="config_small">Seiten</span> &#9881; </li>
+            <li class="header_toggle_config_ausgaben {{display_if 'layout abschluss'}}"> <span class="config_small">Ausgaben</span> &#9881;</li>
         </ul>
 
     </div>
 
   <div class="seiten_config"><ul>
             <li>
-                <span class="config_element"><b>Einstellungen Ausgabe</b></span>
+
+                        <h3>&#9660; Seiten-Einstellungen (Ausgabe {{current_ausgabe_name}})</h3>
                 <form class="neu_seite config_element">
                     Neue Seite: <input type="text" name="text" placeholder="Nr" size="4"/>
                 </form>
@@ -69,6 +114,7 @@
                 <span class="config_new_28 config_button">28</span>
                 <span class="config_new_32 config_button">32</span></span>
             </li>
+
             <li>
                 <span class="config_element config_delete_seiten config_button">Alle Seiten löschen (Ausgabe)</span>
                 <span class="config_element">&nbsp; </span>

@@ -3,27 +3,27 @@
       <div>
             <div  class="task_header">
                 <span class="task_title task_title_{{_id}}"  draggable="true">
-                <span class="task_title_seite">S. {{seitenNummer seiten_id}}: </span>{{text}}</span> 
-                <span class="updated updated_{{_id}} {{dont_display_if 'web'}}">{{formatDate updatedAt}}</span> 
+                <span class="task_title_seite">S. {{seitenNummer seiten_id}}: </span>{{text}}</span>
+                <span class="updated updated_{{_id}} {{dont_display_if 'web'}}">{{formatDate updatedAt}}</span>
             </div>
-          
-            <div class="task_buttons">
-                <button class="toggle_log">&#9776;</button>          
-                <button class="toggle-edit">&#9998;</button> 
 
-            </div> 
+            <div class="task_buttons">
+                <button class="toggle_log">&#9776;</button>
+                <button class="toggle-edit">&#9998;</button>
+
+            </div>
        </div>
-      
-        <div class="task_edit_{{_id}} task_edit">   
+
+        <div class="task_edit_{{_id}} task_edit">
             <input type="text" name="task_title_edit" class="task_title_edit" value="{{text}}" size="12"><br>
             <input type="checkbox" id="bild" checked="{{need_picture}}" class="toggle_need_picture"> mit Bild<br>
             <span class="task-delete">&times; Artikel l&ouml;schen</span>
         </div>
-      
-        <div class="task_planning{{_id}} task_planning"> 
+
+        <div class="task_planning{{_id}} task_planning">
             <ul>
                 <li class="planning_dotted">
-                    <input type="text" name="task_plan_title{{_id}}" class="task_plan_title task_plan_onchange" value="{{text}}"> 
+                    <input type="text" name="task_plan_title{{_id}}" class="task_plan_title task_plan_onchange" value="{{text}}">
                     <select name="task_plan_date{{_id}}" class="task_plan_date task_plan_onchange" >
                     <option value="?" {{isSelectedDate "?"}}>?</option>
                     <option value="Fr" {{isSelectedDate "Fr"}}>Fr</option>
@@ -32,8 +32,8 @@
                     <option value="Mi" {{isSelectedDate "Mi"}}>Mi</option>
                     </select>
                     <span class="task-delete no-print">&times;</span>
-                </li> 
-                {{#if collapsed}}{{else}}     
+                </li>
+                {{#if collapsed}}{{else}}
                 <li class="planning_dotted">
                     <input type="text" name="task_plan_author{{_id}}" class="task_plan_author task_plan_onchange" placeholder="AutorIn" value="{{author}}" size="16">
 
@@ -43,7 +43,7 @@
                     <textarea name="task_plan_desc{{_id}}" class="task_plan_desc task_plan_onchange planning_dotted" placeholder="Beschreibung" >{{desc}}</textarea>
                 </li>
                 {{/if}}
-            </ul> 
+            </ul>
 
             <div class="task_bottom">
                 <span class="task_add_button no-print">+</span>
@@ -53,22 +53,22 @@
                 </div>
                 <span class="task_options">
                     {{#if need_picture}}
-                    <span class="task_option">Bild <span class="remove_picture no-print">x</span></span>{{/if}}            
+                    <span class="task_option">Bild <span class="remove_picture no-print">x</span></span>{{/if}}
                     {{#if rf}}
                     <span class="task_option"> RF <span class="remove_rf no-print">x</span></span>
-                    {{/if}} 
+                    {{/if}}
                 </span>
                 <span class="task_collapse no-print">
                     {{#if collapsed}} &#9660; {{else}} &#9650; {{/if}}
                 </span>
-                
-                <span class="task_dragfield" draggable="true" >&#x2195;</span>
+
+                <span class="task_dragfield no-print" draggable="true" >&#x2195;</span>
             </div>
-            
+
         </div>
-      
+
         <div class="task_status_list {{dont_display_if 'web'}}">
-            <select class="select-status status_color{{status}} "> 
+            <select class="select-status status_color{{status}} ">
                 {{#each status_list}}
                     <option {{isSelectedStatus @index ../status}} value="{{@index}}" class="status_color{{@index}}">{{this}}</option>
                 {{/each}}
@@ -87,9 +87,9 @@
                 <span class="rf_button {{dont_display_if 'web'}}">RF</span>
             {{/if}}
 
-            <span class="big_showcase {{showcase_status}} {{display_if 'layout foto abschluss'}}">&#128444;</span> 
+            <span class="big_showcase {{showcase_status}} {{display_if 'layout foto abschluss'}}">&#128444;</span>
 
-            <button class="toggle_showcase {{showcase_status}} {{display_if 'web'}}">&#128444;</button> 
+            <button class="toggle_showcase {{showcase_status}} {{display_if 'web'}}">&#128444;</button>
 
             <select class="select-web web_color_{{web}} {{display_if 'web abschluss'}} {{select_web_display}}" {{select_web_disabled}}>
                 <option value="" {{isSelectedWeb ""}}   class="web_color_">-</option>
@@ -100,7 +100,7 @@
                 <option value="ressort" {{isSelectedWeb "ressort"}} class="web_color_ressort">Offline Ressort</option>
             </select>
         </div>
-        <ul class="task_log_{{_id}} task_log"> 
+        <ul class="task_log_{{_id}} task_log">
             {{#each log}}
                 <li>{{formatDate this.date}}: {{getStatus this.status}}</li>
             {{/each}}

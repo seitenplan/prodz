@@ -134,29 +134,133 @@ body.planning_mode header{
     border-bottom: 1px solid black;
 }
 
+
+.header_right{
+    right: 0;
+    width: 65%;
+    float: right;
+    text-align: right;
+}
+body.planning_mode .header_right{
+    width: 10%;
+}
+.header_menu_right{
+    margin-left: 10px;
+    vertical-align: top;
+    padding-top: 5px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+body.planning_mode  .header_menu_right{
+background-color: #FFF;
+}
+.header_menu_right li{
+ display: inline;
+    padding: 0 10px;
+    border-right: 1px solid #888;
+    vertical-align: top;
+    float: right
+}
+.config_small{
+  font-size: 12px;
+}
+
+
 .dont_show{
     display:none;
 }
-.header_toggle_config_seiten{
+.header_menu_right li.header_toggle_config_seiten{
   font-size: 20px;
   cursor: pointer;
+    display:none;
+}
+
+.header_menu_right li.header_toggle_config_ausgaben{
     display:none;
 }
 
 body.planning_mode .header_toggle_config_seiten{
 display: block;
 }
+
+
+body.planning_mode .header_toggle_config_ausgaben{
+display: block;
+}
+
 .header_toggle_config_ausgaben{
   font-size: 20px;
   cursor: pointer;
   position: relative;
     padding: 2px;
 }
+
 .header_config_ausgabe{
-    font-size: 12px;
-    display:none;
-    padding: 5px 0px;
+  display:none;
 }
+.header_config_border{
+  border: 1px solid black;
+  display: inline-block;
+  float: left;
+  margin: 5px 3px;
+  padding: 10px;
+}
+
+body.header_ausgaben_config .header_config_ausgabe{
+      font-size: 12px;
+      display:block;
+      padding: 5px 0px;
+}
+
+.ausgaben_vorlagen_list, .seiten_config{
+  display: none;
+}
+
+.ausgaben_vorlagen_list .ausgabe{
+  background-color: #c3fbc3;
+}
+.ausgaben_vorlagen_list .ausgabe_active{
+  background-color: #FFF;
+}
+
+body.header_ausgaben_config.planning_mode .ausgaben_vorlagen_list{
+  display: block;
+  width: 100%;
+  border-top: 1px solid black;
+  padding: 0 0 30px 15px;
+  clear: left;
+  background-color: #e9ffe9;
+}
+
+body.header_seiten_config.planning_mode .seiten_config{
+  display: block;
+    float: right;
+    background-color: white;
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    width: 100%;
+    background-color: #eafff6;
+}
+.seiten_config li{
+  display: inline-block;
+}
+.config_element{
+  margin: 5px 0;
+    display: block;
+    line-height: 22px;
+}
+.config_element_title{
+font-size: 16px;
+font-weight: bold;
+}
+.config_element select{
+  display: inline;
+  border: 1px solid #ccc;
+  background-color: #FFF;
+}
+
 .erscheinungsdatum{
   margin: 7px 0;
 }
@@ -234,20 +338,6 @@ body.planning_mode .ausgaben_list{
     padding: 10px;
 }
 
-.seiten_config {
-  display: none;
-    float: right;
-    background-color: white;
-    border-top: 1px solid black;
-    border-left: 1px solid black;
-}
-.seiten_config li{
-  display: inline-block;
-}
-.config_element{
-  margin: 5px 0;
-    display: block;
-}
  .filtered_task_list_container{
     background-color: #d2edf4;
  }
@@ -868,6 +958,8 @@ body.planning_mode .header_status_total{
 
 ul.header_status_total{
     display: inline-block;
+
+    margin-right: 80px;
 }
 
 ul.header_status_total li{
@@ -886,29 +978,6 @@ ul.header_status_total li{
     margin-bottom: 3px;
 }
 
-
-.header_right{
-    right: 0;
-    width: 65%;
-    float: right;
-    text-align: right;
-
-}
-body.planning_mode .header_right{
-
-    width: 10%;
-}
-.header_menu_right{
- display: inline-block;
-    margin-left: 10px;
-    vertical-align: top;
-    padding-top: 5px;
-}
-.header_menu_right li{
- display: inline-block;
-    padding: 2px;
-    vertical-align: top;
-}
 
 .header_currenttime{
     display:none;
@@ -997,7 +1066,7 @@ body.planning_mode .header_right{
 
     }
 .dont_display{
-    display: none;
+    display: none !important;
 }
 .do_display{
     display: inline-block;

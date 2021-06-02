@@ -60,32 +60,10 @@ function toggle_planning_mode(){
             $(document.body).removeClass('planning_mode');
 
         }
+
 }
 function add_pages(nr,page_breaks){
     for (var i = 1; i <= nr; i++){
-        if(seiten_titles[nr]){
-            if(seiten_titles[nr][i]){
-                seiten_titel=seiten_titles[nr][i];
-            }else{
-                seiten_titel="";
-            }
-        }
-        if(seiten_inserate[nr]){
-            if(seiten_inserate[nr][i]){
-                seite_inserat=true;
-                seite_inserat_desc=seiten_inserate[nr][i];
-            }else{
-               seite_inserat=false;
-                seite_inserat_desc="";
-            }
-        }
-        if(seiten_linked[nr]){
-            if(seiten_linked[nr][i]){
-                seite_linked=true;
-            }else{
-               seite_linked=false;
-            }
-        }
 
         Seiten.insert({
           nummer: i,
@@ -94,10 +72,10 @@ function add_pages(nr,page_breaks){
           has_pdf: false,
           has_picture_edit: false,
           ausgaben_id: current_ausgabe.get(),
-          has_inserat: seite_inserat,
-          inserat_desc:seite_inserat_desc,
-          desc:seiten_titel,
-          linked_after: seite_linked,
+          has_inserat: false,
+          inserat_desc:"",
+          desc:"",
+          linked_after: false,
         });
     }
     Ausgaben.update(current_ausgabe.get(), {
@@ -157,10 +135,16 @@ Template.body.helpers({
         // on data loaded: set ausgabe number as active
         if(current_ausgabe.get()==0){
             if(Ausgaben.find().count()>0){
-                current_ausgabe.set(Ausgaben.findOne({}, { sort: { erscheinungsdatum: 1 } })._id);
+                current_ausgabe.set(Ausgaben.findOne({vorlage: {$ne:true}}, { sort: { erscheinungsdatum: 1 } })._id);
             }
         }
-        return Ausgaben.find({}, { sort: { erscheinungsdatum: 1 } });
+        return Ausgaben.find({vorlage: {$ne:true}}, { sort: { erscheinungsdatum: 1 } });
+    },
+
+    ausgaben_vorlagen() {
+        // on data loaded: set ausgabe number as active
+
+        return Ausgaben.find({vorlage:true}, { sort: { erscheinungsdatum: 1 } });
     },
 
     tasks() {
@@ -220,7 +204,6 @@ Template.body.helpers({
     } ,
 
     ausgabe_is_active: function(){
-
        return (this._id==current_ausgabe.get())? "ausgabe_active":"" ;
     },
 
@@ -272,6 +255,18 @@ Template.body.helpers({
     user_role: function(){
         return (route)? "role_"+route:"";
     },
+
+    current_ausgabe_name: function(){
+      if(ausgaben_name=Ausgaben.findOne( { _id:current_ausgabe.get()})){
+        return  ausgaben_name.bezeichnung;
+      }
+  },
+  dont_display_if: function(f){
+    return (f.includes(route) && route!="")? "dont_display":"";
+  },
+  display_if: function(f){
+    return (f.includes(route) && route!="")? "":"dont_display";
+  }, 
 });
 
 Template.body.events({
@@ -287,7 +282,6 @@ Template.body.events({
 
     'click .toggle_picture_filter': function(e){
         $(e.currentTarget).attr("checked", ! $(e.currentTarget).attr("checked"));
-
         current_picture_filter.set( $(e.currentTarget).prop("checked"));
         _deps.changed();
     },
@@ -298,32 +292,33 @@ Template.body.events({
     },
 
     'click .header_toggle_config_seiten'() {
-        $(".seiten_config").toggle();
-        $(".filtered_task_list_container").toggle();
+        $(document.body).toggleClass("header_seiten_config");
     },
 
     'click .header_toggle_config_ausgaben'() {
-        $(".header_config_ausgabe").toggle();
-        $(".header_display_ausgabe").toggle();
-
-        flatpickr($(".erscheinungsdatum"),{
+        $(document.body).toggleClass("header_ausgaben_config");
+        flatpickr($(".ausgabe_erscheinungsdatum"),{
           onChange: function(selectedDates, dateStr, instance) {
-            console.log();
-            Ausgaben.update(this._input.parentElement.parentElement.id, {
+            Ausgaben.update(this._input.parentElement.parentElement.parentElement.id, {
                $set: {
                    erscheinungsdatum: dateStr,
                    },
                 });
               }
         });
+    },
 
-
+    'click .ausgabe_vorlage'() {
+            Ausgaben.update(this._id, {
+               $set: {
+                   vorlage: !this.vorlage,
+                   },
+                });
     },
 
     'click .header_toggle_planning_mode'() {
         toggle_planning_mode();
     },
-
 
     'click .config_delete_all'() {
               if(confirm('Achtung! Alle Augaben, Seiten, Artikel in der Datenbank werden gelöscht!')){
@@ -391,11 +386,7 @@ Template.body.events({
   },
 
   'click .ausgabe'(e,t) {
-      if($(".header_config_ausgabe").first().css("display")=="none"){ // do not switch ausgabe if edit_mode is active
                 current_ausgabe.set(this._id);
-
-      }
-
   },
 
   'submit .neu_ausgabe'(event) {
@@ -417,6 +408,7 @@ Template.body.events({
       if(confirm('Ausgabe '+this.bezeichnung+' entfernen? ALLE Seiten und Artikel werden gelöscht!')){
           if(confirm('Ausgabe '+this.bezeichnung+' WIRKLICH entfernen?')){
             Meteor.call("removeAusgabe",this._id);
+            location.reload();
         }
       }
   },
@@ -491,8 +483,6 @@ Template.body.events({
     const target = event.target;
     const text = target.text.value;
     const to = target.to.value;
-    console.log(text);
-    console.log(to);
     Tickets.insert({
         status:0,
         ausgaben_id: current_ausgabe.get(),
@@ -529,7 +519,6 @@ Template.body.events({
   },
 
     'change .ticket_text_edit'(e, t) {
-        console.log(this._id);
     e.preventDefault();
     Tickets.update(this._id, {
             $set: {
@@ -540,7 +529,57 @@ Template.body.events({
         $("#"+this._id+" .ticket_text_edit").toggle();
         $("#"+this._id+" .ticket_text").toggle();
   },
+    'click .config_clone'(e,t) {
+      var layout_tasks_array=[];
+      layout_list.forEach(function(element) {
+        layout_tasks_array.push([element,false]);
+      });
 
+      clone_id=Ausgaben.insert({
+          bezeichnung:$("#config_clone_name").val(),
+          layout_tasks:layout_tasks_array,
+          page_break:0,
+      });
 
+      seiten_clone=Seiten.find({ausgaben_id: $("#config_copy_from").val()}).fetch();
+      $(seiten_clone).each(function( index ) {
+        seiten_id=Seiten.insert({
+          nummer: seiten_clone[index].nummer,
+          createdAt: new Date(),
+          has_app: false,
+          has_pdf: false,
+          has_picture_edit: false,
+          ausgaben_id: clone_id,
+          has_inserat: seiten_clone[index].has_inserat,
+          inserat_desc:seiten_clone[index].inserat_desc,
+          desc:seiten_clone[index].desc,
+          linked_after: seiten_clone[index].linked_after,
+        });
+        tasks_clone=Tasks.find({seiten_id: seiten_clone[index]._id}).fetch();
+        $(tasks_clone).each(function( index ) {
+          var log;
+          Tasks.insert({
+              status:0,
+              seiten_id,
+              ausgaben_id:clone_id,
+              text:tasks_clone[index].text,
+              need_picture: tasks_clone[index].need_picture,
+              rf: tasks_clone[index].rf,
+              has_picture: tasks_clone[index].has_picture,
+              has_legend: tasks_clone[index].has_legend,
+              createdAt: new Date(),
+              updatedAt: new Date(),
+              order: tasks_clone[index].order,
+              length:tasks_clone[index].length,
+              author:tasks_clone[index].author,
+              date: tasks_clone[index].date,
+              desc:tasks_clone[index].desc,
+              collapsed: tasks_clone[index].collapsed,
+              log,
+          });
+
+        });
+      });
+  },
 
 });
