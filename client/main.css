@@ -8,7 +8,7 @@ html, body {
 body {
   font-family: sans-serif;
   background-color: #315481;
-  background-image: linear-gradient(to bottom, #315481, #918e82 100%);
+  background-image: linear-gradient(to bottom, #315481, #595959 100%);
   background-attachment: fixed;
 
   top: 0;
@@ -24,7 +24,7 @@ body {
 }
 
 body.planning_mode{
-    background-color: #F1F1F1;
+    background-color: #E3E3E3;
     background-image: none;
 }
 body.planning_mode ::placeholder{
@@ -88,6 +88,7 @@ textarea{
 }
 .task_planning input{
     border:none;
+    font-size: 12px;
 }
 .task_plan_title{
     width: 76%;
@@ -102,7 +103,7 @@ textarea{
 }
 
 .task_plan_author{
-    width: 73%;
+    width: 70%;
 }
 .task_plan_button{
     background-color: #eeeeee;
@@ -163,10 +164,6 @@ background-color: #FFF;
     vertical-align: top;
     float: right
 }
-.config_small{
-  font-size: 12px;
-}
-
 
 .dont_show{
     display:none;
@@ -191,7 +188,7 @@ display: block;
 }
 
 .header_toggle_config_ausgaben{
-  font-size: 20px;
+  font-size: 25px;
   cursor: pointer;
   position: relative;
     padding: 2px;
@@ -204,47 +201,64 @@ display: block;
   border: 1px solid black;
   display: inline-block;
   float: left;
-  margin: 5px 3px;
+  margin: 3px;
   padding: 10px;
 }
-
-body.header_ausgaben_config .header_config_ausgabe{
+.ausgaben_config_section{
+  float:left;
+  width: 40%;
+  border-left: 1px dotted #000;
+  padding-left: 20px;
+  margin: 7px;
+}
+.ausgaben_config_section:first-of-type{
+border: 0;
+padding: 0;
+}
+body.header_ausgaben_config .header_config_ausgabe .config_show{
       font-size: 12px;
       display:block;
       padding: 5px 0px;
 }
 
-.ausgaben_vorlagen_list, .seiten_config{
+.ausgaben_config{
   display: none;
 }
+.ausgabe_edit{
+  display: none;
+  font-size: 18px;
+}
+body.header_ausgaben_config.planning_mode .ausgabe_edit{
+  display: inline;
+}
 
-.ausgaben_vorlagen_list .ausgabe{
+li.ausgabe_vorlage{
+  display: none;
+}
+body.header_ausgaben_config.planning_mode li.ausgabe_vorlage{
+  display: block;
   background-color: #c3fbc3;
 }
-.ausgaben_vorlagen_list .ausgabe_active{
+
+body.header_ausgaben_config.planning_mode li.ausgabe_active{
   background-color: #FFF;
+  border: 1px solid #000;
+  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.5);
 }
 
-body.header_ausgaben_config.planning_mode .ausgaben_vorlagen_list{
+body.header_ausgaben_config.planning_mode .ausgaben_config{
   display: block;
   width: 100%;
   border-top: 1px solid black;
   padding: 0 0 30px 15px;
   clear: left;
-  background-color: #e9ffe9;
 }
 
-body.header_seiten_config.planning_mode .seiten_config{
-  display: block;
-    float: right;
-    background-color: white;
-    border-top: 1px solid black;
-    border-left: 1px solid black;
-    width: 100%;
-    background-color: #eafff6;
-}
 .seiten_config li{
   display: inline-block;
+  padding: 5px 10px;
+  border: 1px solid #000;
+  margin: 0 15px 0 0;
 }
 .config_element{
   margin: 5px 0;
@@ -285,7 +299,7 @@ body.planning_mode .ausgaben_list{
     background-color: #DDD;
     border: 1px solid #AAA;
     margin: 5px 3px;
-    padding: 8px 8px 3px 8px;
+    padding: 3px 8px 3px 8px;
     cursor: pointer;
 
 }
@@ -294,7 +308,8 @@ body.planning_mode .ausgaben_list{
 .ausgabe_active{
     color: #000;
     background-color: #FFF;
-    border: 1px solid #CCC;
+    border: 1px solid #000;
+    box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.3);
 }
 .ausgaben_titel{
     font-size: 16px;
@@ -548,6 +563,7 @@ padding: 5px;
 }
 body.planning_mode .seite_desc{
     display: none;
+    font-size: 12px;
 }
 .seite_edit_desc_top{
     font-weight: bold;

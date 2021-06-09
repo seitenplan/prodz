@@ -266,7 +266,7 @@ Template.body.helpers({
   },
   display_if: function(f){
     return (f.includes(route) && route!="")? "":"dont_display";
-  }, 
+  },
 });
 
 Template.body.events({
@@ -291,9 +291,6 @@ Template.body.events({
         current_legend_filter.set($(e.currentTarget).prop("checked"));
     },
 
-    'click .header_toggle_config_seiten'() {
-        $(document.body).toggleClass("header_seiten_config");
-    },
 
     'click .header_toggle_config_ausgaben'() {
         $(document.body).toggleClass("header_ausgaben_config");
@@ -308,7 +305,7 @@ Template.body.events({
         });
     },
 
-    'click .ausgabe_vorlage'() {
+    'click .ausgabe_vorlage_checkbox'() {
             Ausgaben.update(this._id, {
                $set: {
                    vorlage: !this.vorlage,
@@ -401,7 +398,6 @@ Template.body.events({
             page_break:0,
         });
         event.target.bezeichnung.value = '';
-        $(".header_config_ausgabe").show();
   },
 
   'click .ausgabe_delete'() {
@@ -529,16 +525,33 @@ Template.body.events({
         $("#"+this._id+" .ticket_text_edit").toggle();
         $("#"+this._id+" .ticket_text").toggle();
   },
-    'click .config_clone'(e,t) {
+    'click .ausgabe_edit'(e,t) {
+        $("#"+this._id+" .header_config_ausgabe").toggle();
+        flatpickr($(".ausgabe_erscheinungsdatum"),{
+          onChange: function(selectedDates, dateStr, instance) {
+            Ausgaben.update(this._input.parentElement.parentElement.parentElement.id, {
+               $set: {
+                   erscheinungsdatum: dateStr,
+                   },
+                });
+              }
+        });
+
+  },
+    'submit .config_clone'(e,t) {
+      event.preventDefault();
       var layout_tasks_array=[];
       layout_list.forEach(function(element) {
         layout_tasks_array.push([element,false]);
       });
 
+
+      ausgaben_clone=Ausgaben.findOne({_id: $("#config_copy_from").val()});
+      console.log(ausgaben_clone);
       clone_id=Ausgaben.insert({
           bezeichnung:$("#config_clone_name").val(),
           layout_tasks:layout_tasks_array,
-          page_break:0,
+          page_breaks:ausgaben_clone.page_breaks,
       });
 
       seiten_clone=Seiten.find({ausgaben_id: $("#config_copy_from").val()}).fetch();
@@ -580,6 +593,8 @@ Template.body.events({
 
         });
       });
+
+      $("#config_clone_name").val("");
   },
 
 });
