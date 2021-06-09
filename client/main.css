@@ -1161,6 +1161,7 @@ ul.header_status_total li{
 
 @media print
 {
+
     body{
     width:100%;
     height:100%;
@@ -1174,6 +1175,10 @@ ul.header_status_total li{
         font-size: 10px;
         float: right !important;
     }
+
+    .ausgabe_active{
+        box-shadow: none !important;
+      }
 
     .seiten_break_7 .seite{
         width: 12.7% !important;
