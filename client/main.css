@@ -1176,6 +1176,10 @@ ul.header_status_total li{
         float: right !important;
     }
 
+    .task_planning input {
+    font-size: 8px  !important;
+  }
+
     .ausgabe_active{
         box-shadow: none !important;
       }
