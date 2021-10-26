@@ -85,6 +85,7 @@ textarea{
 
 .planning_dotted{
     border-bottom: 0.01em dotted #CCC !important;
+    padding: 1px 5px;
 }
 .task_planning input{
     border:none;
@@ -693,7 +694,7 @@ ul.status_list li{
     border: 0;
 }
 
-ul.task_list li{
+.task {
     padding: 1px 5px;
     margin: 5px 0;
     border: 0;
@@ -850,11 +851,6 @@ line-height: 13px;
     cursor: pointer;
 }
 
-
-.task_add_dropdown{
-    display:none;
-}
-
 .task_add_button{
     background-color: #DDD;
     padding: 2px 5px;
@@ -864,10 +860,12 @@ line-height: 13px;
 }
 
 .task_add_dropdown{
+    display:none;
     background-color: #DDD;
     position: absolute;
     z-index: 999;
 }
+
 .task_add_dropdown_button{
     margin: 0;
     padding: 4px 10px;
@@ -875,6 +873,66 @@ line-height: 13px;
 }
 .task_add_dropdown_button:hover{
     background-color:#AAA;
+}
+
+.task_texttype_button{
+  background-color: #D7F4F4;
+  padding: 2px 5px;
+  cursor: pointer;
+  border-radius: 25px;
+  z-index: 998;
+}
+
+.task_texttype_menu{
+    display: none;
+    background-color: #D7F4F4;
+    position: absolute;
+    z-index: 999;
+    width: 230px;
+}
+
+.task_texttype_option{
+    width: 99px;
+    margin: 0 0 3px 3px !important;
+    padding: 5px !important;
+    float: left;
+    background-color: #F4FFFF;
+    cursor: pointer;
+}
+.task_texttype_option:nth-of-type(2){
+    clear:left;
+}
+
+.task_texttype_option:hover{
+    background-color:#e4fee3;;
+}
+
+.task_texttype_option_title{
+  font-weight: bold;
+  border-bottom: 1px dotted black;
+  margin-bottom: 5px;
+  display: inline-block;
+}
+
+.task_texttype_option li{
+  padding: 0;
+}
+
+.task_texttype_title{
+  font-weight:bold;
+  padding: 5px;
+  float: left;
+}
+
+.texttype_current,.texttype_current:hover{
+    background-color:#c9ffc7;;
+}
+
+.task_texttype_close{
+    cursor: pointer;
+    float: right;
+    margin: 3px 6px 0 6px;
+    font-size: 16px;
 }
 
 .task_bottom{
@@ -922,14 +980,13 @@ line-height: 13px;
 
 .select-web{
     display: inline-block;
- margin-top: 5px;
+    margin-top: 5px;
     margin-bottom: 2px;
 }
 
 :disabled{
    color: black;
 }
-
 
 .picture_button{
     background-color: #e6e6e6;

@@ -1,6 +1,7 @@
 import { Template } from 'meteor/templating';
 import { Tasks } from '../api/tasks.js';
 import { Seiten } from '../api/seiten.js';
+import { Config } from '../api/config.js';
 import './task.html';
 
 
@@ -10,13 +11,13 @@ function task_status_update(id,new_status){
         $set: {
             status:  new_status,
             updatedAt: new Date(),
-        },       
+        },
         $addToSet: {
-            log: { status: new_status, date: new Date()}, 
+            log: { status: new_status, date: new Date()},
         },
     });
     }else{
-     alert("Nur Abschluss darf Gut zum Druck geben");   
+     alert("Nur Abschluss darf Gut zum Druck geben");
     }
 }
 
@@ -25,7 +26,7 @@ function task_web_update(id,new_status){
       Tasks.update(id, {
         $set: {
             web:  new_status,
-        }, 
+        },
     });
 }
 function task_toggle_edit(id){
@@ -45,14 +46,14 @@ Template.task.rendered = function() {
 template.$('.task_plan_desc').each(function () {
 //              this.setAttribute('style', 'height:1em;overflow-y:hidden;');
              this.setAttribute('style', 'overflow-y:hidden;');
-                      
+
               this.style.height = 'auto';
               this.style.height = (this.scrollHeight) + 'px';
             }).on('input', function () {
               this.style.height = 'auto';
               this.style.height = (this.scrollHeight) + 'px';
         });
-    
+
     }
 }
 
@@ -82,19 +83,19 @@ Template.task.helpers({
         return status_list[i];
     },
     lastStatus: function() {
-        return this.status > (status_list.length-2) ? 'last-status' : ''; 
-    },  
+        return this.status > (status_list.length-2) ? 'last-status' : '';
+    },
     abschluss_mode: function(){
         if(route=="abschluss"){
-            return true;   
+            return true;
         }
     },
-    
+
     show_picture_button: function(){
-        return (this.need_picture)? false:true;   
+        return (this.need_picture)? false:true;
     },
     show_rf_button: function(){
-        return (this.rf)? false:true;   
+        return (this.rf)? false:true;
     },
     showcase_status: function(){
         if(!this.showcase || this.showcase==0 ){
@@ -106,76 +107,84 @@ Template.task.helpers({
         }else{
             return (this.showcase);
         }
-    },  
+    },
     isSelectedDate: function(date) {
         return date == this.date ? 'selected' : '';
     },
     isSelectedWeb: function(web) {
         return web == this.web ? 'selected' : '';
     },
-      
+
     dont_display_if: function(f){
         return (f.includes(route) && route!="")? "dont_display":"";
-    },  
+    },
     display_if: function(f){
         return (f.includes(route) && route!="")? "":"dont_display";
-    }, 
+    },
     select_web_disabled: function(){
         return (route!="web")? "disabled":"";
-    }, 
+    },
     select_web_display: function(){
         console.log(route=="web")
         return ((this.web && this.web!="") || route=="web")? "":"dont_display";
-    }, 
+    },
+    texttype_list: function(){
+         return texttype_list;
+    },
+    texttype_current: function(this_text_id,parent_text_id){
+      return this_text_id == parent_text_id ? 'texttype_current' : '';
+    },
+
+
 });
 
 Template.task.events({
-   
+
   'click .toggle_need_picture': function(e, template){
     Tasks.update(template.data._id, {
-          $set: { 
-              need_picture: ! this.need_picture 
+          $set: {
+              need_picture: ! this.need_picture
           },
     });
     task_toggle_edit(this._id);
   },
-    
+
   'click .toggle_has_picture': function(e, template){
     Tasks.update(template.data._id, {
           $set: { has_picture: ! this.has_picture },
     });
   },
-    
+
   'click .toggle_has_legend': function(e, template){
     Tasks.update(template.data._id, {
           $set: { has_legend: ! this.has_legend },
     });
-  }, 
-    
+  },
+
   'click .next_status': function(e, template){
       task_status_update(template.data._id, (template.data.status*1)+1);
   },
-     
-  'change .select-status': function(e, template) {   
+
+  'change .select-status': function(e, template) {
       task_status_update(template.data._id, e.target.value*1);
   },
-    
-  'change .select-web': function(e, template) {   
+
+  'change .select-web': function(e, template) {
       task_web_update(template.data._id, e.target.value);
   },
-    
+
   'click .toggle-edit'() {
     task_toggle_edit(this._id);
   },
-        
+
   'click .toggle_log'() {
     $(".task_log_"+this._id).toggle();
   },
 
-  'change .task_title_edit'(event, template) {  
+  'change .task_title_edit'(event, template) {
     event.preventDefault();
     Tasks.update(template.data._id, {
-            $set: { 
+            $set: {
                 text: event.target.value,
                 },
         });
@@ -192,7 +201,7 @@ Template.task.events({
         e.originalEvent.dataTransfer.setData('text', this._id);
         e.originalEvent.dataTransfer.effectAllowed = 'move';
   },
-    
+
   'click .toggle_showcase': function(){
         if(!this.showcase || this.showcase==0 ){
             var new_showcase_status=1;
@@ -204,16 +213,23 @@ Template.task.events({
         Tasks.update(this._id, {
             $set: { showcase: new_showcase_status },
         });
-  },  
-    
+  },
+
   'click .task_add_button': function(){
     $(".task_add_dropdown").not(".task_add_dropdown"+this._id).hide();
+    $(".task_texttype_menu").hide();
     $(".task_add_dropdown"+this._id).toggle();
-  },  
-    
+  },
+
+  'click .task_texttype_button': function(){
+    $(".task_add_dropdown").hide();
+    $(".task_texttype_menu").not(".task_texttype_menu"+this._id).hide();
+    $(".task_texttype_menu"+this._id).toggle();
+  },
+
   'change .task_plan_onchange': function(e){
         Tasks.update(this._id, {
-            $set: { 
+            $set: {
                 text: $("[name='task_plan_title"+this._id+"']").val(),
                 length: $("[name='task_plan_length"+this._id+"']").val(),
                 author: $("[name='task_plan_author"+this._id+"']").val(),
@@ -221,51 +237,63 @@ Template.task.events({
                 date: $("[name='task_plan_date"+this._id+"']").val(),
                 },
         });
-  },  
-      
-  'click .add_picture': function(){    
+  },
+
+  'click .add_picture': function(){
     Tasks.update(this._id, {
-          $set: { 
-              need_picture: true, 
+          $set: {
+              need_picture: true,
           },
     });
     $(".task_add_dropdown").hide();
-  },  
-'click .add_rf': function(){    
+  },
+'click .add_rf': function(){
     Tasks.update(this._id, {
-          $set: { 
-              rf: true, 
+          $set: {
+              rf: true,
           },
     });
     $(".task_add_dropdown").hide();
-  },  
-    
-    
-'click .remove_rf': function(){    
+  },
+
+
+'click .remove_rf': function(){
     Tasks.update(this._id, {
-          $set: { 
-              rf: false, 
+          $set: {
+              rf: false,
           },
     });
-  },  
-    
-    
-'click .remove_picture': function(){    
+  },
+
+
+'click .remove_picture': function(){
     Tasks.update(this._id, {
-          $set: { 
-              need_picture: false, 
+          $set: {
+              need_picture: false,
           },
     });
-  },  
-    
-      'click .task_collapse': function(){
-        Tasks.update(this._id, {
-            $set: { collapsed: ! this.collapsed },
-        });
-  }, 
-    
-    
-    
-    
+  },
+
+  'click .task_collapse': function(){
+    Tasks.update(this._id, {
+        $set: { collapsed: ! this.collapsed },
+    });
+},
+
+  'click .task_texttype_select': function(e, template){
+    Tasks.update(template.data._id, {
+    $set: { texttype: this.type_id, textfields: texttype_textfields[this.type_id]  },
+    });
+    $(".task_texttype_menu").hide();
+},
+
+
+  'click .task_texttype_close': function(e, template){
+        $(".task_texttype_menu").hide();
+},
+
+
+
+
 
 });

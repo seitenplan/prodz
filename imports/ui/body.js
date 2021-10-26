@@ -588,6 +588,8 @@ Template.body.events({
               date: tasks_clone[index].date,
               desc:tasks_clone[index].desc,
               collapsed: tasks_clone[index].collapsed,
+              texttype: tasks_clone[index].texttype,
+              textfields: tasks_clone[index].textfields,
               log,
           });
 

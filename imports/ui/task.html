@@ -39,8 +39,8 @@
 
                     <input type="text" name="task_plan_length{{_id}}" class="task_plan_length task_plan_onchange" placeholder="1000" value="{{length}}"  >
                 </li>
-                <li>
-                    <textarea name="task_plan_desc{{_id}}" class="task_plan_desc task_plan_onchange planning_dotted" placeholder="Beschreibung" >{{desc}}</textarea>
+                <li class="planning_dotted">
+                    <textarea name="task_plan_desc{{_id}}" class="task_plan_desc task_plan_onchange " placeholder="Beschreibung" >{{desc}}</textarea>
                 </li>
                 {{/if}}
             </ul>
@@ -63,6 +63,22 @@
                 </span>
 
                 <span class="task_dragfield no-print" draggable="true" >&#x2195;</span>
+
+                <span class="task_texttype_button no-print {{display_if 'debug'}}">  ⌸</span>
+{{this.textfields}}
+                <ul class="task_texttype_menu task_texttype_menu{{_id}}">
+                  <li class="task_texttype_title">Auswahl Texttyp</li> <span class="task_texttype_close">×</span>
+                      {{#each texttype_list}}
+                          <li class="task_texttype_option task_texttype_select {{texttype_current this.type_id ../texttype }}">
+                              <span class="task_texttype_option_title">{{this.title}}</span>
+
+                                                    <ul>{{#each this.examples}}
+                                                            <li>{{this}}</li>
+                                                    {{/each}}</ul>
+
+                                                  </li>
+                      {{/each}}
+                </ul>
             </div>
 
         </div>
@@ -87,9 +103,9 @@
                 <span class="rf_button {{dont_display_if 'web'}}">RF</span>
             {{/if}}
 
-            <span class="big_showcase {{showcase_status}} {{display_if 'layout foto abschluss'}}">&#128444;</span>
+            <span class="big_showcase {{showcase_status}} {{display_if 'layout foto'}}">&#128444;</span>
 
-            <button class="toggle_showcase {{showcase_status}} {{display_if 'web'}}">&#128444;</button>
+            <button class="toggle_showcase {{showcase_status}} {{display_if 'web abschluss'}}">&#128444;</button>
 
             <select class="select-web web_color_{{web}} {{display_if 'web abschluss'}} {{select_web_display}}" {{select_web_disabled}}>
                 <option value="" {{isSelectedWeb ""}}   class="web_color_">-</option>
