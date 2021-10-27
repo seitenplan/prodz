@@ -227,6 +227,10 @@ Template.task.events({
     $(".task_texttype_menu"+this._id).toggle();
   },
 
+  'click .task_textsubmit_button': function(){
+       window.open(text_submit_baseurl+this._id, '_blank').focus();
+    },
+
   'change .task_plan_onchange': function(e){
         Tasks.update(this._id, {
             $set: {

@@ -883,6 +883,15 @@ line-height: 13px;
   z-index: 998;
 }
 
+
+.task_textsubmit_button{
+  background-color: #e2ffe1;
+  padding: 2px 5px;
+  cursor: pointer;
+  border-radius: 25px;
+  z-index: 998;
+}
+
 .task_texttype_menu{
     display: none;
     background-color: #D7F4F4;
