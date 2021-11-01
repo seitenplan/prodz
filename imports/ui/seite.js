@@ -141,7 +141,7 @@ Template.seite.events({
         date: "?",
         desc:"",
         texttype:"nor",
-        textfields:"",
+        textfields:texttype_textfields["nor"],
         log,
     });
 
