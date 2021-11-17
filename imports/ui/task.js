@@ -6,7 +6,7 @@ import './task.html';
 
 
 function task_status_update(id,new_status){
-    if(new_status!=9 || route=="abschluss"){ // only "abschluss"-role may change status 9
+    if(new_status!=10 || route=="abschluss"){ // only "abschluss"-role may change status 10
     Tasks.update(id, {
         $set: {
             status:  new_status,
@@ -44,9 +44,7 @@ Template.task.rendered = function() {
     if(!this._rendered) {
         var template = Template.instance();
 template.$('.task_plan_desc').each(function () {
-//              this.setAttribute('style', 'height:1em;overflow-y:hidden;');
              this.setAttribute('style', 'overflow-y:hidden;');
-
               this.style.height = 'auto';
               this.style.height = (this.scrollHeight) + 'px';
             }).on('input', function () {
@@ -56,8 +54,6 @@ template.$('.task_plan_desc').each(function () {
 
     }
 }
-
-
 
 Template.task.helpers({
     isSelectedStatus: function(thisstatus, parentstatus) {
@@ -90,7 +86,6 @@ Template.task.helpers({
             return true;
         }
     },
-
     show_picture_button: function(){
         return (this.need_picture)? false:true;
     },
@@ -114,7 +109,6 @@ Template.task.helpers({
     isSelectedWeb: function(web) {
         return web == this.web ? 'selected' : '';
     },
-
     dont_display_if: function(f){
         return (f.includes(route) && route!="")? "dont_display":"";
     },
@@ -134,8 +128,6 @@ Template.task.helpers({
     texttype_current: function(this_text_id,parent_text_id){
       return this_text_id == parent_text_id ? 'texttype_current' : '';
     },
-
-
 });
 
 Template.task.events({
@@ -251,6 +243,7 @@ Template.task.events({
     });
     $(".task_add_dropdown").hide();
   },
+
 'click .add_rf': function(){
     Tasks.update(this._id, {
           $set: {
@@ -260,7 +253,6 @@ Template.task.events({
     $(".task_add_dropdown").hide();
   },
 
-
 'click .remove_rf': function(){
     Tasks.update(this._id, {
           $set: {
@@ -268,7 +260,6 @@ Template.task.events({
           },
     });
   },
-
 
 'click .remove_picture': function(){
     Tasks.update(this._id, {
@@ -291,13 +282,8 @@ Template.task.events({
     $(".task_texttype_menu").hide();
 },
 
-
   'click .task_texttype_close': function(e, template){
         $(".task_texttype_menu").hide();
 },
-
-
-
-
 
 });

@@ -1069,33 +1069,36 @@ ul.header_status_total li{
     background-color:#FFF;
 }
 .status_color1{
-    background-color:#06d6a0;
+    background-color:#FFB9F1;
 }
 .status_color2{
-    background-color:#4bc1d0;
+    background-color:#06d6a0;
 }
 .status_color3{
-    background-color:#60d45c;
+    background-color:#4bc1d0;
 }
 .status_color4{
-    background-color:#ff6a6a;
+    background-color:#60d45c;
 }
 .status_color5{
+    background-color:#ff6a6a;
+}
+.status_color6{
     background-color:#f764b3;
 }
 
-.status_color6{
+.status_color7{
     background-color:#66c9fd;
 }
 
-.status_color7{
+.status_color8{
     background-color:#fcd059;
 }
-.status_color8{
+.status_color9{
     background-color:#f9ff6e;
 }
 
-.status_color9{
+.status_color10{
     background-color:#6dff6d;
 }
 
