@@ -17,7 +17,7 @@ body {
   right: 0;
   padding: 0;
   margin: 0;
-  font-size: 12px;
+  font-size: 11px;
 
   display: flex;
   flex-direction: column;
@@ -31,7 +31,7 @@ body.planning_mode ::placeholder{
     color: #888;
 }
 body.planning_mode .seite{
-   width: 180px;
+   width: 170px;
     background-color: white;
     border: 1px solid #000;
     padding: 0;
@@ -80,7 +80,8 @@ textarea{
 
 .task_plan_date{
     border: none;
-    width: 20px;
+    width: 18px;
+    font-size:10px;
 }
 
 .planning_dotted{
@@ -89,10 +90,10 @@ textarea{
 }
 .task_planning input{
     border:none;
-    font-size: 12px;
+    font-size: 11px;
 }
 .task_plan_title{
-    width: 76%;
+    width: 73%;
 }
 .task_plan_length{
     width: 21%;
@@ -313,7 +314,7 @@ body.planning_mode .ausgaben_list{
     box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.3);
 }
 .ausgaben_titel{
-    font-size: 16px;
+    font-size: 15px;
     font-weight: bold;
 }
 
@@ -370,7 +371,8 @@ body.planning_mode .ausgaben_list{
 
 .layout_task{
     margin: 7px 0;
-    padding: 12px 10px;
+    padding: 8px 10px;
+    font-size: 11px;
 
   cursor: pointer;
     background-color: #FFF;
@@ -391,12 +393,12 @@ body.planning_mode .ausgaben_list{
 .ticket{
     background-color: #fff;
     margin: 5px 0;
-    padding: 10px 10px;
+    padding: 5px 8px;
 }
 .ticket_check,.ticket_alert, .ticket_edit, .ticket_delete{
     display:none;
-    font-size: 20px;
-    line-height: 20px;
+    font-size: 15px;
+    line-height: 10px;
     float: right;
 }
 .ticket_alert{
@@ -444,13 +446,20 @@ body.planning_mode .ausgaben_list{
 }
 .ticket_from{
     color: #AAA;
-    margin-bottom:5px;
+    margin-bottom:4px;
 }
 .tickets_category{
     margin-top: 15px;
 }
 .ticket_date{
     float:right;
+}
+.ticket_list{
+  font-size: 10px;
+}
+
+.new_ticket_text{
+  font-size: 11px;
 }
 
 h1 {
@@ -526,6 +535,10 @@ li .text {
     cursor: default;
 }
 
+.task_title_edit{
+  font-size:11px;
+}
+
 ul.task_log{
   display: none;
 }
@@ -550,7 +563,7 @@ padding: 5px;
     display: block;
     margin-top: 10px;
     margin-bottom: 10px;
-    width: 155px;
+    width: 140px;
     float: left;
     min-height: 280px;
     padding: 5px;
@@ -598,10 +611,10 @@ body.planning_mode .buttons{
 }
 
 .seite_ungerade{
-    width: 18px;
+    width: 16px;
 }
 .seite_gerade{
-    width:8px;
+    width:7px;
 }
 .seite_doppelseite{
     background-color: #ccc;
@@ -670,7 +683,7 @@ body.planning_mode .task_dropable:before{
 
 .seite_tools{
   margin-top: 5px;
- font-size: 22px;
+ font-size: 20px;
   cursor: pointer;
 
   -moz-user-select: none;
@@ -742,7 +755,7 @@ body.planning_mode .seite_bottom{
   background: transparent;
   border: none;
   width: 50%;
-
+  font-size: 11px;
 }
 
 .new-task input:focus{
@@ -827,6 +840,7 @@ ul {
 }
  .task-delete{
   cursor: pointer;
+  font-size: 13px;
  }
 
 .task_buttons{
@@ -885,8 +899,8 @@ line-height: 13px;
 
 
 .task_textsubmit_button{
-  background-color: #e2ffe1;
-  padding: 2px 5px;
+  background-color: #ffef00;
+  padding: 2px 3px;
   cursor: pointer;
   border-radius: 25px;
   z-index: 998;
@@ -970,7 +984,7 @@ line-height: 13px;
 .next_status{
   background-color: #999;
   color: #FFF;
-  padding:3px 6px 1px 6px;
+  padding:2px 5px 1px 5px;
   cursor: pointer;
 }
 
@@ -983,8 +997,9 @@ line-height: 13px;
 
 .select-status{
     margin: 2px 0 5px 0;
-    width: 110px;
+    width: 90px;
     border: 1px solid #888;
+    font-size:10px;
 }
 
 .select-web{
@@ -1046,7 +1061,7 @@ ul.header_status_total{
 
 ul.header_status_total li{
  display: inline-block;
-    font-size: 14px;
+    font-size: 10px;
     font-weight: bold;
     padding: 0;
     margin: 5px 1px 2px 1px;
@@ -1054,9 +1069,9 @@ ul.header_status_total li{
 }
 .header_status{
     font-weight: normal;
-    padding: 2px 5px 2px 0px;
+    padding: 0px 5px 0px 0px;
     display: block;
-    font-size: 11px;
+    font-size: 10px;
     margin-bottom: 3px;
 }
 
