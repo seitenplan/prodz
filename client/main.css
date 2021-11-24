@@ -587,6 +587,7 @@ body.planning_mode .seite_desc{
     border: none;
     background-color: transparent;
     font-family: helvetica,sans-serif;
+    font-size: 11px;
 }
 body.planning_mode .seite_edit_desc_top{
     display: inline;
