@@ -809,6 +809,7 @@ position: absolute;
   border: none;
   width: 80%;
     color: white;
+    font-size: 11px;
 }
 .seite_inserat input::placeholder {
     color: #ccc;
