@@ -2,6 +2,7 @@
 <body>
     <header>
       <div>
+
         <ul class="ausgaben_list">
           {{#each ausgaben}}
             <li class="ausgabe {{ausgabe_is_active}}" id="{{_id}}">
@@ -13,37 +14,33 @@
                 </div>
                 <div class="header_config_ausgabe">
                     <input class="ausgabe_rename" type="text" value="{{bezeichnung}}" name="rename"  size="10">
-                    <div>
-                    Erscheinungsdatum: <br><span class="ausgabe_erscheinungsdatum"><strong>{{formatDayDate erscheinungsdatum}} &#x270E;</strong></span></div>
-                    <div>
-                    Vorlage: <input type="checkbox" class="ausgabe_vorlage_checkbox" checked="{{vorlage}}"></div>
+                    <div>Erscheinungsdatum: <br><span class="ausgabe_erscheinungsdatum"><strong>{{formatDayDate erscheinungsdatum}} &#x270E;</strong></span></div>
+                    <div>Vorlage: <input type="checkbox" class="ausgabe_vorlage_checkbox" checked="{{vorlage}}"></div>
                     <span class="ausgabe_delete">&#x274C; löschen</span>
                 </div>
             </li>
           {{/each}}
 
           {{#each ausgaben_vorlagen}}
-<li class="ausgabe ausgabe_vorlage {{ausgabe_is_active}}" id="{{_id}}">
-    <div class="header_display_ausgabe">
-          <span class="ausgaben_titel">
-          <span class="no-web ausgabe_inline"> WOZ Nr. </span>{{bezeichnung}}</span>
-          <span class="no-print">({{ausgabe_count _id}}) <span class="ausgabe_edit">&#9881;</span></span>
-          <span class="ausgaben_datum"><span class="no-web ausgabe_inline">vom </span>{{formatDayDate erscheinungsdatum}}</span>
-    </div>
-    <div class="header_config_ausgabe">
-        <input class="ausgabe_rename" type="text" value="{{bezeichnung}}" name="rename"  size="25">
-        <div>
-        Erscheinungsdatum: <br><span class="ausgabe_erscheinungsdatum"><strong>{{formatDayDate erscheinungsdatum}} &#x270E;</strong></span></div>
-        <div>
-        Vorlage: <input type="checkbox" class="ausgabe_vorlage_checkbox" checked="{{vorlage}}"></div>
-        <span class="ausgabe_delete">&#x274C; löschen</span>
-    </div>
-</li>
+          <li class="ausgabe ausgabe_vorlage {{ausgabe_is_active}}" id="{{_id}}">
+              <div class="header_display_ausgabe">
+                    <span class="ausgaben_titel">
+                    <span class="no-web ausgabe_inline"> WOZ Nr. </span>{{bezeichnung}}</span>
+                    <span class="no-print">({{ausgabe_count _id}}) <span class="ausgabe_edit">&#9881;</span></span>
+                    <span class="ausgaben_datum"><span class="no-web ausgabe_inline">vom </span>{{formatDayDate erscheinungsdatum}}</span>
+              </div>
+              <div class="header_config_ausgabe">
+                  <input class="ausgabe_rename" type="text" value="{{bezeichnung}}" name="rename"  size="25">
+                  <div>Erscheinungsdatum: <br><span class="ausgabe_erscheinungsdatum"><strong>{{formatDayDate erscheinungsdatum}} &#x270E;</strong></span></div>
+                  <div>Vorlage: <input type="checkbox" class="ausgabe_vorlage_checkbox" checked="{{vorlage}}"></div>
+                  <span class="ausgabe_delete">&#x274C; löschen</span>
+              </div>
+          </li>
+          {{/each}}
 
-{{/each}}
-
-              <li class="header_currenttime">{{current_datetime}}</li>
+          <li class="header_currenttime">{{current_datetime}}</li>
         </ul>
+
         </div>
         <div class="ausgaben_config">
           <div class="ausgaben_config_section">
@@ -65,20 +62,18 @@
               {{/each}}
               </select><br>
               Neuer Name: <input type="text"  placeholder="Neue Ausgabe..." id="config_clone_name" size="12">
-
           </span>
                       </form>
           </li>
-            </ul>
+          </ul>
 
 </div>
   <div class="ausgaben_config_section">
               <div class="seiten_config">
 
-                                                                <h3>&#9660; Seiten-Funktionen (Ausgabe {{current_ausgabe_name}})</h3>
+                <h3>&#9660; Seiten-Funktionen (Ausgabe {{current_ausgabe_name}})</h3>
                 <ul>
                         <li>
-
                             <form class="neu_seite config_element">
                                 Neue Seite: <input type="text" name="text" placeholder="Nr" size="4"/>
                             </form>
@@ -94,7 +89,6 @@
                             <span class="config_new_28 config_button">28</span>
                             <span class="config_new_32 config_button">32</span></span>
                         </li>
-
                         <li>
                             <span class="config_element config_delete_seiten config_button">Alle Seiten löschen (Ausgabe)</span>
                             <span class="config_element config_delete_all config_button">Datenbank leeren (Global)</span>
@@ -102,7 +96,6 @@
 
                     </ul>
                 </div>
-
           </div>
           </div>
 
@@ -110,31 +103,27 @@
 
         <ul class="header_status_total">
                 {{#each status_list}}
-                        <li ><span class="header_status status_color{{@index}}">
-                        <input type="checkbox" name="{{@index}}" class="toggle_status_list">
-                        {{this}}</span>{{status_count @index}}</li>
+                    <li ><span class="header_status status_color{{@index}}">
+                    <input type="checkbox" name="{{@index}}" class="toggle_status_list">
+                    {{this}}</span>{{status_count @index}}</li>
                 {{/each}}
-                        <li><span class="header_picture_filter header_status">
-                        <input type="checkbox" class="toggle_picture_filter">Bild
-                        </span>{{picture_count}}</li>
+                    <li><span class="header_picture_filter header_status">
+                    <input type="checkbox" class="toggle_picture_filter">Bild
+                    </span>{{picture_count}}</li>
 
-                        <li><span class="header_legend_filter header_status">
-                        <input type="checkbox" class="toggle_legend_filter">Legende
-                        </span>{{legend_count}}</li>
+                    <li><span class="header_legend_filter header_status">
+                    <input type="checkbox" class="toggle_legend_filter">Legende
+                    </span>{{legend_count}}</li>
         </ul>
 
         <ul class="header_menu_right no-print">
-
-              <li><span class="header_toggle_planning_mode">&#128161;</span></li>
+            <li><span class="header_toggle_planning_mode">&#128161;</span></li>
             <li class="header_toggle_config_ausgaben {{display_if 'layout abschluss debug'}}"> &#9881;</li>
         </ul>
-
     </div>
-
     </header>
 
   <div class="container {{user_role}}">
-
 
     <div class="seiten_list seiten_break_{{page_breaks}}">
         <ul>
@@ -143,10 +132,21 @@
           {{/each}}
         </ul>
     </div>
+
+    <div class="second_right_column {{display_if 'debug'}}">
+      <div class="online_texte">
+        <b>🖥 Web-Texte</b>
+        <form class="new-web-task no-print">
+          {{#each web_tasks}}
+              {{> task}}
+          {{/each}}
+
+          <li class="task task_insert_end task_drag_body task_drag"> </li>
+            <input type="text" name="text" placeholder="Neuer Artikel" />
+        </form>
+        </div>
+    </div>
     <div class="right_column">
-
-
-
         <div class="ticket_container right_column_element {{show "layout,foto,abschluss"}}"><b>Tickets</b><br>
             <div class="tickets_category">Eingehend</div>
             <ul class="tickets">
@@ -156,29 +156,28 @@
                       <div>{{text}} <span class="ticket_check">&#x2713;</span></div>
                     </li>
                 {{/each}}
-             </ul>
+            </ul>
             <div class="tickets_category">Aufgegeben</div>
-            <ul class="tickets">
-                {{#each tickets_outbox}}
-                    <li class="ticket ticket_outbox {{ticket_status}}" id="{{_id}}">
-                        <div class="ticket_from">an {{to}} <span class="ticket_date">{{formatDate updatedAt}}</span></div>
-                      <div><span class="ticket_text">{{text}}</span>            <input type="text" name="ticket_text_edit" class="ticket_text_edit" value="{{text}}" size="10">
+                <ul class="tickets">
+                    {{#each tickets_outbox}}
+                        <li class="ticket ticket_outbox {{ticket_status}}" id="{{_id}}">
+                          <div class="ticket_from">an {{to}} <span class="ticket_date">{{formatDate updatedAt}}</span></div>
+                          <div><span class="ticket_text">{{text}}</span>            <input type="text" name="ticket_text_edit" class="ticket_text_edit" value="{{text}}" size="10">
 
                           <span class="ticket_delete">&#9587;</span><span class="ticket_edit">&#9998;</span> <span class="ticket_alert">&#9200;</span> <span class="ticket_check">&#x2713;</span></div>
-                    </li>
-                {{/each}}
-            </ul>
+                        </li>
+                    {{/each}}
+                </ul>
                 <div class="tickets_category">Neues Ticket</div>
-            <form class="new-ticket">
-                An: <select name="to" class="ticket_list">
-                 {{#each ticket_role_list}}
-                    <option {{this.[1]}} >{{this.[0]}} </option>
-                {{/each}}
-                </select>
-            <input type="text" name="text" class="new_ticket_text" placeholder="Neues Ticket" />
-
-        </form>
-        </div>
+                <form class="new-ticket">
+                  An: <select name="to" class="ticket_list">
+                    {{#each ticket_role_list}}
+                        <option {{this.[1]}} >{{this.[0]}} </option>
+                    {{/each}}
+                  </select>
+                  <input type="text" name="text" class="new_ticket_text" placeholder="Neues Ticket" />
+                </form>
+            </div>
 
         <div class="filtered_task_list_container right_column_element"><b>Todo</b><br>
             <ul class="filtered_task_list">
@@ -199,7 +198,6 @@
         </div>
 
     </div>
-
 
   </div>
 </body>

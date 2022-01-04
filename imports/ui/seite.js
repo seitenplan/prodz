@@ -209,7 +209,7 @@ Template.seite.events({
         new_seiten_id=this._id;
         new_order=(1000+previous_task_order*1)/2;
 
-      }else{
+      }else{ //= objekt ist task
         if($("#"+this._id).prev("li")[0]){ // gibt es ein vorheriges element?
             previous_task_order=$("#"+this._id).prev("li")[0].attributes.order.nodeValue;
         }
@@ -222,6 +222,7 @@ Template.seite.events({
           $set: {
             seiten_id: new_seiten_id,
             order:  new_order,
+            web: false,
             },
       });
   },

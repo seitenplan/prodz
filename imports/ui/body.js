@@ -267,6 +267,12 @@ Template.body.helpers({
   display_if: function(f){
     return (f.includes(route) && route!="")? "":"dont_display";
   },
+
+
+  web_tasks: function() {
+    return Tasks.find({"ausgaben_id":current_ausgabe.get(),"web":true}, { sort: { order: 1 } });
+  },
+
 });
 
 Template.body.events({
@@ -545,7 +551,6 @@ Template.body.events({
         layout_tasks_array.push([element,false]);
       });
 
-
       ausgaben_clone=Ausgaben.findOne({_id: $("#config_copy_from").val()});
       console.log(ausgaben_clone);
       clone_id=Ausgaben.insert({
@@ -556,47 +561,180 @@ Template.body.events({
 
       seiten_clone=Seiten.find({ausgaben_id: $("#config_copy_from").val()}).fetch();
       $(seiten_clone).each(function( index ) {
-        seiten_id=Seiten.insert({
-          nummer: seiten_clone[index].nummer,
-          createdAt: new Date(),
-          has_app: false,
-          has_pdf: false,
-          has_picture_edit: false,
-          ausgaben_id: clone_id,
-          has_inserat: seiten_clone[index].has_inserat,
-          inserat_desc:seiten_clone[index].inserat_desc,
-          desc:seiten_clone[index].desc,
-          linked_after: seiten_clone[index].linked_after,
-        });
-        tasks_clone=Tasks.find({seiten_id: seiten_clone[index]._id}).fetch();
-        $(tasks_clone).each(function( index ) {
-          var log;
-          Tasks.insert({
-              status:0,
-              seiten_id,
-              ausgaben_id:clone_id,
-              text:tasks_clone[index].text,
-              need_picture: tasks_clone[index].need_picture,
-              rf: tasks_clone[index].rf,
-              has_picture: tasks_clone[index].has_picture,
-              has_legend: tasks_clone[index].has_legend,
+          seiten_id=Seiten.insert({
+              nummer: seiten_clone[index].nummer,
               createdAt: new Date(),
-              updatedAt: new Date(),
-              order: tasks_clone[index].order,
-              length:tasks_clone[index].length,
-              author:tasks_clone[index].author,
-              date: tasks_clone[index].date,
-              desc:tasks_clone[index].desc,
-              collapsed: tasks_clone[index].collapsed,
-              texttype: tasks_clone[index].texttype,
-              textfields: tasks_clone[index].textfields,
-              log,
+              has_app: false,
+              has_pdf: false,
+              has_picture_edit: false,
+              ausgaben_id: clone_id,
+              has_inserat: seiten_clone[index].has_inserat,
+              inserat_desc:seiten_clone[index].inserat_desc,
+              desc:seiten_clone[index].desc,
+              linked_after: seiten_clone[index].linked_after,
           });
+          tasks_clone=Tasks.find({seiten_id: seiten_clone[index]._id}).fetch();
+          $(tasks_clone).each(function( index ) {
+              var log;
+              Tasks.insert({
+                  status:0,
+                  seiten_id,
+                  ausgaben_id:clone_id,
+                  text:tasks_clone[index].text,
+                  need_picture: tasks_clone[index].need_picture,
+                  rf: tasks_clone[index].rf,
+                  has_picture: tasks_clone[index].has_picture,
+                  has_legend: tasks_clone[index].has_legend,
+                  createdAt: new Date(),
+                  updatedAt: new Date(),
+                  order: tasks_clone[index].order,
+                  length:tasks_clone[index].length,
+                  author:tasks_clone[index].author,
+                  date: tasks_clone[index].date,
+                  desc:tasks_clone[index].desc,
+                  collapsed: tasks_clone[index].collapsed,
+                  texttype: tasks_clone[index].texttype,
+                  textfields: tasks_clone[index].textfields,
+                  web: tasks_clone[index].web,
+                  log,
+              });
+            }); // end tasks
+      }); // end seiten
 
+      tasks_web_clone=Tasks.find({web:true,ausgaben_id: $("#config_copy_from").val()}).fetch();
+      $(tasks_web_clone).each(function( index ) {
+        var log;
+        Tasks.insert({
+            status:0,
+            seiten_id:"",
+            ausgaben_id:clone_id,
+            text:tasks_web_clone[index].text,
+            need_picture: tasks_web_clone[index].need_picture,
+            rf: tasks_web_clone[index].rf,
+            has_picture: tasks_web_clone[index].has_picture,
+            has_legend: tasks_web_clone[index].has_legend,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+            order: tasks_web_clone[index].order,
+            length:tasks_web_clone[index].length,
+            author:tasks_web_clone[index].author,
+            date: tasks_web_clone[index].date,
+            desc:tasks_web_clone[index].desc,
+            collapsed: tasks_web_clone[index].collapsed,
+            texttype: tasks_web_clone[index].texttype,
+            textfields: tasks_web_clone[index].textfields,
+            web: tasks_web_clone[index].web,
+            log,
         });
       });
 
       $("#config_clone_name").val("");
   },
 
+
+      'submit .new-web-task'(event, template) {
+
+      event.preventDefault();
+
+      const target = event.target;
+      const text = target.text.value;
+      const seiten_id = "";
+      const ausgaben_id = current_ausgabe.get();
+      if(order= Tasks.findOne({"ausgaben_id":current_ausgabe.get(),},{sort:{order:-1}})){
+         order= order.order+1;
+      }else{
+          order=1;
+      }
+      var log;
+      Tasks.insert({
+          status:0,
+          seiten_id,
+          ausgaben_id,
+          text,
+          need_picture: false,
+          rf: false,
+          has_picture: false,
+          has_legend: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          order: order,
+          length:"",
+          author:"",
+          date: "?",
+          desc:"",
+          texttype:"nor",
+          textfields:texttype_textfields["nor"],
+          log,
+          web:true,
+      });
+
+      target.text.value = '';
+    },
+
+
+      // leider hier die sektion aus seite.js nochmals kopiert... könnte irgendwie wohl auch zusammengefasst werden
+      'dragstart' : function(e, t) {
+        $(".task_insert_end").show();
+          console.log(e);
+          console.log(t);
+      },
+
+      'dragenter li.task_drag' : function(e, t) {
+           $(".task").removeClass("task_dropable");
+          if(this.seiten_id==undefined){ // =  objekt ist Seite, ansonsten task
+           $("#task_insert_"+this._id).addClass("task_dropable");
+          }else{
+           $("#"+this._id).addClass("task_dropable");
+          }
+      },
+      'dragenter li.task_drag_body' : function(e, t) {
+           $(".task").removeClass("task_dropable");
+           $(".task_drag_body").addClass("task_dropable");
+
+      },
+      'dragover li.task_drag' : function(e, t) {
+            e.originalEvent.preventDefault();
+            e.originalEvent.dataTransfer.dropEffect = "grabbing";
+      },
+      'dragleave li.task_drag' : function(e, t) {
+          $(e.originalEvent.target).removeClass("task_dropable");
+      },
+      'dragend li.task_drag' : function(e, t) {
+            $(".task").removeClass("task_dropable");
+            $(".task_insert_end").hide();
+        },
+
+      'drop li.task_drag' : function(e, t) {
+          $(".task").removeClass("task_dropable");
+          $(".task_insert_end").hide();
+
+          original_id=e.originalEvent.dataTransfer.getData("text");
+          var previous_task_order=0;
+
+          if(this.seiten_id==undefined){ // =  objekt ist Seite, ansonsten Task
+            if($("#task_insert_"+this._id).prev("li")[0]){ // gibt es ein vorheriges element?
+                previous_task_order=$("#task_insert_"+this._id).prev("li")[0].attributes.order.nodeValue;
+            }
+            new_seiten_id=this._id;
+            new_order=(1000+previous_task_order*1)/2;
+
+          }else{ //= objekt ist task
+            if($("#"+this._id).prev("li")[0]){ // gibt es ein vorheriges element?
+                previous_task_order=$("#"+this._id).prev("li")[0].attributes.order.nodeValue;
+            }
+            new_seiten_id=this.seiten_id;
+            new_order=(this.order*1+previous_task_order*1)/2;
+          }
+          e.stopPropagation();
+          e.preventDefault();
+
+          Tasks.update(original_id, {
+              $set: {
+                seiten_id: "",
+                order:  new_order,
+                web: true,
+                },
+          });
+      },
+        // ende "leider hier..."
 });

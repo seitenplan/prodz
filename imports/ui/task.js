@@ -5,8 +5,8 @@ import { Config } from '../api/config.js';
 import './task.html';
 
 
-function task_status_update(id,new_status){
-    if(new_status!=10 || route=="abschluss"){ // only "abschluss"-role may change status 10
+function task_status_update(id,new_status,task){
+    if(((task.web && new_status!=6) || (!task.web && new_status!=10)) || route=="abschluss"){ // only "abschluss"-role may change status 10
     Tasks.update(id, {
         $set: {
             status:  new_status,
@@ -21,7 +21,7 @@ function task_status_update(id,new_status){
     }
 }
 
-function task_web_update(id,new_status){
+function task_web_update(id,new_status,task){
     console.log(new_status);
       Tasks.update(id, {
         $set: {
@@ -60,7 +60,7 @@ Template.task.helpers({
         return thisstatus == parentstatus ? 'selected' : '';
     },
     status_list: function(){
-       return status_list;
+      return this.web ? status_list_web : status_list;
     },
     nextStatusName: function(){
        return status_list[((1*this.status)+1)];
@@ -154,15 +154,15 @@ Template.task.events({
   },
 
   'click .next_status': function(e, template){
-      task_status_update(template.data._id, (template.data.status*1)+1);
+      task_status_update(template.data._id, (template.data.status*1)+1,this);
   },
 
   'change .select-status': function(e, template) {
-      task_status_update(template.data._id, e.target.value*1);
+      task_status_update(template.data._id, e.target.value*1,this);
   },
 
   'change .select-web': function(e, template) {
-      task_web_update(template.data._id, e.target.value);
+      task_web_update(template.data._id, e.target.value, this);
   },
 
   'click .toggle-edit'() {
@@ -216,7 +216,11 @@ Template.task.events({
   'click .task_texttype_button': function(){
     $(".task_add_dropdown").hide();
     $(".task_texttype_menu").not(".task_texttype_menu"+this._id).hide();
-    $(".task_texttype_menu"+this._id).toggle();
+    if($(".task_texttype_menu"+this._id).css("display")=="none"){
+      $(".task_texttype_menu"+this._id).css("display","grid");
+    }else{
+      $(".task_texttype_menu"+this._id).css("display","none");
+    }
   },
 
   'click .task_textsubmit_button': function(){
