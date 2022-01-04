@@ -931,13 +931,24 @@ line-height: 13px;
 }
 
 
-.task_textsubmit_button{
+.task_edit_button{
   background-color: #ffef00;
   padding: 2px 3px;
   cursor: pointer;
   border-radius: 25px;
   z-index: 998;
 }
+
+.task_icml_button{
+  background-color: #c0f8ff;
+  padding: 2px 10px;
+  cursor: pointer;
+  border-radius: 25px;
+  z-index: 998;
+  display: inline-block;
+}
+
+
 
 .task_texttype_menu{
     display: none;

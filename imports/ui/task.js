@@ -115,6 +115,14 @@ Template.task.helpers({
     display_if: function(f){
         return (f.includes(route) && route!="")? "":"dont_display";
     },
+    display_if_status: function(f){
+        positive_array=f.split(",");
+        return (f.includes(this.status))? "":"dont_display";
+    },
+    dont_display_if_status: function(f){
+        positive_array=f.split(",");
+        return (f.includes(this.status))? "dont_display":"";
+    },
     select_web_disabled: function(){
         return (route!="web")? "disabled":"";
     },
@@ -223,8 +231,12 @@ Template.task.events({
     }
   },
 
-  'click .task_textsubmit_button': function(){
-       window.open(text_submit_baseurl+this._id, '_blank').focus();
+  'click .task_edit_button': function(){
+       window.open(text_edit_url.replace("%TASK_ID%",this._id), '_blank').focus();
+    },
+
+  'click .task_icml_button': function(){
+       window.open(icml_download_url.replace("%TASK_ID%",this._id), '_blank').focus();
     },
 
   'change .task_plan_onchange': function(e){
