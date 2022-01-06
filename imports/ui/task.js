@@ -1,7 +1,7 @@
 import { Template } from 'meteor/templating';
 import { Tasks } from '../api/tasks.js';
 import { Seiten } from '../api/seiten.js';
-import { Config } from '../api/config.js';
+import { defaultConfig } from '../ui/config.js';
 import './task.html';
 
 
@@ -231,13 +231,15 @@ Template.task.events({
     }
   },
 
-  'click .task_edit_button': function(){
-       window.open(text_edit_url.replace("%TASK_ID%",this._id), '_blank').focus();
-    },
+  'click .task_edit_button': async function() {
+    const c = await defaultConfig().fetch();
+    window.open(c.text_edit_url.replace("%TASK_ID%", this._id), '_blank').focus();
+  },
 
-  'click .task_icml_button': function(){
-       window.open(icml_download_url.replace("%TASK_ID%",this._id), '_blank').focus();
-    },
+  'click .task_icml_button': async function() {
+    const c = await defaultConfig().fetch();
+    window.open(c.icml_download_url.replace("%TASK_ID%",this._id), '_blank').focus();
+  },
 
   'change .task_plan_onchange': function(e){
         Tasks.update(this._id, {
