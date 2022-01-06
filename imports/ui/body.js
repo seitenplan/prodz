@@ -1,7 +1,6 @@
 import { Template } from 'meteor/templating';
 import { Tasks } from '../api/tasks.js';
 import { Seiten } from '../api/seiten.js';
-import { Config } from '../api/config.js';
 import { Ausgaben } from '../api/ausgaben.js';
 import { Tickets } from '../api/tickets.js';
 import flatpickr from "flatpickr";
