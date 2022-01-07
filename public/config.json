@@ -1,0 +1,4 @@
+{
+  "text_edit_url": "https://prodsys2021-staging.schreibzeug.org/article-ui/#/text/submit/print/%TASK_ID%",
+  "icml_download_url": "https://prodsys2021-staging.schreibzeug.org/article-api/pageplan/%TASK_ID%/icml"
+}
