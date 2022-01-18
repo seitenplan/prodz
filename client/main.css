@@ -1032,6 +1032,7 @@ line-height: 13px;
   color: #FFF;
   padding:2px 5px 1px 5px;
   cursor: pointer;
+  margin-right: 5px;
 }
 
 .all_next_status{
@@ -1043,7 +1044,7 @@ line-height: 13px;
 
 .select-status{
     margin: 2px 0 5px 0;
-    width: 90px;
+    width: 80px;
     border: 1px solid #888;
     font-size:10px;
 }

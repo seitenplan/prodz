@@ -63,25 +63,19 @@
                 </span>
 
                 <span class="task_dragfield no-print" draggable="true" >&#x2195;</span>
-
-                <span class="task_texttype_button no-print {{display_if 'debug'}}">  ⌸</span>
+                <span class="task_texttype_button no-print">  ⚙</span>
                 <ul class="task_texttype_menu task_texttype_menu{{_id}}">
                   <li class="task_texttype_title">Auswahl Texttyp</li> <span class="task_texttype_close">×</span>
                       {{#each texttype_list}}
                           <li class="task_texttype_option task_texttype_select {{texttype_current this.type_id ../texttype }}">
                               <span class="task_texttype_option_title">{{this.title}}</span>
-
-                                                    <ul>{{#each this.examples}}
-                                                            <li>{{this}}</li>
-                                                    {{/each}}</ul>
-
-                                                  </li>
+                                  <ul>{{#each this.examples}}<li>{{this}}</li>{{/each}}
+                                  </ul>
+                          </li>
                       {{/each}}
                 </ul>
-
-                  <span class="task_edit_button no-print {{display_if 'debug'}}"> ✎ </span>
+                <span class="task_edit_button no-print"> ✎ </span>
             </div>
-
         </div>
 
         <div class="task_status_list {{dont_display_if 'web'}}">
@@ -90,9 +84,9 @@
                     <option {{isSelectedStatus @index ../status}} value="{{@index}}" class="status_color{{@index}}">{{this}}</option>
                 {{/each}}
             </select>
-            <span class="next_status {{lastStatus}} {{dont_display_if 'web'}} {{! dont_display_if_status '0,1,2'}}" > &#10145; </span>
-            <span class="task_edit_button no-print {{display_if 'debug'}} {{display_if_status '0,1,2'}}"> ✎ </span>
-            <span class="task_icml_button no-print {{display_if 'debug'}} {{display_if_status '3'}}"> ▼ ICML </span>
+            <span class="next_status {{lastStatus}} {{dont_display_if 'web'}} {{ dont_display_if_status '0,1,2'}}" > &#10145; </span>
+             <span class="task_edit_button no-print  {{display_if_status '0,1,2'}}"> ✎ </span>
+            <span class="task_icml_button no-print {{display_if 'layout debug'}} {{display_if_status '3'}}"> 🠇 icml </span>
         </div>
         <div class="task_functions">
             {{#if need_picture}}
