@@ -11,13 +11,18 @@ export class Config {
    * Construct new frontend configuration instance.
    *
    * @param {string} url Absolute URL to config.json. Defaults to /config.json
-   *                     relative to meteor base URL.
+   *                     relative to meteor base URL, but can be overriden by
+   *                     Meteor.settings.public.configUrl.
    */
   constructor(url = undefined) {
     if (url === undefined) {
-      const base = Meteor.absoluteUrl();
-      this.url = (new URL("config.json", base)).toString();
+      if (Meteor.settings.public.configUrl) {
+        url = Meteor.settings.public.configUrl
+      } else {
+        url = Meteor.absoluteUrl("config.json");
+      }
     }
+    this.url = url
   }
 
   /**
