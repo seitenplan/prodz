@@ -6,7 +6,7 @@ import './task.html';
 
 
 function task_status_update(id,new_status,task){
-    if(((task.web && new_status!=6) || (!task.web && new_status!=10)) || route=="abschluss"){ // only "abschluss"-role may change status 10
+    if(((task.webtext && new_status!=6) || (!task.webtext && new_status!=10)) || route=="abschluss"){ // only "abschluss"-role may change status 10
     Tasks.update(id, {
         $set: {
             status:  new_status,
@@ -25,7 +25,7 @@ function task_web_update(id,new_status,task){
     console.log(new_status);
       Tasks.update(id, {
         $set: {
-            web:  new_status,
+            web_release:  new_status,
         },
     });
 }
@@ -60,7 +60,7 @@ Template.task.helpers({
         return thisstatus == parentstatus ? 'selected' : '';
     },
     status_list: function(){
-      return this.web ? status_list_web : status_list;
+      return this.web_text ? status_list_web : status_list;
     },
     nextStatusName: function(){
        return status_list[((1*this.status)+1)];
@@ -106,8 +106,8 @@ Template.task.helpers({
     isSelectedDate: function(date) {
         return date == this.date ? 'selected' : '';
     },
-    isSelectedWeb: function(web) {
-        return web == this.web ? 'selected' : '';
+    isSelectedWeb: function(web_release) {
+        return web_release == this.web_release ? 'selected' : '';
     },
     dont_display_if: function(f){
         return (f.includes(route) && route!="")? "dont_display":"";
@@ -128,7 +128,7 @@ Template.task.helpers({
     },
     select_web_display: function(){
         console.log(route=="web")
-        return ((this.web && this.web!="") || route=="web")? "":"dont_display";
+        return ((this.web_release && this.web_release!="") || route=="web")? "":"dont_display";
     },
     texttype_list: function(){
          return texttype_list;

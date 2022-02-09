@@ -594,13 +594,14 @@ Template.body.events({
                   collapsed: tasks_clone[index].collapsed,
                   texttype: tasks_clone[index].texttype,
                   textfields: tasks_clone[index].textfields,
-                  web: tasks_clone[index].web,
+                  web_release: tasks_clone[index].web_release,
+                  webtext: tasks_clone[index].webtext,
                   log,
               });
             }); // end tasks
       }); // end seiten
 
-      tasks_web_clone=Tasks.find({web:true,ausgaben_id: $("#config_copy_from").val()}).fetch();
+      tasks_web_clone=Tasks.find({webtext:true,ausgaben_id: $("#config_copy_from").val()}).fetch();
       $(tasks_web_clone).each(function( index ) {
         var log;
         Tasks.insert({
@@ -622,7 +623,7 @@ Template.body.events({
             collapsed: tasks_web_clone[index].collapsed,
             texttype: tasks_web_clone[index].texttype,
             textfields: tasks_web_clone[index].textfields,
-            web: tasks_web_clone[index].web,
+            web_release: tasks_web_clone[index].web_release,
             log,
         });
       });
