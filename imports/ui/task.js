@@ -60,7 +60,7 @@ Template.task.helpers({
         return thisstatus == parentstatus ? 'selected' : '';
     },
     status_list: function(){
-      return this.web_text ? status_list_web : status_list;
+      return this.webtext ? status_list_web : status_list;
     },
     nextStatusName: function(){
        return status_list[((1*this.status)+1)];

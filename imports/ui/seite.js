@@ -222,7 +222,7 @@ Template.seite.events({
           $set: {
             seiten_id: new_seiten_id,
             order:  new_order,
-            web: false,
+            webtext: false,
             },
       });
   },

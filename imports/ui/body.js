@@ -82,7 +82,6 @@ function add_pages(nr,page_breaks){
           page_breaks: page_breaks,
                 },
         });
-
 }
 
 Template.body.rendered = function() {
@@ -269,7 +268,7 @@ Template.body.helpers({
 
 
   web_tasks: function() {
-    return Tasks.find({"ausgaben_id":current_ausgabe.get(),"web":true}, { sort: { order: 1 } });
+    return Tasks.find({"ausgaben_id":current_ausgabe.get(),"webtext":true}, { sort: { order: 1 } });
   },
 
 });
@@ -595,7 +594,7 @@ Template.body.events({
                   texttype: tasks_clone[index].texttype,
                   textfields: tasks_clone[index].textfields,
                   web_release: tasks_clone[index].web_release,
-                  webtext: tasks_clone[index].webtext,
+                  webtext: false,
                   log,
               });
             }); // end tasks
@@ -624,6 +623,7 @@ Template.body.events({
             texttype: tasks_web_clone[index].texttype,
             textfields: tasks_web_clone[index].textfields,
             web_release: tasks_web_clone[index].web_release,
+            webtext: true,
             log,
         });
       });
@@ -665,7 +665,7 @@ Template.body.events({
           texttype:"nor",
           textfields:texttype_textfields["nor"],
           log,
-          web:true,
+          webtext:true,
       });
 
       target.text.value = '';
@@ -732,7 +732,7 @@ Template.body.events({
               $set: {
                 seiten_id: "",
                 order:  new_order,
-                web: true,
+                webtext: true,
                 },
           });
       },
