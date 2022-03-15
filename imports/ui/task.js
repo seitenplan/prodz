@@ -116,11 +116,11 @@ Template.task.helpers({
 	},
 	display_if_status: function(f){
 		positive_array=f.split(",");
-		return (f.includes(this.status))? "":"dont_display";
+		return (f.includes(this.status) || this.webtext==true)? "":"dont_display";
 	},
 	dont_display_if_status: function(f){
 		positive_array=f.split(",");
-		return (f.includes(this.status))? "dont_display":"";
+		return (f.includes(this.status)|| this.webtext==true)? "dont_display":"";
 	},
 	select_web_disabled: function(){
 		return (route!="web")? "disabled":"";
