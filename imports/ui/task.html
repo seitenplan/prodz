@@ -3,7 +3,7 @@
       <div>
             <div  class="task_header">
                 <span class="task_title task_title_{{_id}}"  draggable="true">
-                <span class="task_title_seite">S. {{seitenNummer seiten_id}}: </span>{{text}}</span>
+                <span class="task_title_seite">{{seitenNummer seiten_id}}: </span>{{text}}</span>
                 <span class="updated updated_{{_id}} {{dont_display_if 'web'}}">{{formatDate updatedAt}}</span>
             </div>
 
@@ -79,14 +79,14 @@
         </div>
 
         <div class="task_status_list {{dont_display_if 'web'}}">
-            <select class="select-status status_color{{status}} ">
+            <select class="select-status {{#if webtext}}web_{{/if}}status_color{{status}} ">
                 {{#each status_list}}
-                    <option {{isSelectedStatus @index ../status}} value="{{@index}}" class="status_color{{@index}}">{{this}}</option>
+                    <option {{isSelectedStatus @index ../status}} value="{{@index}}" class="{{#if ../webtext}}web_{{/if}}status_color{{@index}}">{{this}}</option>
                 {{/each}}
             </select>
             <span class="next_status {{lastStatus}} {{dont_display_if 'web'}} {{ dont_display_if_status '0,1,2'}}" > &#10145; </span>
              <span class="task_edit_button no-print  {{display_if_status '0,1,2'}}"> ✎ </span>
-            <span class="task_icml_button no-print {{display_if 'layout debug'}} {{display_if_status '3'}}"> ➥ icml </span>
+            	{{#unless webtext}}<span class="task_icml_button no-print {{display_if 'layout debug'}} {{display_if_status '3'}}"> ➥ icml </span>{{/unless}}
         </div>
         <div class="task_functions">
             {{#if need_picture}}

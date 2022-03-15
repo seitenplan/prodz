@@ -134,6 +134,7 @@ Template.seite.events({
         has_picture: false,
         has_legend: false,
         createdAt: new Date(),
+        webtext:false,
         updatedAt: new Date(),
         order: order,
         length:"",

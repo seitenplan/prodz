@@ -101,20 +101,31 @@
 
         <div class="header_right">
 
-        <ul class="header_status_total">
+         <ul class="header_status_total">
+				<li>Print:</li>
                 {{#each status_list}}
                     <li ><span class="header_status status_color{{@index}}">
                     <input type="checkbox" name="{{@index}}" class="toggle_status_list">
-                    {{this}}</span>{{status_count @index}}</li>
+                    {{this}} ({{status_count @index}})</span></li>
                 {{/each}}
                     <li><span class="header_picture_filter header_status">
-                    <input type="checkbox" class="toggle_picture_filter">Bild
-                    </span>{{picture_count}}</li>
+                    <input type="checkbox" class="toggle_picture_filter">Bild: <strong>{{picture_count}}</strong>
+                    </span></li>
 
                     <li><span class="header_legend_filter header_status">
-                    <input type="checkbox" class="toggle_legend_filter">Legende
-                    </span>{{legend_count}}</li>
+                    <input type="checkbox" class="toggle_legend_filter">Legende: <strong>{{legend_count}}</strong>
+                    </span></li>
         </ul>
+		 <ul class="header_status_total {{display_if 'debug'}}">
+
+			 		<li>Web:</li>
+		{{#each web_status_list}}
+
+			<li ><span class="header_status web_status_color{{@index}}">
+			<input type="checkbox" name="{{@index}}" class="toggle_web_status_list">
+			{{this}} ({{web_status_count @index}})</span></li>
+		{{/each}}
+	</ul>
 
         <ul class="header_menu_right no-print">
             <li><span class="header_toggle_planning_mode">&#128161;</span></li>

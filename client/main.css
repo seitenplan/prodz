@@ -152,7 +152,7 @@ body.planning_mode header{
 
 .header_right{
     right: 0;
-    width: 65%;
+    width: 67%;
     float: right;
     text-align: right;
 }
@@ -302,7 +302,7 @@ font-weight: bold;
     font-size: 24px;
 }
 .ausgaben_list{
-    width: 35%;
+    width: 33%;
     float: left;
 }
 body.planning_mode .ausgaben_list{
@@ -1111,7 +1111,8 @@ body.planning_mode .header_status_total{
 ul.header_status_total{
     display: inline-block;
 
-    margin-right: 80px;
+    margin-right: 50px;
+	margin-top:5px;
 }
 
 ul.header_status_total li{
@@ -1119,7 +1120,7 @@ ul.header_status_total li{
     font-size: 10px;
     font-weight: bold;
     padding: 0;
-    margin: 5px 1px 2px 1px;
+    margin: 0 1px 0 1px;
     border: 0;
 }
 .header_status{
@@ -1167,10 +1168,31 @@ ul.header_status_total li{
 .status_color9{
     background-color:#f9ff6e;
 }
-
 .status_color10{
     background-color:#6dff6d;
 }
+
+
+
+.web_status_color0{
+    background-color:#FFF;
+}
+.web_status_color1{
+    background-color:#FFB9F1;
+}
+.web_status_color2{
+    background-color:#60d45c;
+}
+.web_status_color3{
+    background-color:#ff6a6a;
+}
+.web_status_color4{
+    background-color:#f9ff6e;
+}
+.web_status_color5{
+    background-color:#6dff6d;
+}
+
 
 .last-status{
     display:none;
