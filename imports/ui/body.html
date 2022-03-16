@@ -147,12 +147,13 @@
     <div class="second_right_column {{display_if 'debug'}}">
       <div class="online_texte">
         <b>🖥 Web-Texte</b>
-        <form class="new-web-task no-print">
           {{#each web_tasks}}
               {{> task}}
           {{/each}}
 
           <li class="task task_insert_end task_drag_body task_drag"> </li>
+
+          <form class="new-web-task no-print">
             <input type="text" name="text" placeholder="Neuer Artikel" />
         </form>
         </div>
