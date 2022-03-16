@@ -243,6 +243,11 @@ Template.task.events({
 	},
 
 	'click .task_icml_button': async function() {
+		Tasks.update(this._id, {
+			$set: {
+				icml_downloaded: true,
+			},
+		});
 		const c = await defaultConfig().fetch();
 		window.open(c.icml_download_url.replace("%TASK_ID%",this._id), '_blank').focus();
 	},
