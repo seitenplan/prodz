@@ -88,8 +88,7 @@
             <span class="next_status {{lastStatus}}  {{dont_display_if 'web'}} {{ dont_display_if_status '0,1,2'}}" > &#10145; </span>
              <span class="task_edit_button no-print  {{task_edit_showhide}} {{task_edit_disabled}}"> ✎ </span>
             	{{#unless webtext}}<span class="task_icml_button no-print {{display_if 'layout debug'}} {{display_if_status '3'}} {{#if icml_downloaded}}icml_downloaded{{/if}}"> ➥ icml </span>{{/unless}}
-				{{#if webtext}}<span class="task_icml_button no-print {{display_if 'web'}} {{display_if_status '5'}}"> ➥ web icml </span>{{/if}}
-
+				
         </div>
         <div class="task_functions">
             {{#if need_picture}}
