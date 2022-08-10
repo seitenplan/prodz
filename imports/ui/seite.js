@@ -143,6 +143,7 @@ Template.seite.events({
         desc:"",
         texttype:"nor",
         textfields:texttype_textfields["nor"],
+        icml_downloaded:false,
         log,
     });
 
@@ -224,6 +225,7 @@ Template.seite.events({
             seiten_id: new_seiten_id,
             order:  new_order,
             webtext: false,
+            status: 3,
             },
       });
   },

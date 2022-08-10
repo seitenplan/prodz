@@ -1067,6 +1067,7 @@ height: 15px;
     display: inline-block;
     margin-top: 5px;
     margin-bottom: 2px;
+	font-size: 10px;
 }
 
 :disabled{
