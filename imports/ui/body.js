@@ -622,6 +622,7 @@ Template.body.events({
 						textfields: tasks_clone[index].textfields,
 						web_release: tasks_clone[index].web_release,
 						webtext: false,
+				        icml_downloaded:false,
 						log,
 					});
 				}); // end tasks
@@ -650,6 +651,7 @@ Template.body.events({
 					texttype: tasks_web_clone[index].texttype,
 					textfields: tasks_web_clone[index].textfields,
 					web_release: tasks_web_clone[index].web_release,
+			        icml_downloaded:false,
 					webtext: true,
 					log,
 				});
@@ -693,6 +695,7 @@ Template.body.events({
 				textfields:texttype_textfields["nor"],
 				log,
 				webtext:true,
+		        icml_downloaded:false,
 			});
 
 			target.text.value = '';

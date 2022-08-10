@@ -30,6 +30,7 @@
                     <option value="Mo" {{isSelectedDate "Mo"}}>Mo</option>
                     <option value="Di" {{isSelectedDate "Di"}}>Di</option>
                     <option value="Mi" {{isSelectedDate "Mi"}}>Mi</option>
+                    <option value="Mi" {{isSelectedDate "Do"}}>Do</option>
                     </select>
                     <span class="task-delete no-print">&times;</span>
                 </li>
@@ -85,7 +86,7 @@
                 {{/each}}
             </select>
             <span class="next_status {{lastStatus}} {{dont_display_if 'web'}} {{ dont_display_if_status '0,1,2'}}" > &#10145; </span>
-             <span class="task_edit_button no-print  {{display_if_status '0,1,2'}}"> ✎ </span>
+             <span class="task_edit_button no-print  {{task_edit_showhide}} {{task_edit_disabled}}"> ✎ </span>
             	{{#unless webtext}}<span class="task_icml_button no-print {{display_if 'layout debug'}} {{display_if_status '3'}} {{#if icml_downloaded}}icml_downloaded{{/if}}"> ➥ icml </span>{{/unless}}
         </div>
         <div class="task_functions">

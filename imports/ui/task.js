@@ -138,7 +138,10 @@ Template.task.helpers({
 		return this.texttype == "nor" ? '' : 'task_texttype_notstandard';
 	},
 	task_edit_disabled: function(){
-		return this.status > 2 ? 'task_edit_disabled' : '';
+		return this.status > 2  ? 'task_edit_disabled' : '';
+	},
+	task_edit_showhide: function(){
+		return (this.status > 2 && route!="foto" && this.webtext!=true) ? 'dont_display' : '';
 	},
 
 

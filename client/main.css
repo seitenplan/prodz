@@ -63,7 +63,8 @@ body.planning_mode .seite_tools
 }
 
 body.planning_mode .seiten_list {
-    width: 100%;
+
+        width: calc(100% - 200px);
 }
 .task_planning{
     display: none;
@@ -1428,5 +1429,20 @@ ul.header_status_total li{
         font-size: 10px;
     }
 
+	.second_right_column{
+		position: unset;
+		right: unset;
+	}
+	.online_texte {
+		width: 90% !important;
+	}
+
+	.online_texte > li{
+	float:left;
+	display: block;
+	border: 1px solid black;
+	margin: 20px 5px 5px 5px;
+	width: 200px;
+	}
 
 }
