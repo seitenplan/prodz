@@ -1344,6 +1344,9 @@ ul.header_status_total li{
         float: right !important;
     }
 
+	.task_planning > ul > li.planning_dotted:last-of-type{
+		border: none !important;
+	}
     .task_planning input {
     font-size: 8px  !important;
   }
@@ -1353,7 +1356,7 @@ ul.header_status_total li{
       }
 
     .seiten_break_7 .seite{
-        width: 12.7% !important;
+        width: 13% !important;
     }
 
     .seiten_break_8 .seite{
@@ -1366,18 +1369,19 @@ ul.header_status_total li{
     }
 
     .seite{
-        min-height: 370px !important;
+        min-height: 260px !important;
     }
     .seite_after{
-        min-height: 360px !important;
+        min-height: 250px !important;
     }
 
     .seite.has_inserat{
-        min-height: 345px !important;
+        min-height: 235px !important;
     }
     .seite_gerade{
         width: 6px !important;
     }
+
 
     .ausgabe{
         display:none;
@@ -1431,19 +1435,33 @@ ul.header_status_total li{
     }
 
 	.second_right_column{
-		position: unset;
 		right: unset;
+		position: unset;
+		width: 100%;
+		float: left;
 	}
 	.online_texte {
 		width: 90% !important;
 	}
-
+	.online_texte > b{
+	float:left;
+	display: block;
+	width: 100%;
+	}
 	.online_texte > li{
 	float:left;
 	display: block;
+	width: 16%;
 	border: 1px solid black;
 	margin: 20px 5px 5px 5px;
-	width: 200px;
+	}
+	.online_texte .task_plan_desc{
+		overflow-y: auto !important;
+		padding-bottom: 15px;
+	}
+	.seiten_list{
+		        width: 100% !important;
+				margin: 0 !important;
 	}
 
 }
