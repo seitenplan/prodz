@@ -140,6 +140,9 @@ Template.task.helpers({
 	task_edit_disabled: function(){
 		return this.status > 2  ? 'task_edit_disabled' : '';
 	},
+	task_no_edit_button: function(){
+		return this.texttype=="none" ? 'dont_display' : '';
+	},
 	task_edit_showhide: function(){
 		return (this.status > 2 && route!="foto" && this.webtext!=true) ? 'dont_display' : '';
 	},

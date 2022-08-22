@@ -130,7 +130,7 @@ textarea{
 .task_dragfield{
     float:right;
     margin-right: 5px;
-    font-size: 14px;
+    font-size: 12px;
     cursor: move;
 }
 .container {
@@ -1027,6 +1027,7 @@ height: 15px;
     cursor: pointer;
     z-index: 998;
     float: right;
+	font-family: serif;
 }
 .header_legend_filter{
     background-color: #CCC;

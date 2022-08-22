@@ -60,10 +60,10 @@
                     {{/if}}
                 </span>
                 <span class="task_collapse no-print">
-                    {{#if collapsed}} &#9660; {{else}} &#9650; {{/if}}
+                    {{#if collapsed}} ▲ {{else}} ▼ {{/if}}
                 </span>
 
-                <span class="task_dragfield no-print" draggable="true" >&#x2195;</span>
+                <span class="task_dragfield no-print" draggable="true" >⤮</span>
                 <span class="task_texttype_button no-print {{task_texttype_notstandard}} {{task_edit_disabled}}">  ⚙</span>
                 <ul class="task_texttype_menu task_texttype_menu{{_id}}  {{task_edit_disabled}}">
                   <li class="task_texttype_title">Auswahl Texttyp</li> <span class="task_texttype_close">×</span>
@@ -75,7 +75,7 @@
                           </li>
                       {{/each}}
                 </ul>
-                <span class="task_edit_button no-print {{task_edit_disabled}}"> ✎ </span>
+                <span class="task_edit_button no-print {{task_edit_disabled}} {{task_no_edit_button}}"> ✎ </span>
             </div>
         </div>
 
@@ -86,9 +86,9 @@
                 {{/each}}
             </select>
             <span class="next_status {{lastStatus}}  {{dont_display_if 'web'}} {{ dont_display_if_status '0,1,2'}}" > &#10145; </span>
-             <span class="task_edit_button no-print  {{task_edit_showhide}} {{task_edit_disabled}}"> ✎ </span>
+             <span class="task_edit_button no-print  {{task_edit_showhide}} {{task_edit_disabled}} {{task_no_edit_button}}"> ✎ </span>
             	{{#unless webtext}}<span class="task_icml_button no-print {{display_if 'layout debug'}} {{display_if_status '3'}} {{#if icml_downloaded}}icml_downloaded{{/if}}"> ➥ icml </span>{{/unless}}
-				
+
         </div>
         <div class="task_functions">
             {{#if need_picture}}
