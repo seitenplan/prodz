@@ -46,6 +46,7 @@ body.planning_mode .online_texte{
 
 body.planning_mode .second_right_column{
 right: 10px;
+overflow-x: visible;
 }
 
 body.planning_mode .task{
@@ -375,7 +376,6 @@ body.planning_mode .ausgaben_list{
 .second_right_column{
   overflow-x: auto;
   overflow-y: clip;
-  max-height: 85%;
  position: fixed;
  right: 225px;
 }
@@ -972,6 +972,9 @@ height: 15px;
     width: 230px;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: masonry;
+}
+.second_right_column .task_texttype_menu{
+	right: 0;
 }
 
 .task_texttype_option{
