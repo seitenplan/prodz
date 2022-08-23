@@ -479,6 +479,7 @@ Template.body.events({
 				$set: {
 					ausgaben_id: this._id,
 					seiten_id:  target_seite._id,
+			        webtext:false,
 				},
 			});
 		}else{
