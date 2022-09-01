@@ -118,6 +118,9 @@ Template.task.helpers({
 		positive_array=f.split(",");
 		return (f.includes(this.status))? "":"dont_display";
 	},
+	display_icml_button: function(f){
+		return(this.status==3 || (this.status==7 && this.was_webtext==true))?"":"dont_display";
+	},
 	dont_display_if_status: function(f){
 		positive_array=f.split(",");
 		return (f.includes(this.status)|| this.webtext==true)? "dont_display":"";

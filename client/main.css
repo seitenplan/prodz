@@ -47,6 +47,7 @@ body.planning_mode .online_texte{
 body.planning_mode .second_right_column{
 right: 10px;
 overflow-x: visible;
+height: 100%;
 }
 
 body.planning_mode .task{
@@ -1407,7 +1408,9 @@ ul.header_status_total li{
     input:placeholder-shown, textarea:placeholder-shown{
         display:none;
     }
-
+	.seite_inserat input{
+		font-size: 8px;
+	}
 
       .no-print, .no-print *
     {

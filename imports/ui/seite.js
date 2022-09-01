@@ -220,12 +220,23 @@ Template.seite.events({
       }
       e.stopPropagation();
       e.preventDefault();
+	  dragged_task=Tasks.findOne(original_id);
+
+	  console.log(">>> "+dragged_task.webtext);
+	  if (dragged_task.webtext==true){
+		  newstatus=7;
+		  was_webtext=true;
+	  }else{
+		  newstatus=dragged_task.status;
+		  was_webtext=false;
+	  }
       Tasks.update(original_id, {
           $set: {
             seiten_id: new_seiten_id,
             order:  new_order,
             webtext: false,
-            status: 3,
+            status: newstatus,
+			was_webtext: was_webtext,
             },
       });
   },
