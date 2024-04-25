@@ -288,6 +288,9 @@ Template.body.helpers({
 		return Tasks.find({"ausgaben_id":current_ausgabe.get(),"webtext":true}, { sort: { order: 1 } });
 	},
 
+	connection_failed: function() {
+		return !Meteor.status().status.startsWith("connect");
+	}
 });
 
 Template.body.events({
@@ -767,5 +770,9 @@ Template.body.events({
 				},
 			});
 		},
+
+		'click .flash-action--reload' : function() {
+			window.location.reload();
+		}
 		// ende "leider hier..."
 	});

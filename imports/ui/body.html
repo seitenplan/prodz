@@ -212,4 +212,10 @@
     </div>
 
   </div>
+
+  {{#if connection_failed}}
+    <div class="flash flash--warning">
+      <p>Die Verbindung zum Server ist unterbrochen. <a class="flash-action flash-action--reload" href="#">Seite neu laden</a>.</p>
+    </div>
+  {{/if}}
 </body>
