@@ -22,9 +22,9 @@ current_web_status_filter=new ReactiveVar([]);
 current_picture_filter=new ReactiveVar(false);
 current_legend_filter=new ReactiveVar(false);
 
-var favicon=new Favico({
-	animation:'slide'
-});
+// var favicon=new Favico({
+// 	animation:'slide'
+// });
 
 
 function toggle_planning_mode(){
@@ -173,7 +173,7 @@ Template.body.helpers({
 	tickets_inbox() {
 		var inbox_tickets=Tickets.find({to:route, ausgaben_id: current_ausgabe.get()},{sort: { status:1, updatedAt: -1 } });
 		var inbox_tickets_undone=Tickets.find({to:route, ausgaben_id: current_ausgabe.get(),status:0},{}).count();
-		favicon.badge(inbox_tickets_undone);
+		// favicon.badge(inbox_tickets_undone);
 		document.title = "("+inbox_tickets_undone+") Seitenplan";
 		return inbox_tickets;
 	},
