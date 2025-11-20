@@ -354,7 +354,7 @@ Template.body.events({
 	'click .config_delete_all'() {
 		if(confirm('Achtung! Alle Augaben, Seiten, Artikel in der Datenbank werden gelöscht!')){
 			if(confirm('Wirklich ALLE DATEN löschen?')){
-				Meteor.call("deleteAll");
+				Meteor.callAsync("deleteAll");
 			}
 		}
 	},
@@ -362,7 +362,7 @@ Template.body.events({
 	'click .config_delete_seiten'() {
 		if(confirm('Achtung! Alle Seiten dieser Ausgabe werden gelöscht!')){
 			if(confirm('Wirklich ALLE SEITEN dieser Ausgabe löschen?')){
-				Meteor.call("deleteSeiten",current_ausgabe.get());
+				Meteor.callAsync("deleteSeiten",current_ausgabe.get());
 			}
 		}
 	},
@@ -437,7 +437,7 @@ Template.body.events({
 	'click .ausgabe_delete'() {
 		if(confirm('Ausgabe '+this.bezeichnung+' entfernen? ALLE Seiten und Artikel werden gelöscht!')){
 			if(confirm('Ausgabe '+this.bezeichnung+' WIRKLICH entfernen?')){
-				Meteor.call("removeAusgabe",this._id);
+				Meteor.callAsync("removeAusgabe",this._id);
 				location.reload();
 			}
 		}
