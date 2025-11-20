@@ -12,9 +12,6 @@ import './ticket.js';
 import './body.html';
 
 var _deps = new Tracker.Dependency;
-var status_filter = [];
-var picture_filter;
-var legend_filter;
 var planning_mode=false;
 current_ausgabe=new ReactiveVar(0);
 current_status_filter=new ReactiveVar([]);
@@ -302,17 +299,17 @@ Template.body.helpers({
 Template.body.events({
 
 	'change .toggle_status_list': function(e){
-		status_filter = Array.from(document.querySelectorAll('.toggle_status_list:checked:enabled')).map(function(element) {
+		const status_filter = Array.from(document.querySelectorAll('.toggle_status_list:checked:enabled')).map(function(element) {
 			return parseInt(element.getAttribute("name"));
 		});
-		current_status_filter.set([...status_filter]);
+		current_status_filter.set(status_filter);
 	},
 
 	'change .toggle_web_status_list': function(e){
-		web_status_filter = Array.from(document.querySelectorAll('.toggle_web_status_list:checked:enabled')).map(function(element) {
+		const web_status_filter = Array.from(document.querySelectorAll('.toggle_web_status_list:checked:enabled')).map(function(element) {
 			return parseInt(element.getAttribute("name"));
 		});
-		current_web_status_filter.set([...web_status_filter]);
+		current_web_status_filter.set(web_status_filter);
 	},
 
 
