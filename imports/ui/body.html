@@ -159,7 +159,7 @@
         </div>
     </div>
     <div class="right_column">
-        <div class="ticket_container right_column_element {{show "layout,foto,abschluss"}}"><b>Tickets</b><br>
+        <div class="ticket_container right_column_element {{show 'layout,foto,abschluss'}}"><b>Tickets</b><br>
             <div class="tickets_category">Eingehend</div>
             <ul class="tickets">
                 {{#each tickets_inbox}}
@@ -199,7 +199,7 @@
             </ul>
         </div>
 
-        <div class="layout_tasks_container right_column_element {{show "layout"}}"><b>Mittwochstodo</b><br>
+        <div class="layout_tasks_container right_column_element {{show 'layout'}}"><b>Mittwochstodo</b><br>
             <ul class="layout_tasks">
                 {{#each layout_task_list}}
                 <li class="layout_task {{layout_task_status}}" name="{{@index}}">

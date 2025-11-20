@@ -467,8 +467,6 @@ Template.body.events({
 
 
 	'drop li.ausgabe' : function(e, t) {
-		$(".ausgabe").removeClass("ausgabe_dropable");
-
 		e.stopPropagation();
 		e.preventDefault();
 		task_id=e.originalEvent.dataTransfer.getData("text");
@@ -497,7 +495,8 @@ Template.body.events({
 	'click .layout_task'(e,t) {
 		var ausgabe=Ausgaben.findOne({_id:current_ausgabe.get()});
 		var layout_tasks_new=ausgabe.layout_tasks;
-		var update_index=$(e.currentTarget).attr("name");
+		const update_index = parseInt(e.currentTarget.getAttribute("name"));
+
 		layout_tasks_new[update_index]=[layout_tasks_new[update_index][0],!layout_tasks_new[update_index][1]];
 
 		Ausgaben.update(current_ausgabe.get(), {
