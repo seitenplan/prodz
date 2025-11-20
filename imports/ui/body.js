@@ -301,22 +301,18 @@ Template.body.helpers({
 
 Template.body.events({
 
-	'click .toggle_status_list': function(e){
-		$(e.currentTarget).attr("checked", ! $(e.currentTarget).attr("checked"));
-
-		status_filter = $('.toggle_status_list:checked:enabled').map(function(index) {
-			return $(this).attr("name")*1;
+	'change .toggle_status_list': function(e){
+		status_filter = Array.from(document.querySelectorAll('.toggle_status_list:checked:enabled')).map(function(element) {
+			return parseInt(element.getAttribute("name"));
 		});
-		current_status_filter.set($.makeArray(status_filter));
+		current_status_filter.set([...status_filter]);
 	},
 
-	'click .toggle_web_status_list': function(e){
-		$(e.currentTarget).attr("checked", ! $(e.currentTarget).attr("checked"));
-
-		web_status_filter = $('.toggle_web_status_list:checked:enabled').map(function(index) {
-			return $(this).attr("name")*1;
+	'change .toggle_web_status_list': function(e){
+		web_status_filter = Array.from(document.querySelectorAll('.toggle_web_status_list:checked:enabled')).map(function(element) {
+			return parseInt(element.getAttribute("name"));
 		});
-		current_web_status_filter.set($.makeArray(web_status_filter));
+		current_web_status_filter.set([...web_status_filter]);
 	},
 
 
