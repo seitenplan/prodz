@@ -43,22 +43,21 @@ function toggle_planning_mode(){
 	}
 
 	if(planning_mode){
-		$(document.body).addClass('planning_mode');
-		$('textarea').each(function () {
-			//              this.setAttribute('style', 'height:1em;overflow-y:hidden;');
-			this.setAttribute('style', 'overflow-y:hidden;');
+		document.body.classList.add('planning_mode');
+		document.querySelectorAll('textarea').forEach(function (textarea) {
+			textarea.style.overflowY = 'hidden';
+			textarea.style.height = 'auto';
+			textarea.style.height = textarea.scrollHeight + 'px';
 
-			this.style.height = 'auto';
-			this.style.height = (this.scrollHeight) + 'px';
-		}).on('input', function () {
-			this.style.height = 'auto';
-			this.style.height = (this.scrollHeight) + 'px';
+			textarea.addEventListener('input', function () {
+				textarea.style.height = 'auto';
+				textarea.style.height = textarea.scrollHeight + 'px';
+			});
 		});
 
 
 	}else{
-		$(document.body).removeClass('planning_mode');
-
+		document.body.classList.remove('planning_mode');
 	}
 
 }
