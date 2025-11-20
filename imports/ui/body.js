@@ -12,9 +12,6 @@ import './ticket.js';
 import './body.html';
 
 var _deps = new Tracker.Dependency;
-var status_filter = [];
-var picture_filter;
-var legend_filter;
 var planning_mode=false;
 current_ausgabe=new ReactiveVar(0);
 current_status_filter=new ReactiveVar([]);
@@ -43,22 +40,21 @@ function toggle_planning_mode(){
 	}
 
 	if(planning_mode){
-		$(document.body).addClass('planning_mode');
-		$('textarea').each(function () {
-			//              this.setAttribute('style', 'height:1em;overflow-y:hidden;');
-			this.setAttribute('style', 'overflow-y:hidden;');
+		document.body.classList.add('planning_mode');
+		document.querySelectorAll('textarea').forEach(function (textarea) {
+			textarea.style.overflowY = 'hidden';
+			textarea.style.height = 'auto';
+			textarea.style.height = textarea.scrollHeight + 'px';
 
-			this.style.height = 'auto';
-			this.style.height = (this.scrollHeight) + 'px';
-		}).on('input', function () {
-			this.style.height = 'auto';
-			this.style.height = (this.scrollHeight) + 'px';
+			textarea.addEventListener('input', function () {
+				textarea.style.height = 'auto';
+				textarea.style.height = textarea.scrollHeight + 'px';
+			});
 		});
 
 
 	}else{
-		$(document.body).removeClass('planning_mode');
-
+		document.body.classList.remove('planning_mode');
 	}
 
 }
@@ -89,13 +85,18 @@ Template.body.rendered = function() {
 	if(!this._rendered) {
 
 		// ROUTING VIEWS
-		$(load_status).each(function( index ) {
-			$(".toggle_status_list[name='"+this+"']").prop( "checked", true );
+		load_status.forEach(( value ) => {
+			document.querySelectorAll(".toggle_status_list[name='"+value+"']").forEach(element => {
+				element.checked = true;
+			});
 		});
 
-		$(web_load_status).each(function( index ) {
-			$(".toggle_web_status_list[name='"+this+"']").prop( "checked", true );
+		web_load_status.forEach(( value ) => {
+			document.querySelectorAll(".toggle_web_status_list[name='"+value+"']").forEach(element => {
+				element.checked = true;
+			});
 		});
+
 		if(planning_url==true){
 			toggle_planning_mode();
 		}
@@ -103,7 +104,9 @@ Template.body.rendered = function() {
 		current_web_status_filter.set(web_load_status);
 
 		if(load_picture){
-			$(".toggle_picture_filter").prop("checked",true);
+			document.querySelectorAll(".toggle_picture_filter").forEach(element => {
+				element.checked = true;
+			});
 			current_picture_filter.set(true);
 		}
 
@@ -295,34 +298,28 @@ Template.body.helpers({
 
 Template.body.events({
 
-	'click .toggle_status_list': function(e){
-		$(e.currentTarget).attr("checked", ! $(e.currentTarget).attr("checked"));
-
-		status_filter = $('.toggle_status_list:checked:enabled').map(function(index) {
-			return $(this).attr("name")*1;
+	'change .toggle_status_list': function(e){
+		const status_filter = Array.from(document.querySelectorAll('.toggle_status_list:checked:enabled')).map(function(element) {
+			return parseInt(element.getAttribute("name"));
 		});
-		current_status_filter.set($.makeArray(status_filter));
+		current_status_filter.set(status_filter);
 	},
 
-	'click .toggle_web_status_list': function(e){
-		$(e.currentTarget).attr("checked", ! $(e.currentTarget).attr("checked"));
-
-		web_status_filter = $('.toggle_web_status_list:checked:enabled').map(function(index) {
-			return $(this).attr("name")*1;
+	'change .toggle_web_status_list': function(e){
+		const web_status_filter = Array.from(document.querySelectorAll('.toggle_web_status_list:checked:enabled')).map(function(element) {
+			return parseInt(element.getAttribute("name"));
 		});
-		current_web_status_filter.set($.makeArray(web_status_filter));
+		current_web_status_filter.set(web_status_filter);
 	},
 
 
-	'click .toggle_picture_filter': function(e){
-		$(e.currentTarget).attr("checked", ! $(e.currentTarget).attr("checked"));
-		current_picture_filter.set( $(e.currentTarget).prop("checked"));
+	'change .toggle_picture_filter': function(e){
+		current_picture_filter.set(e.currentTarget.checked);
 		_deps.changed();
 	},
 
-	'click .toggle_legend_filter': function(e){
-		$(e.currentTarget).attr("checked", ! $(e.currentTarget).attr("checked"));
-		current_legend_filter.set($(e.currentTarget).prop("checked"));
+	'change .toggle_legend_filter': function(e){
+		current_legend_filter.set(e.currentTarget.checked);
 	},
 
 
@@ -470,8 +467,6 @@ Template.body.events({
 
 
 	'drop li.ausgabe' : function(e, t) {
-		$(".ausgabe").removeClass("ausgabe_dropable");
-
 		e.stopPropagation();
 		e.preventDefault();
 		task_id=e.originalEvent.dataTransfer.getData("text");
@@ -500,7 +495,8 @@ Template.body.events({
 	'click .layout_task'(e,t) {
 		var ausgabe=Ausgaben.findOne({_id:current_ausgabe.get()});
 		var layout_tasks_new=ausgabe.layout_tasks;
-		var update_index=$(e.currentTarget).attr("name");
+		const update_index = parseInt(e.currentTarget.getAttribute("name"));
+
 		layout_tasks_new[update_index]=[layout_tasks_new[update_index][0],!layout_tasks_new[update_index][1]];
 
 		Ausgaben.update(current_ausgabe.get(), {
