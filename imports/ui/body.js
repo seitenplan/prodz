@@ -320,15 +320,13 @@ Template.body.events({
 	},
 
 
-	'click .toggle_picture_filter': function(e){
-		$(e.currentTarget).attr("checked", ! $(e.currentTarget).attr("checked"));
-		current_picture_filter.set( $(e.currentTarget).prop("checked"));
+	'change .toggle_picture_filter': function(e){
+		current_picture_filter.set(e.currentTarget.checked);
 		_deps.changed();
 	},
 
-	'click .toggle_legend_filter': function(e){
-		$(e.currentTarget).attr("checked", ! $(e.currentTarget).attr("checked"));
-		current_legend_filter.set($(e.currentTarget).prop("checked"));
+	'change .toggle_legend_filter': function(e){
+		current_legend_filter.set(e.currentTarget.checked);
 	},
 
 

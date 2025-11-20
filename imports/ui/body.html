@@ -109,11 +109,11 @@
                     {{this}} ({{status_count @index}})</span></li>
                 {{/each}}
                     <li><span class="header_picture_filter header_status">
-                    <input type="checkbox" class="toggle_picture_filter">Bild: <strong>{{picture_count}}</strong>
+                    <input id="toggle_picture_filter" type="checkbox" class="toggle_picture_filter" /><label for="toggle_picture_filter">Bild: <strong>{{picture_count}}</strong></label>
                     </span></li>
 
                     <li><span class="header_legend_filter header_status">
-                    <input type="checkbox" class="toggle_legend_filter">Legende: <strong>{{legend_count}}</strong>
+                    <input id="toggle_legend_filter" type="checkbox" class="toggle_legend_filter" /><label for="toggle_legend_filter">Legende: <strong>{{legend_count}}</strong></label>
                     </span></li>
         </ul>
 		 <ul class="header_status_total">
