@@ -13,27 +13,27 @@ import { Ausgaben } from '../imports/api/ausgaben.js';
 Meteor.startup(() => {
      Meteor.methods({
 
-        "removeSeite": function(seiten_id) {
-            Seiten.remove(seiten_id);
-            Tasks.remove({"seiten_id":seiten_id});
+        "removeSeite": async function(seiten_id) {
+            await Seiten.removeAsync(seiten_id);
+            await Tasks.removeAsync({"seiten_id":seiten_id});
         },
          
 
-        "removeAusgabe": function(ausgaben_id) {
-            Ausgaben.remove(ausgaben_id);
-           Seiten.remove({"ausgaben_id":ausgaben_id});
-           Tasks.remove({"ausgaben_id":ausgaben_id});
+        "removeAusgabe": async function(ausgaben_id) {
+            await Seiten.removeAsync({"ausgaben_id":ausgaben_id});
+            await Tasks.removeAsync({"ausgaben_id":ausgaben_id});
+            await Ausgaben.removeAsync(ausgaben_id);
         },
          
          
-        "deleteAll": function() {
-            Seiten.remove({});
-            Ausgaben.remove({});
-            Tasks.remove({});
+        "deleteAll": async function() {
+            await Seiten.removeAsync({});
+            await Ausgaben.removeAsync({});
+            await Tasks.removeAsync({});
         },
-        "deleteSeiten": function(ausgaben_id) {
-           Seiten.remove({"ausgaben_id":ausgaben_id});
-           Tasks.remove({"ausgaben_id":ausgaben_id});
+        "deleteSeiten": async function(ausgaben_id) {
+           await Seiten.removeAsync({"ausgaben_id":ausgaben_id});
+           await Tasks.removeAsync({"ausgaben_id":ausgaben_id});
         }
 
 

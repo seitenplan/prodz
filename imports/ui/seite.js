@@ -80,7 +80,7 @@ Template.seite.events({
 
   'click .delete'() {
       if(confirm('Seite '+this.nummer+' entfernen?')){
-        Meteor.call("removeSeite",this._id);
+        Meteor.callAsync("removeSeite",this._id);
     }
   },
 
