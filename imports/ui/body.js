@@ -88,13 +88,18 @@ Template.body.rendered = function() {
 	if(!this._rendered) {
 
 		// ROUTING VIEWS
-		$(load_status).each(function( index ) {
-			$(".toggle_status_list[name='"+this+"']").prop( "checked", true );
+		load_status.forEach(( value ) => {
+			document.querySelectorAll(".toggle_status_list[name='"+value+"']").forEach(element => {
+				element.checked = true;
+			});
 		});
 
-		$(web_load_status).each(function( index ) {
-			$(".toggle_web_status_list[name='"+this+"']").prop( "checked", true );
+		web_load_status.forEach(( value ) => {
+			document.querySelectorAll(".toggle_web_status_list[name='"+value+"']").forEach(element => {
+				element.checked = true;
+			});
 		});
+
 		if(planning_url==true){
 			toggle_planning_mode();
 		}
@@ -102,7 +107,9 @@ Template.body.rendered = function() {
 		current_web_status_filter.set(web_load_status);
 
 		if(load_picture){
-			$(".toggle_picture_filter").prop("checked",true);
+			document.querySelectorAll(".toggle_picture_filter").forEach(element => {
+				element.checked = true;
+			});
 			current_picture_filter.set(true);
 		}
 
