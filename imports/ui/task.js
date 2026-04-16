@@ -138,7 +138,7 @@ Template.task.helpers({
 		return this_text_id == parent_text_id ? 'texttype_current' : '';
 	},
 	task_texttype_notstandard: function(){
-		return this.texttype == "nor" ? '' : 'task_texttype_notstandard';
+		return this.texttype == "2026_normal" ? '' : 'task_texttype_notstandard';
 	},
 	task_edit_disabled: function(){
 		return this.status > 2  ? 'task_edit_disabled' : '';

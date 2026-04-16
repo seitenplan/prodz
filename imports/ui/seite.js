@@ -141,8 +141,8 @@ Template.seite.events({
         author:"",
         date: "?",
         desc:"",
-        texttype:"nor",
-        textfields:texttype_textfields["nor"],
+        texttype:"2026_normal",
+        textfields:texttype_textfields["2026_normal"],
         icml_downloaded:false,
         log,
     });
