@@ -1,4 +1,7 @@
 <template name="seite">
+    {{#if flex_page_break}}
+        <li class="page_row_break"></li>
+    {{/if}}
     <li class="seite seite_break {{page_break}} {{page_pdf}} {{has_inserat}}" id="{{_id}}">
         <b>{{nummer}} <span class="seite_desc">{{desc}}</span></b>
         <input type="text" name="seite_edit_desc_top" class="seite_edit_desc_top" value="{{desc}}">

@@ -52,6 +52,13 @@ Template.seite.helpers({
         var breaks=Ausgaben.findOne({_id:current_ausgabe.get()}).page_breaks;
        return (((this.nummer-1)/breaks)==Math.round((this.nummer-1)/breaks)) ? "page_break": "";
     },
+    flex_page_break : function(){
+        var ausgabe=Ausgaben.findOne({_id:current_ausgabe.get()});
+        if(!ausgabe || !ausgabe.page_breaks || this.nummer <= 1){
+            return false;
+        }
+        return ((this.nummer-1) % ausgabe.page_breaks) === 0;
+    },
     page_odd_even: function(){
         return (this.nummer%2 == 0) ? "seite_gerade":"seite_ungerade";
     },

@@ -19,6 +19,26 @@ current_web_status_filter=new ReactiveVar([]);
 current_picture_filter=new ReactiveVar(false);
 current_legend_filter=new ReactiveVar(false);
 
+var APP_BASE_WIDTH = 1440;
+var APP_MIN_SCALE = 0.7;
+
+function update_app_zoom(){
+	var zoom_frame = document.querySelector('.app_zoom_frame');
+	if(!zoom_frame){
+		return;
+	}
+
+	var scale = Math.min(1, Math.max(APP_MIN_SCALE, window.innerWidth / APP_BASE_WIDTH));
+	var board_width = Math.ceil(window.innerWidth / scale);
+	var board_height = Math.max(720, Math.ceil(window.innerHeight / scale));
+
+	zoom_frame.style.setProperty('--app-scale', scale);
+	zoom_frame.style.setProperty('--app-board-width', board_width + 'px');
+	zoom_frame.style.setProperty('--app-board-height', board_height + 'px');
+}
+
+window.addEventListener('resize', update_app_zoom);
+
 // var favicon=new Favico({
 // 	animation:'slide'
 // });
@@ -57,6 +77,8 @@ function toggle_planning_mode(){
 		document.body.classList.remove('planning_mode');
 	}
 
+	update_app_zoom();
+
 }
 function add_pages(nr,page_breaks){
 	for (var i = 1; i <= nr; i++){
@@ -83,6 +105,7 @@ function add_pages(nr,page_breaks){
 
 Template.body.rendered = function() {
 	if(!this._rendered) {
+		update_app_zoom();
 
 		// ROUTING VIEWS
 		load_status.forEach(( value ) => {
