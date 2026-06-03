@@ -19,8 +19,26 @@ current_web_status_filter=new ReactiveVar([]);
 current_picture_filter=new ReactiveVar(false);
 current_legend_filter=new ReactiveVar(false);
 
-var APP_BASE_WIDTH = 1440;
-var APP_MIN_SCALE = 0.7;
+var APP_DEFAULT_BASE_WIDTH = 1440;
+var APP_DEFAULT_MIN_SCALE = 0.7;
+var APP_BASE_WIDTH = get_app_zoom_number('zoombase', APP_DEFAULT_BASE_WIDTH, 320, 4000);
+var APP_MIN_SCALE = get_app_zoom_number('minscale', APP_DEFAULT_MIN_SCALE, 0.3, 1);
+
+function get_app_zoom_number(name, fallback, min, max){
+	var value = parseFloat(new URLSearchParams(window.location.search).get(name));
+	if(isNaN(value)){
+		return fallback;
+	}
+	return Math.min(max, Math.max(min, value));
+}
+
+function get_app_query_params(){
+	var query_params = {};
+	new URLSearchParams(window.location.search).forEach(function(value, key){
+		query_params[key] = value;
+	});
+	return query_params;
+}
 
 function update_app_zoom(){
 	var zoom_frame = document.querySelector('.app_zoom_frame');
@@ -53,10 +71,10 @@ function toggle_planning_mode(){
 		url_planning_param="";
 	}
 	if(route){
-		FlowRouter.go('url_with_role', { route: route , planung: url_planning_param });
+		FlowRouter.go('url_with_role', { route: route , planung: url_planning_param }, get_app_query_params());
 	}else{
 
-		FlowRouter.go('url_without_role', { planung: url_planning_param });
+		FlowRouter.go('url_without_role', { planung: url_planning_param }, get_app_query_params());
 	}
 
 	if(planning_mode){
