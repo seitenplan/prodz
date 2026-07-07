@@ -17,7 +17,7 @@ body {
   right: 0;
   padding: 0;
   margin: 0;
-  font-size: 11px;
+  font-size: calc(11px * var(--app-type-scale, 1));
 
   position: relative;
 
@@ -34,6 +34,7 @@ body {
 
 .app_zoom_frame {
   --app-scale: 1;
+  --app-type-scale: 0.95;
   --app-board-width: 100vw;
   --app-board-height: 100vh;
   width: var(--app-board-width);
@@ -42,6 +43,7 @@ body {
   min-height: 720px;
   display: flex;
   flex-direction: column;
+  font-size: calc(11px * var(--app-type-scale, 1));
   zoom: var(--app-scale);
 }
 
@@ -134,7 +136,7 @@ textarea{
 .task_plan_date{
     border: none;
     width: 18px;
-    font-size:10px;
+    font-size: calc(10px * var(--app-type-scale, 1));
 }
 
 .planning_dotted{
@@ -143,7 +145,7 @@ textarea{
 }
 .task_planning input{
     border:none;
-    font-size: 11px;
+    font-size: calc(11px * var(--app-type-scale, 1));
 }
 .task_plan_title{
     width: 73%;
@@ -154,7 +156,7 @@ textarea{
 .task_plan_desc{
     width: 100%;
     border: none;
-    font-size: 11px;
+    font-size: calc(11px * var(--app-type-scale, 1));
 }
 
 .task_plan_author{
@@ -165,12 +167,12 @@ textarea{
     color: #666;
     padding: 2px 5px;
     cursor: pointer;
-    font-size: 11px;
+    font-size: calc(11px * var(--app-type-scale, 1));
 }
 .task_dragfield{
     float:right;
     margin-right: 5px;
-    font-size: 12px;
+    font-size: calc(12px * var(--app-type-scale, 1));
     cursor: move;
 }
 .container {
@@ -224,7 +226,7 @@ background-color: #FFF;
     display:none;
 }
 .header_menu_right li.header_toggle_config_seiten{
-  font-size: 20px;
+  font-size: calc(20px * var(--app-type-scale, 1));
   cursor: pointer;
     display:none;
 }
@@ -243,7 +245,7 @@ display: block;
 }
 
 .header_toggle_config_ausgaben{
-  font-size: 25px;
+  font-size: calc(25px * var(--app-type-scale, 1));
   cursor: pointer;
   position: relative;
     padding: 2px;
@@ -275,7 +277,7 @@ padding: 0;
 background-color: #c3fbc3;
 }
 body.header_ausgaben_config .header_config_ausgabe .config_show{
-      font-size: 12px;
+      font-size: calc(12px * var(--app-type-scale, 1));
       display:block;
       padding: 5px 0px;
 }
@@ -285,7 +287,7 @@ body.header_ausgaben_config .header_config_ausgabe .config_show{
 }
 .ausgabe_edit{
   display: none;
-  font-size: 18px;
+  font-size: calc(18px * var(--app-type-scale, 1));
 }
 body.header_ausgaben_config.planning_mode .ausgabe_edit{
   display: inline;
@@ -322,10 +324,10 @@ body.header_ausgaben_config.planning_mode .ausgaben_config{
 .config_element{
   margin: 5px 0;
     display: block;
-    line-height: 22px;
+    line-height: calc(22px * var(--app-type-scale, 1));
 }
 .config_element_title{
-font-size: 16px;
+font-size: calc(16px * var(--app-type-scale, 1));
 font-weight: bold;
 }
 .config_element select{
@@ -340,7 +342,7 @@ font-weight: bold;
 
 .header_toggle_planning_mode{
       cursor: pointer;
-    font-size: 24px;
+    font-size: calc(24px * var(--app-type-scale, 1));
 }
 .ausgaben_list{
     width: 33%;
@@ -371,12 +373,12 @@ body.planning_mode .ausgaben_list{
     box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.3);
 }
 .ausgaben_titel{
-    font-size: 15px;
+    font-size: calc(15px * var(--app-type-scale, 1));
     font-weight: bold;
 }
 
 .ausgaben_datum{
-    font-size: 9px;
+    font-size: calc(9px * var(--app-type-scale, 1));
     display: block;
 }
 
@@ -387,7 +389,7 @@ body.planning_mode .ausgaben_list{
  clear: left;
 }
 .ausgabe_sort input{
- font-size: 11px;
+ font-size: calc(11px * var(--app-type-scale, 1));
  margin-bottom: 5px;
 }
 .config_button{
@@ -473,7 +475,7 @@ body.planning_mode .ausgaben_list{
 .layout_task{
     margin: 7px 0;
     padding: 8px 10px;
-    font-size: 11px;
+    font-size: calc(11px * var(--app-type-scale, 1));
 
   cursor: pointer;
     background-color: #FFF;
@@ -481,8 +483,8 @@ body.planning_mode .ausgaben_list{
 }
 .layout_task_check{
     display: none;
-    font-size: 20px;
-    line-height: 8px;
+    font-size: calc(20px * var(--app-type-scale, 1));
+    line-height: calc(8px * var(--app-type-scale, 1));
 }
 .layout_task_done .layout_task_check{
     display: inline-block;
@@ -498,13 +500,13 @@ body.planning_mode .ausgaben_list{
 }
 .ticket_check,.ticket_alert, .ticket_edit, .ticket_delete{
     display:none;
-    font-size: 15px;
-    line-height: 10px;
+    font-size: calc(15px * var(--app-type-scale, 1));
+    line-height: calc(10px * var(--app-type-scale, 1));
     float: right;
 }
 .ticket_alert{
      display:none;
-    font-size: 12px;
+    font-size: calc(12px * var(--app-type-scale, 1));
     float: right;
 }
 .ticket_open{
@@ -556,11 +558,11 @@ body.planning_mode .ausgaben_list{
     float:right;
 }
 .ticket_list{
-  font-size: 10px;
+  font-size: calc(10px * var(--app-type-scale, 1));
 }
 
 .new_ticket_text{
-  font-size: 11px;
+  font-size: calc(11px * var(--app-type-scale, 1));
 }
 
 h1 {
@@ -632,12 +634,12 @@ li .text {
  display: none;
     margin: 5px 0 5px 0;
     background: #eafcfb;
-    line-height: 21px;
+    line-height: calc(21px * var(--app-type-scale, 1));
     cursor: default;
 }
 
 .task_title_edit{
-  font-size:11px;
+  font-size: calc(11px * var(--app-type-scale, 1));
 }
 
 ul.task_log{
@@ -645,7 +647,7 @@ ul.task_log{
 }
 
 ul.task_log li{
-  font-size: 9px;
+  font-size: calc(9px * var(--app-type-scale, 1));
   color: #AAA;
   padding: 0 !important;
   margin: 1px !important;
@@ -655,7 +657,7 @@ ul.task_log li{
  display: none;
 margin: 5px 0 10px 0;
 background: #eafcfb;
-line-height: 25px;
+line-height: calc(25px * var(--app-type-scale, 1));
 padding: 5px;
 }
 
@@ -679,7 +681,7 @@ padding: 5px;
 }
 body.planning_mode .seite_desc{
     display: none;
-    font-size: 12px;
+    font-size: calc(12px * var(--app-type-scale, 1));
 }
 .seite_edit_desc_top{
     font-weight: bold;
@@ -689,7 +691,7 @@ body.planning_mode .seite_desc{
     border: none;
     background-color: transparent;
     font-family: helvetica,sans-serif;
-    font-size: 11px;
+    font-size: calc(11px * var(--app-type-scale, 1));
 }
 body.planning_mode .seite_edit_desc_top{
     display: inline;
@@ -787,7 +789,7 @@ body.planning_mode .task_dropable:before{
 .seite_tools{
   clear: both;
   padding-top: 5px;
- font-size: 18px;
+ font-size: calc(18px * var(--app-type-scale, 1));
   cursor: pointer;
 
   -moz-user-select: none;
@@ -859,7 +861,7 @@ body.planning_mode .seite_bottom{
   padding: 5px 0 0 0;
   background: transparent;
   border: none;
-  font-size: 11px;
+  font-size: calc(11px * var(--app-type-scale, 1));
 }
 
 .new-task input:focus,.new-web-task input:focus{
@@ -874,7 +876,7 @@ body.planning_mode .seite_bottom{
     float:right;
     cursor: pointer;
     display:none;
-    font-size: 10px;
+    font-size: calc(10px * var(--app-type-scale, 1));
 }
 body.planning_mode .add_inserat{
     display:inline;
@@ -912,7 +914,7 @@ position: absolute;
   border: none;
   width: 80%;
     color: white;
-    font-size: 11px;
+    font-size: calc(11px * var(--app-type-scale, 1));
 }
 .seite_inserat input::placeholder {
     color: #ccc;
@@ -945,7 +947,7 @@ ul {
 }
  .task-delete{
   cursor: pointer;
-  font-size: 13px;
+  font-size: calc(13px * var(--app-type-scale, 1));
  }
 
 .task_buttons{
@@ -958,7 +960,7 @@ height: 15px;
   float: left;
   padding: 2px 0 0 0;
  width: 95px;
- line-height: 13px;
+ line-height: calc(13px * var(--app-type-scale, 1));
 }
 
 .task_option{
@@ -1088,7 +1090,7 @@ height: 15px;
     cursor: pointer;
     text-align: right;
     margin: 3px 6px 0 6px;
-    font-size: 16px;
+    font-size: calc(16px * var(--app-type-scale, 1));
 }
 
 .task_bottom{
@@ -1110,7 +1112,7 @@ height: 15px;
 }
 
  .updated{
-  font-size: 9px;
+  font-size: calc(9px * var(--app-type-scale, 1));
      display: inline-block;
      color: #666;
  }
@@ -1134,14 +1136,14 @@ height: 15px;
     margin: 2px 0 5px 0;
     width: 80px;
     border: 1px solid #888;
-    font-size:10px;
+    font-size: calc(10px * var(--app-type-scale, 1));
 }
 
 .select-web{
     display: inline-block;
     margin-top: 5px;
     margin-bottom: 2px;
-	font-size: 10px;
+	font-size: calc(10px * var(--app-type-scale, 1));
 }
 
 :disabled{
@@ -1158,7 +1160,7 @@ height: 15px;
     color: white;
     padding: 3px 8px 1px 8px;
     cursor: pointer;
-    font-size: 11px;
+    font-size: calc(11px * var(--app-type-scale, 1));
 }
 
 body.planning_mode .task_functions{
@@ -1173,7 +1175,7 @@ body.planning_mode .task_functions{
 
 
 .picture_buttons{
-    font-size: 11px;
+    font-size: calc(11px * var(--app-type-scale, 1));
     margin: 2px 0 5px 0;
     display: inline-block;
 }
@@ -1198,7 +1200,7 @@ ul.header_status_total{
 
 ul.header_status_total li{
  display: inline-block;
-    font-size: 10px;
+    font-size: calc(10px * var(--app-type-scale, 1));
     font-weight: bold;
     padding: 0;
     margin: 0 1px 0 1px;
@@ -1208,7 +1210,7 @@ ul.header_status_total li{
     font-weight: normal;
     padding: 0px 5px 0px 0px;
     display: block;
-    font-size: 10px;
+    font-size: calc(10px * var(--app-type-scale, 1));
     margin-bottom: 3px;
 }
 
@@ -1426,6 +1428,13 @@ ul.header_status_total li{
 
 @media print
 {
+    .app_zoom_frame {
+        --app-scale: 1 !important;
+        --app-type-scale: 1 !important;
+        width: auto !important;
+        height: auto !important;
+        zoom: 1 !important;
+    }
 
     body{
     width:100%;
@@ -1437,7 +1446,7 @@ ul.header_status_total li{
 
     .header_currenttime{
     display:inline;
-        font-size: 10px;
+        font-size: calc(10px * var(--app-type-scale, 1));
         float: right !important;
     }
 
@@ -1445,7 +1454,7 @@ ul.header_status_total li{
 		border: none !important;
 	}
     .task_planning input {
-    font-size: 8px  !important;
+    font-size: calc(8px * var(--app-type-scale, 1))  !important;
   }
 
     .ausgabe_active{
@@ -1462,7 +1471,7 @@ ul.header_status_total li{
     }
     .seite,  .seite *{
 
-        font-size: 6pt;
+        font-size: calc(6pt * var(--app-type-scale, 1));
     }
 
     .seite{
@@ -1488,7 +1497,7 @@ ul.header_status_total li{
         border: 0;
     }
      .ausgaben_datum{
-    font-size: 16px;
+    font-size: calc(16px * var(--app-type-scale, 1));
     display: inline;
          margin-left: 20px;
     }
@@ -1501,7 +1510,7 @@ ul.header_status_total li{
         display:none;
     }
 	.seite_inserat input{
-		font-size: 8px;
+		font-size: calc(8px * var(--app-type-scale, 1));
 	}
 
       .no-print, .no-print *
@@ -1526,11 +1535,11 @@ ul.header_status_total li{
     }
 
     .showcase_1, .showcase_2 {
-        font-size: 14px;
+        font-size: calc(14px * var(--app-type-scale, 1));
     }
 
     .select-web {
-        font-size: 10px;
+        font-size: calc(10px * var(--app-type-scale, 1));
     }
 
 	.second_right_column{

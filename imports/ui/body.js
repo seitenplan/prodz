@@ -21,8 +21,10 @@ current_legend_filter=new ReactiveVar(false);
 
 var APP_DEFAULT_BASE_WIDTH = 1440;
 var APP_DEFAULT_MIN_SCALE = 0.7;
+var APP_DEFAULT_TYPE_SCALE = 1;
 var APP_BASE_WIDTH = get_app_zoom_number('zoombase', APP_DEFAULT_BASE_WIDTH, 320, 4000);
 var APP_MIN_SCALE = get_app_zoom_number('minscale', APP_DEFAULT_MIN_SCALE, 0.3, 1);
+var APP_TYPE_SCALE = get_app_zoom_number('typescale', APP_DEFAULT_TYPE_SCALE, 0.5, 2);
 
 function get_app_zoom_number(name, fallback, min, max){
 	var value = parseFloat(new URLSearchParams(window.location.search).get(name));
@@ -49,8 +51,10 @@ function update_app_zoom(){
 	var scale = Math.min(1, Math.max(APP_MIN_SCALE, window.innerWidth / APP_BASE_WIDTH));
 	var board_width = Math.ceil(window.innerWidth / scale);
 	var board_height = Math.max(720, Math.ceil(window.innerHeight / scale));
+	var type_scale = APP_TYPE_SCALE / scale;
 
 	zoom_frame.style.setProperty('--app-scale', scale);
+	zoom_frame.style.setProperty('--app-type-scale', type_scale);
 	zoom_frame.style.setProperty('--app-board-width', board_width + 'px');
 	zoom_frame.style.setProperty('--app-board-height', board_height + 'px');
 }
