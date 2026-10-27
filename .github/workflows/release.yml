@@ -1,0 +1,82 @@
+name: Release
+
+# Push a version tag `git tag v1.2.0 && git push origin v1.2.0` to build
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Read Meteor release
+        id: meteor
+        run: echo "release=$(sed 's/^METEOR@//' .meteor/release)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache Meteor installation
+        id: meteor-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.meteor
+          key: meteor-${{ runner.os }}-${{ steps.meteor.outputs.release }}
+
+      - name: Install Meteor ${{ steps.meteor.outputs.release }}
+        if: steps.meteor-cache.outputs.cache-hit != 'true'
+        run: curl -sSf "https://install.meteor.com/?release=${{ steps.meteor.outputs.release }}" | sh
+
+      - name: Add Meteor to PATH
+        run: echo "$HOME/.meteor" >> "$GITHUB_PATH"
+
+      - name: Install npm dependencies
+        run: meteor npm ci
+
+      - name: Build server bundle
+        run: meteor build "$RUNNER_TEMP/build" --architecture os.linux.x86_64 --server-only
+
+      - name: Name artifact
+        id: artifact
+        run: |
+          if [ "$GITHUB_REF_TYPE" = tag ]; then
+            version="$GITHUB_REF_NAME"
+          else
+            version="$(git rev-parse --short HEAD)"
+          fi
+          name="prodz-$version-linux-x64.tar.gz"
+          mkdir -p dist
+          mv "$RUNNER_TEMP/build/prodz.tar.gz" "dist/$name"
+          (cd dist && sha256sum "$name" > "$name.sha256")
+          node_version="$(tar -xzOf "dist/$name" bundle/.node_version.txt)"
+          echo "name=$name" >> "$GITHUB_OUTPUT"
+          echo "node_version=$node_version" >> "$GITHUB_OUTPUT"
+
+      - name: Upload workflow artifact
+        if: github.ref_type != 'tag'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.artifact.outputs.name }}
+          path: dist/
+          retention-days: 7
+
+      - name: Create GitHub Release
+        if: github.ref_type == 'tag'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NAME: ${{ steps.artifact.outputs.name }}
+          NODE_VERSION: ${{ steps.artifact.outputs.node_version }}
+          METEOR_RELEASE: ${{ steps.meteor.outputs.release }}
+        run: |
+          cat > "$RUNNER_TEMP/notes.md" <<EOF
+          Built with Meteor $METEOR_RELEASE. Requires Node.js $NODE_VERSION.
+          EOF
+          gh release create "$GITHUB_REF_NAME" dist/* \
+            --verify-tag \
+            --title "$GITHUB_REF_NAME" \
+            --notes-file "$RUNNER_TEMP/notes.md" \
+            --generate-notes
