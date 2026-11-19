@@ -94,20 +94,20 @@ body.planning_mode .seiten_list {
 }
 
 body.planning_mode .seiten_break_5 .seite{
-    width: max(145px, calc((100% - 62px) / 5));
-}
+
+    width: clamp(160px, calc((100% - 100px) / 5), 220px);}
 
 body.planning_mode .seiten_break_6 .seite{
-    width: max(145px, calc((100% - 69px) / 6));
-}
+
+    width: clamp(160px, calc((100% - 100px) / 6), 220px);}
 
 body.planning_mode .seiten_break_7 .seite{
-    width: max(145px, calc((100% - 85px) / 7));
-}
+
+    width: clamp(160px, calc((100% - 100px) / 7), 220px);}
 
 body.planning_mode .seiten_break_8 .seite{
-    width: max(145px, calc((100% - 92px) / 8));
-}
+
+    width: clamp(160px, calc((100% - 100px) / 8), 220px);}
 .task_planning{
     display: none;
 }
@@ -135,23 +135,43 @@ textarea{
 
 .task_plan_date{
     border: none;
-    width: 18px;
+    width: 28px;
     font-size: calc(10px * var(--app-type-scale, 1));
+}
+body.planning_mode .task_plan_date{
+    flex: 0 0 28px;
 }
 
 .planning_dotted{
     border-bottom: 0.01em dotted #CCC !important;
     padding: 1px 5px;
 }
+body.planning_mode .task_planning li.planning_dotted{
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 1px;
+}
 .task_planning input{
     border:none;
     font-size: calc(11px * var(--app-type-scale, 1));
+    box-sizing: border-box;
 }
 .task_plan_title{
     width: 73%;
 }
+body.planning_mode .task_plan_title{
+    flex: 1 1 auto;
+    width: auto;
+    min-width: 0;
+}
 .task_plan_length{
     width: 21%;
+}
+body.planning_mode .task_plan_length{
+    flex: 0 0 38px;
+    width: auto;
+    min-width: 0;
 }
 .task_plan_desc{
     width: 100%;
@@ -161,6 +181,11 @@ textarea{
 
 .task_plan_author{
     width: 70%;
+}
+body.planning_mode .task_plan_author{
+    flex: 1 1 auto;
+    width: auto;
+    min-width: 0;
 }
 .task_plan_button{
     background-color: #eeeeee;
@@ -174,6 +199,7 @@ textarea{
     margin-right: 5px;
     font-size: calc(12px * var(--app-type-scale, 1));
     cursor: move;
+    flex: 0 0 auto;
 }
 .container {
   flex: 1 1 auto;
@@ -453,20 +479,20 @@ body.planning_mode .ausgaben_list{
 }
 
 .seiten_break_5 .seite{
-    width: max(130px, calc((100% - 62px) / 5));
-}
+
+    width: clamp(160px, calc((100% - 100px) / 5), 220px);}
 
 .seiten_break_6 .seite{
-    width: max(130px, calc((100% - 69px) / 6));
-}
+
+    width: clamp(160px, calc((100% - 100px) / 6), 220px);}
 
 .seiten_break_7 .seite{
-    width: max(130px, calc((100% - 85px) / 7));
-}
+
+    width: clamp(160px, calc((100% - 100px) / 7), 220px);}
 
 .seiten_break_8 .seite{
-    width: max(130px, calc((100% - 92px) / 8));
-}
+
+    width: clamp(160px, calc((100% - 100px) / 8), 220px);}
 
 .layout_tasks_container{
     margin: 10px;
@@ -819,6 +845,9 @@ ul.status_list li{
     border: 0;
     background-color:#FFF;
 }
+body.planning_mode .task {
+    padding: 1px 0px;
+}
 
 body.planning_mode ul.task_list li {
     margin: 1px 0;
@@ -948,19 +977,49 @@ ul {
  .task-delete{
   cursor: pointer;
   font-size: calc(13px * var(--app-type-scale, 1));
+  flex: 0 0 auto;
  }
+body.planning_mode .task_planning .delete{
+  flex: 0 0 auto;
+}
+
+.task_topline{
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  gap: 3px;
+}
 
 .task_buttons{
-  float: right;
+  flex: 0 0 auto;
   padding: 0;
 height: 15px;
 }
 
 .task_header{
-  float: left;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  flex: 1 1 auto;
+  min-width: 0;
   padding: 2px 0 0 0;
- width: 95px;
+ width: auto;
  line-height: calc(13px * var(--app-type-scale, 1));
+}
+
+.task_header > *{
+  flex: 0 0 auto;
+}
+
+.task_header .task_title{
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.task_header .updated{
+  flex: 0 0 auto;
 }
 
 .task_option{
