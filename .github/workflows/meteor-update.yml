@@ -1,0 +1,67 @@
+name: Meteor update check
+
+# Weekly check for new Meteor releases and Atmosphere package versions.
+# Opens (or refreshes) a pull request when `meteor update` changes anything.
+on:
+  schedule:
+    - cron: "0 5 * * 0" # Sundays 05:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Read current Meteor release
+        id: meteor
+        run: echo "release=$(sed 's/^METEOR@//' .meteor/release)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache Meteor installation
+        id: meteor-cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.meteor
+          key: meteor-${{ runner.os }}-${{ steps.meteor.outputs.release }}
+
+      - name: Install Meteor
+        if: steps.meteor-cache.outputs.cache-hit != 'true'
+        run: curl -sSf "https://install.meteor.com/?release=${{ steps.meteor.outputs.release }}" | sh
+
+      - name: Add Meteor to PATH
+        run: echo "$HOME/.meteor" >> "$GITHUB_PATH"
+
+      # `--all-packages` alone can miss packages, so run plain `meteor update` first.
+      - name: Run meteor update
+        run: meteor update && meteor update --all-packages
+
+      - name: Write pull request description
+        env:
+          OLD: ${{ steps.meteor.outputs.release }}
+        run: |
+          new="$(sed 's/^METEOR@//' .meteor/release)"
+          if [ "$new" = "$OLD" ]; then
+            echo "Atmosphere package updates." > "$RUNNER_TEMP/body.md"
+            exit 0
+          fi
+          # Changelog anchors include the release date, e.g. #v3-5-3-2026-10-13
+          anchor="$(curl -sf https://raw.githubusercontent.com/meteor/meteor/devel/v3-docs/docs/history.md \
+            | grep -m1 "^## v$new," \
+            | sed -E 's/^## //; s/[^A-Za-z0-9]+/-/g; s/-$//' || true)"
+          cat > "$RUNNER_TEMP/body.md" <<EOF
+          Meteor $OLD → $new
+
+          - Changelog: https://docs.meteor.com/history.html${anchor:+#$anchor}
+          - GitHub release: https://github.com/meteor/meteor/releases/tag/release/METEOR@$new
+          EOF
+
+      - uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
+        with:
+          branch: deps/meteor-update
+          title: "deps: Meteor update"
+          commit-message: "deps: Meteor update"
+          body-path: ${{ runner.temp }}/body.md
